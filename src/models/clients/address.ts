@@ -1,4 +1,4 @@
-import { ValueObject } from '../ValueObject'
+import { ValueObject } from '../../core/domain/ValueObject'
 
 interface AddressProperties {
     value: string

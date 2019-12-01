@@ -1,9 +1,9 @@
-import { AggregateRoot } from '../AggregateRoot'
-import { UniqueEntityID } from '../UniqueEntityID'
-import { Guard } from '../logic/Guard'
+import { AggregateRoot } from '../../core/domain/AggregateRoot'
+import { UniqueEntityID } from '../../core/domain/UniqueEntityID'
+import { Guard } from '../../core/logic/Guard'
 import { Email } from './email'
 import { Fullname } from './fullname'
-import { Result } from '../logic/Result'
+import { Result } from '../../core/logic/Result'
 import { Address } from './address'
 
 interface ClientProperties {
