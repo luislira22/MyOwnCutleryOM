@@ -1,6 +1,14 @@
+
+import { shallowEqual } from "shallow-equal-object";
+
 interface ValueObjectProps {
   [index: string]: any;
 }
+
+/**
+ * @desc ValueObjects are objects that we determine their
+ * equality through their structrual property.
+ */
 
 export abstract class ValueObject<T extends ValueObjectProps> {
   public readonly props: T;
@@ -16,6 +24,6 @@ export abstract class ValueObject<T extends ValueObjectProps> {
     if (vo.props === undefined) {
       return false;
     }
-    return this.props === vo.props
+    return shallowEqual(this.props, vo.props)
   }
 }

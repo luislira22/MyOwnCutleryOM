@@ -1,4 +1,4 @@
-import { ValueObject } from '../valueObject'
+import { ValueObject } from '../ValueObject'
 
 interface EmailProperties {
     value: string

@@ -59,6 +59,8 @@
     "morgan": "^1.9.1",
     "reflect-metadata": "^0.1.12",
     "shallow-equal": "^1.2.0",
+    "shallow-equal-object": "^1.1.1",
+    "sinon": "^7.5.0",
     "typedi": "^0.8.0",
     "winston": "^3.2.1"
   },
