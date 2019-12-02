@@ -1,7 +1,7 @@
 import { Client } from '../clients/client';
 import { Quantity } from './quantity';
 import { AggregateRoot } from '../../core/domain/aggregateRoot';
-import { OrderDate } from './orderDate';
+import { OrderDate } from './orderdate';
 import { Status } from './status';
 import { UniqueEntityID } from '../../core/domain/UniqueEntityID';
 import { Guard } from '../../core/logic/Guard';
@@ -57,10 +57,6 @@ export class Order extends AggregateRoot<OrderProperties> {
       return Result.fail<Order>(guardResult.message);
     } else {
       const order = new Order({
-        /*client: Client;
-   quantity: Quantity;
-   date: OrderDate;
-   status: Status;*/
         ...props,
         client: props.client,
         quantity: props.quantity,

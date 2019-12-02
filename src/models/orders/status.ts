@@ -1,19 +1,18 @@
 import { ValueObject } from '../../core/domain/ValueObject';
 
-
-enum StatusMedia {
+//TODO see what's going on on here
+export enum StatusMedia {
   Accepted = 'ACCEPTED',
   Processing = 'PROCESSING',
   Completed = 'COMPLETED'
 }
 
-
 interface StatusProperties {
-  status: StatusMedia;
+  status: string;
 }
 
 export class Status extends ValueObject<StatusProperties> {
-  get value(): StatusMedia {
+  get value(): string {
     return this.props.status;
   }
 
@@ -21,13 +20,15 @@ export class Status extends ValueObject<StatusProperties> {
     super(props);
   }
 
-  public static create(myStatus: StatusMedia): Status {
+  public static create(myStatus: string): Status {
     if (
-      myStatus.toString().localeCompare('ACCEPTED') != 0 ||
-      myStatus.toString().localeCompare('PROCESSING') != 0 ||
-      myStatus.toString().localeCompare('COMPLETED') != 0
+      myStatus.localeCompare(StatusMedia.Accepted) != 0 ||
+      myStatus.localeCompare(StatusMedia.Processing) != 0 ||
+      myStatus.localeCompare(StatusMedia.Completed) != 0
     ) {
       throw new Error('Should have 1 valid status');
+    } else if (myStatus === undefined) {
+      throw new Error('Status undefined');
     } else {
       return new Status({ status: myStatus });
     }
