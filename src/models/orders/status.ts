@@ -1,6 +1,5 @@
 import { ValueObject } from '../../core/domain/ValueObject';
 
-//TODO see what's going on on here
 export enum StatusMedia {
   Accepted = 'ACCEPTED',
   Processing = 'PROCESSING',
@@ -22,9 +21,7 @@ export class Status extends ValueObject<StatusProperties> {
 
   public static create(myStatus: string): Status {
     if (
-      myStatus.localeCompare(StatusMedia.Accepted) != 0 ||
-      myStatus.localeCompare(StatusMedia.Processing) != 0 ||
-      myStatus.localeCompare(StatusMedia.Completed) != 0
+      myStatus != StatusMedia.Accepted && myStatus != StatusMedia.Processing && myStatus != StatusMedia.Completed
     ) {
       throw new Error('Should have 1 valid status');
     } else if (myStatus === undefined) {
