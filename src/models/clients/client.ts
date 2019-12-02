@@ -6,7 +6,7 @@ import { Fullname } from './fullname'
 import { Result } from '../../core/logic/Result'
 import { Address } from './address'
 
-interface ClientProperties {
+export interface ClientProperties {
     email: Email
     fullname: Fullname
     password: string
@@ -30,6 +30,10 @@ export class Client extends AggregateRoot<ClientProperties> {
 
     get fullname(): Fullname {
         return this.props.fullname
+    }
+
+    get password(): string {
+        return this.props.password
     }
 
     private constructor(props: ClientProperties, id?: UniqueEntityID) {
