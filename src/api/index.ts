@@ -12,5 +12,5 @@ export default () => {
 	agendash(app);
 	client(app)
 
-	return app
-}
+    return app;
+};

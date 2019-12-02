@@ -15,7 +15,11 @@ export class Address extends ValueObject<AddressProperties> {
     }
 
     public static create(address: string, postalcode: string, city: string, country: string): Address {
-        if (address === undefined || address === null || address.length <= 2 || address.length > 100 ||
+        if (
+            address === undefined ||
+            address === null ||
+            address.length <= 2 ||
+            address.length > 100 ||
             city === undefined || city === null || city.length <= 2 || city.length > 100 ||
             postalcode === undefined || postalcode === null || postalcode.length <= 2 || postalcode.length > 100 ||
             country === undefined || country === null || country.length <= 2 || country.length > 100) {

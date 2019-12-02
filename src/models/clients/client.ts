@@ -1,4 +1,4 @@
-import { AggregateRoot } from '../../core/domain/AggregateRoot'
+import { AggregateRoot } from '../../core/domain/aggregateRoot'
 import { UniqueEntityID } from '../../core/domain/UniqueEntityID'
 import { Guard } from '../../core/logic/Guard'
 import { Email } from './email'
