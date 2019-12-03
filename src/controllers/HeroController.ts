@@ -1,7 +1,7 @@
 import express = require("express");
 import HeroBusiness = require("../app/services/HeroService");
 import IBaseController = require("./interfaces/base/BaseController");
-import IHeroModel = require("./../app/model/interfaces/HeroModel");
+import IHeroModel = require("../app/model/interfaces/Hero");
 
 
 

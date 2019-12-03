@@ -1,6 +1,6 @@
-import IHeroModel = require("./interfaces/HeroModel");
+import IHeroModel = require("./interfaces/Hero");
 
-class HeroModel {
+class Hero {
    
    private _heroModel: IHeroModel;
    
@@ -21,5 +21,5 @@ class HeroModel {
    
     
 }
-Object.seal(HeroModel);
-export =  HeroModel;
+Object.seal(Hero);
+export =  Hero;

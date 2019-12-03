@@ -1,5 +1,5 @@
-import HeroModel = require("./../model/HeroModel");
-import IHeroModel = require("./../model/interfaces/HeroModel");
+import HeroModel = require("../model/Hero");
+import IHeroModel = require("../model/interfaces/Hero");
 import HeroSchema = require("./../dataAccess/schemas/HeroSchema");
 import RepositoryBase = require("./base/RepositoryBase");
 

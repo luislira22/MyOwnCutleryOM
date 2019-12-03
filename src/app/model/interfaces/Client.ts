@@ -1,10 +1,10 @@
 import mongoose = require("mongoose");
 
-interface ClientModel extends mongoose.Document {
+interface Client extends mongoose.Document {
     name: string
     address: string
     email: string
     password: string
 }
 
-export = ClientModel;
+export = Client;

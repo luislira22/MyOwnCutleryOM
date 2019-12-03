@@ -1,6 +1,6 @@
 import SpartanRepository = require("./../repository/SpartanRepository");
 import ISpartanBusiness = require("./interfaces/SpartanService");
-import ISpartanModel = require("./../model/interfaces/SpartanModel");
+import ISpartanModel = require("../model/interfaces/Spartan");
 
 class SpartanService  implements ISpartanBusiness {
     private _spartanRepository: SpartanRepository;

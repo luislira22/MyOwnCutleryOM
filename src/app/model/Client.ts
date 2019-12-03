@@ -1,6 +1,6 @@
-import IClientModel = require("./interfaces/ClientModel");
+import IClientModel = require("./interfaces/Client");
 
-class ClientModel {
+class Client {
 
     private _heroModel: IClientModel;
 
@@ -25,5 +25,5 @@ class ClientModel {
     }
 }
 
-Object.seal(ClientModel);
-export = ClientModel;
+Object.seal(Client);
+export = Client;

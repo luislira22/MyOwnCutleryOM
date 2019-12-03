@@ -1,7 +1,7 @@
 import HeroRepository = require("./../repository/HeroRepository");
 import IHeroBusiness = require("./interfaces/HeroService");
-import IHeroModel = require("./../model/interfaces/HeroModel");
-import HeroModel = require("./../model/HeroModel");
+import IHeroModel = require("../model/interfaces/Hero");
+import HeroModel = require("../model/Hero");
 
 
 class HeroService  implements HeroService {

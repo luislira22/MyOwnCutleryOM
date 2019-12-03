@@ -1,9 +1,9 @@
 import mongoose = require("mongoose");
 
-interface SpartanModel extends mongoose.Document {
+interface Spartan extends mongoose.Document {
     folk: string;
     amountPeopleKilled: number;
     name: string;
 }
 
-export = SpartanModel;
+export = Spartan;

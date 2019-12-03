@@ -1,5 +1,5 @@
-import ClientModel = require("./../model/ClientModel");
-import IClientModel = require("./../model/interfaces/ClientModel");
+import ClientModel = require("../model/Client");
+import IClientModel = require("../model/interfaces/Client");
 import ClientSchema = require("./../dataAccess/schemas/ClientSchema");
 import RepositoryBase = require("./base/RepositoryBase");
 
