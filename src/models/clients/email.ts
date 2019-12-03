@@ -1,12 +1,12 @@
 import { ValueObject } from '../../core/domain/ValueObject'
 
 interface EmailProperties {
-  value: string;
+  email: string;
 }
 
 export class Email extends ValueObject<EmailProperties> {
-  get value(): string {
-    return this.props.value;
+  get email(): string {
+    return this.props.email;
   }
 
   private constructor(props: EmailProperties) {
@@ -18,7 +18,7 @@ export class Email extends ValueObject<EmailProperties> {
     if (!emailRegex.test(email)) {
       throw new Error('Email does not match email patterns.');
     } else {
-      return new Email({ value: email });
+      return new Email({ email: email });
     }
   }
 }

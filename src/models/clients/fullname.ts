@@ -1,13 +1,18 @@
 import { ValueObject } from '../../core/domain/ValueObject'
 
 interface FullnameProperties {
-	value: string
+	firstname: string
+	lastname: string
 }
 
 export class Fullname extends ValueObject<FullnameProperties> {
 
-	get value(): string {
-		return this.props.value
+	get firstname(): string {
+		return this.props.firstname
+	}
+
+	get lastname(): string {
+		return this.props.lastname
 	}
 
 	private constructor(props: FullnameProperties) {
@@ -20,8 +25,7 @@ export class Fullname extends ValueObject<FullnameProperties> {
 			throw new Error('Firstname and Lastname must be greater than 2 chars and less than 100.')
 		}
 		else {
-			let name = firstname + ' ' + lastname
-			return new Fullname({ value: name })
+			return new Fullname({ firstname: firstname, lastname: lastname })
 		}
 	}
 }

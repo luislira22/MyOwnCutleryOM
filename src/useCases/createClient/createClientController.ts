@@ -11,7 +11,7 @@ export class CreateClientController extends BaseController {
         this.useCase = useCase
     }
 
-    async executeImpl(): Promise<any> {
+    public async executeImpl(): Promise<any> {
         const dto: CreateClientDTO = this.req.body as CreateClientDTO
 
         try {
