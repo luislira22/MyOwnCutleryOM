@@ -1,5 +1,5 @@
-import SpartanModel = require("./../model/SpartanModel");
-import ISpartanModel = require("./../model/interfaces/SpartanModel");
+import SpartanModel = require("../model/Spartan");
+import ISpartanModel = require("../model/interfaces/Spartan");
 import SpartanSchema = require("./../dataAccess/schemas/SpartanSchema");
 import RepositoryBase = require("./base/RepositoryBase");
 

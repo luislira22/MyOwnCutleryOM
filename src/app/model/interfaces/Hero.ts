@@ -1,9 +1,9 @@
 import mongoose = require("mongoose");
 
-interface HeroModel extends mongoose.Document {
+interface Hero extends mongoose.Document {
   power: string;
   amountPeopleSaved: number;
   name: string;
 }
 
-export = HeroModel;
+export = Hero;

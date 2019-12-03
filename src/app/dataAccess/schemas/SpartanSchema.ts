@@ -1,5 +1,5 @@
 import DataAccess = require("./../../dataAccess/DataAccess");
-import ISpartanModel = require("./../../model/interfaces/SpartanModel");
+import ISpartanModel = require("../../model/interfaces/Spartan");
 
 var mongoose = DataAccess.mongooseInstance;
 var mongooseConnection = DataAccess.mongooseConnection;

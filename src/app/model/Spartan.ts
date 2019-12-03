@@ -1,6 +1,6 @@
-import ISpartanModel = require("./interfaces/SpartanModel");
+import ISpartanModel = require("./interfaces/Spartan");
 
-class SpartanModel {
+class Spartan {
    private _spartanModel: ISpartanModel;
    
    constructor(spartan: ISpartanModel) {
@@ -19,5 +19,5 @@ class SpartanModel {
     
 }
 
-Object.seal(SpartanModel);
-export = SpartanModel;
+Object.seal(Spartan);
+export = Spartan;
