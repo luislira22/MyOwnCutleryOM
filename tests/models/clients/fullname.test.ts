@@ -1,8 +1,13 @@
 import { Fullname } from '../../../src/models/clients/fullname'
 
-test('Create a valid fullname', () => {
+describe('Create a valid fullname', () => {
     let fullname = Fullname.create('Daniel', 'Craig')
-    expect(fullname.value).toBe('Daniel Craig')
+    it('Address correct', () => {
+        expect(fullname.firstname).toBe('Daniel')
+    })
+    it('Postalcode correct', () => {
+        expect(fullname.lastname).toBe('Craig')
+    })
 })
 
 describe('Create an invalid fullname', () => {

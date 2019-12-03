@@ -1,8 +1,20 @@
 import { Address } from '../../../src/models/clients/address'
 
-test('Create a valid address', () => {
+describe('Create a valid address', () => {
     let address = Address.create('Rua da Avenida', '4010-200', 'Porto', 'Portugal')
-    expect(address.value).toBe('Rua da Avenida, 4010-200, Porto, Portugal')
+    it('Address correct', () => {
+        expect(address.address).toBe('Rua da Avenida')
+    })
+    it('Postalcode correct', () => {
+        expect(address.postalcode).toBe('4010-200')
+    })
+    it('City correct', () => {
+        expect(address.city).toBe('Porto')
+    })
+    it('Country correct', () => {
+        expect(address.country).toBe('Portugal')
+    })
+
 })
 
 describe('Create an invalid address', () => {
