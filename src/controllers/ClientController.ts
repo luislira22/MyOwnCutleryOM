@@ -2,10 +2,27 @@ import express = require("express");
 import ClientService = require("../app/services/ClientService");
 import IBaseController = require("./interfaces/base/BaseController");
 import IClient = require("../app/model/clients/interfaces/Client");
+import ClientDTO from "../app/dtos/clients/ClientDTO";
 
-class HeroController implements IBaseController <ClientService> {
+class ClientController implements IBaseController <ClientService> {
 
     create(req: express.Request, res: express.Response): void {
+        try {
+            var clientDTO: ClientDTO = <ClientDTO>req.body;
+            var clientService = new ClientService();
+            clientService.create(clientDTO, (error, result) => {
+                if (error) res.status(400).end(error.toString());
+
+                else res.send({"success": "success"});
+            });
+        } catch (e) {
+            console.log(e);
+            res.send({"error": "error in your request"});
+
+        }
+    }
+    /*
+    create2(req: express.Request, res: express.Response): void {
         try {
             var client: IClient = <IClient>req.body;
             var clientService = new ClientService();
@@ -19,7 +36,7 @@ class HeroController implements IBaseController <ClientService> {
             res.send({"error": "error in your request"});
 
         }
-    }
+    }*/
 
     update(req: express.Request, res: express.Response): void {
         try {
@@ -84,4 +101,4 @@ class HeroController implements IBaseController <ClientService> {
 
 }
 
-export = HeroController;
+export = ClientController;

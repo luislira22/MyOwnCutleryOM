@@ -1,11 +1,11 @@
-import Client from "../../model/clients/interfaces/Client";
 import ClientDTO from "../../dtos/clients/ClientDTO"
 import {BaseMapper} from "../BaseMapper";
+import IClient = require("../../model/clients/interfaces/Client");
 
 
-class ClientMapper extends BaseMapper<Client> {
+class ClientMapper extends BaseMapper<IClient> {
 
-    public static toPersistence(client: Client): any {
+    public static toPersistence(client: IClient): any {
         //tojson
         return {
             name: {
@@ -25,11 +25,27 @@ class ClientMapper extends BaseMapper<Client> {
         }
     }
 
-    public static toDomain(raw: any): Client {
-        return null
+    public static toDomain(clientDTO: ClientDTO): IClient {
+        let json = {
+            name: {
+                firstname: clientDTO.name.firstname,
+                lastname: clientDTO.name.lastname
+            },
+            address: {
+                address: clientDTO.address.address,
+                postalcode: clientDTO.address.postalcode,
+                city: clientDTO.address.city,
+                country: clientDTO.address.country
+            },
+            email: {
+                email: clientDTO.email
+            },
+            password: clientDTO.password
+        };
+        return <IClient>json;
     }
 
-    public static toDTO(client: Client): ClientDTO {
+    public static toDTO(client: IClient): ClientDTO {
         return null;
     }
 }

@@ -5,8 +5,9 @@ import {DTO} from "../DTO";
 
 interface ClientDTO extends DTO {
     name: IFullnameDTO
-    email: IEmailDTO
     address: IAddressDTO
+    email: string
+    password: string
 }
 
 export = ClientDTO
