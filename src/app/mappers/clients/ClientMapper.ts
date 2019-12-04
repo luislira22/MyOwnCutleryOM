@@ -46,7 +46,21 @@ class ClientMapper extends BaseMapper<IClient> {
     }
 
     public static toDTO(client: IClient): ClientDTO {
-        return null;
+        let json = {
+            id: client._id,
+            name: {
+                firstname: client.name[0].firstname,
+                lastname: client.name[0].lastname
+            },
+            address: {
+                address: client.address[0].address,
+                postalcode: client.address[0].postalcode,
+                city: client.address[0].city,
+                country: client.address[0].country
+            },
+            email: client.email[0].email,
+        };
+        return <ClientDTO>json;
     }
 }
 
