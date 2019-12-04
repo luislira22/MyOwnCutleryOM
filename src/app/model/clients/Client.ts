@@ -1,5 +1,7 @@
 import IClientModel = require("./interfaces/Client");
 import Fullname = require("./interfaces/Fullname");
+import Email = require("./interfaces/Email");
+import Address = require("./interfaces/Address");
 
 class Client {
 
@@ -13,11 +15,11 @@ class Client {
         return this._client.name;
     }
 
-    get address(): string {
+    get address(): Address {
         return this._client.address;
     }
 
-    get email(): string {
+    get email(): Email {
         return this._client.email;
     }
 
