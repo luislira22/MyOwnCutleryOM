@@ -3,17 +3,17 @@ import ClientService = require("../app/services/ClientService");
 import IBaseController = require("./interfaces/base/BaseController");
 import IClient = require("../app/model/clients/interfaces/Client");
 import ClientDTO from "../app/dtos/clients/ClientDTO";
+import ClientMapper = require("../app/mappers/clients/ClientMapper");
 
 class ClientController implements IBaseController <ClientService> {
 
     create(req: express.Request, res: express.Response): void {
         try {
-            var clientDTO: ClientDTO = <ClientDTO>req.body;
-            var clientService = new ClientService();
+            let clientDTO: ClientDTO = <ClientDTO>req.body;
+            let clientService = new ClientService();
             clientService.create(clientDTO, (error, result) => {
                 if (error) res.status(400).end(error.toString());
-
-                else res.send({"success": "success"});
+                else res.send(ClientMapper.toDTO(result));
             });
         } catch (e) {
             console.log(e);
@@ -21,6 +21,7 @@ class ClientController implements IBaseController <ClientService> {
 
         }
     }
+
     /*
     create2(req: express.Request, res: express.Response): void {
         try {
