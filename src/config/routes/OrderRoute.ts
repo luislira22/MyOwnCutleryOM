@@ -1,6 +1,6 @@
 import express = require("express");
 import OrderController = require("../../controllers/OrderController");
-//TODO verificar
+
 var router = express.Router();
 class OrderRoutes {
     private _orderController: OrderController;

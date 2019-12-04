@@ -1,20 +1,19 @@
 import express = require("express");
-import SpartanBusiness = require("../app/services/SpartanService");
+import OrderService = require("../app/services/OrderService");
 import IBaseController = require("./interfaces/base/BaseController");
-import ISpartanModel = require("../app/model/interfaces/Spartan");
+import IOrder = require("../app/model/orders/interfaces/Order");
 
-
-//TODO fazer
-class OrderController implements IBaseController <SpartanBusiness> {
+class OrderController implements IBaseController <OrderService> {
 
     create(req: express.Request, res: express.Response): void {
         try {
 
-            var spartan: ISpartanModel = <ISpartanModel>req.body;
-            var spartanBusiness = new SpartanBusiness();
-            spartanBusiness.create(spartan, (error, result) => {
-                if(error) res.send({"error": "error"});
-                else res.send({"success": "success"});
+            var order: IOrder = <IOrder>req.body;
+            var orderService = new OrderService();
+            orderService.create(order, (error, result) => {
+                if (error) res.status(400).end(error.toString());
+                else //res.send({"success": "success"});
+                res.status(201).send(res);
             });
         }
         catch (e)  {
@@ -24,10 +23,10 @@ class OrderController implements IBaseController <SpartanBusiness> {
     }
     update(req: express.Request, res: express.Response): void {
         try {
-            var spartan: ISpartanModel = <ISpartanModel>req.body;
+            var order: IOrder = <IOrder>req.body;
             var _id: string = req.params._id;
-            var spartanBusiness = new SpartanBusiness();
-            spartanBusiness.update(_id, spartan, (error, result) => {
+            var orderService = new OrderService();
+            orderService.update(_id, order, (error, result) => {
                 if(error) res.send({"error": "error"});
                 else res.send({"success": "success"});
             });
@@ -42,8 +41,8 @@ class OrderController implements IBaseController <SpartanBusiness> {
         try {
 
             var _id: string = req.params._id;
-            var spartanBusiness = new SpartanBusiness();
-            spartanBusiness.delete(_id, (error, result) => {
+            var orderService = new OrderService();
+            orderService.delete(_id, (error, result) => {
                 if(error) res.send({"error": "error"});
                 else res.send({"success": "success"});
             });
@@ -57,8 +56,8 @@ class OrderController implements IBaseController <SpartanBusiness> {
     retrieve(req: express.Request, res: express.Response): void {
         try {
 
-            var spartanBusiness = new SpartanBusiness();
-            spartanBusiness.retrieve((error, result) => {
+            var orderService = new OrderService();
+            orderService.retrieve((error, result) => {
                 if(error) res.send({"error": "error"});
                 else res.send(result);
             });
@@ -74,8 +73,8 @@ class OrderController implements IBaseController <SpartanBusiness> {
 
             var _id: string = req.params._id;
 
-            var spartanBusiness = new SpartanBusiness();
-            spartanBusiness.findById(_id, (error, result) => {
+            var orderService = new OrderService();
+            orderService.findById(_id, (error, result) => {
                 if(error) res.send({"error": "error"});
                 else res.send(result);
             });
@@ -89,4 +88,4 @@ class OrderController implements IBaseController <SpartanBusiness> {
 
 
 }
-export = SpartanController;
+export = OrderController;

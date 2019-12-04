@@ -1,4 +1,3 @@
-import ClientModel = require("../model/clients/Client");
 import IClientModel = require("../model/clients/interfaces/Client");
 import ClientSchema = require("./../dataAccess/schemas/ClientSchema");
 import RepositoryBase = require("./base/RepositoryBase");

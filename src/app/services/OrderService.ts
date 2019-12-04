@@ -1,39 +1,40 @@
-import SpartanRepository = require("./../repository/SpartanRepository");
+import OrderRepository = require("./../repository/OrderRepository");
 import IOrderService = require("./interfaces/OrderService");
-import ISpartanModel = require("../model/interfaces/Spartan");
-//TODO acertar e fazer
+import IOrder = require("../model/orders/interfaces/Order");
+
+
 class OrderService  implements IOrderService {
     private _orderRepository: OrderRepository;
 
     constructor () {
-        this._spartanRepository = new SpartanRepository();
+        this._orderRepository = new OrderRepository();
     }
 
-    create (item: ISpartanModel, callback: (error: any, result: any) => void) {
-        this._spartanRepository.create(item, callback);
+    create (item: IOrder, callback: (error: any, result: any) => void) {
+        this._orderRepository.create(item, callback);
     }
 
     retrieve (callback: (error: any, result: any) => void) {
-        this._spartanRepository.retrieve(callback);
+        this._orderRepository.retrieve(callback);
     }
 
-    update (_id: string, item: ISpartanModel, callback: (error: any, result: any) => void) {
-        this._spartanRepository.findById(_id, (err, res) => {
+    update (_id: string, item: IOrder, callback: (error: any, result: any) => void) {
+        this._orderRepository.findById(_id, (err, res) => {
             if(err) callback(err, res);
             else
-                this._spartanRepository.update(res._id, item, callback);
+                this._orderRepository.update(res._id, item, callback);
 
         });
     }
 
     delete (_id: string, callback:(error: any, result: any) => void) {
-        this._spartanRepository.delete(_id, callback);
+        this._orderRepository.delete(_id, callback);
     }
 
-    findById (_id: string, callback: (error: any, result: ISpartanModel) => void) {
-        this._spartanRepository.findById(_id, callback);
+    findById (_id: string, callback: (error: any, result: IOrder) => void) {
+        this._orderRepository.findById(_id, callback);
     }
 
 }
-Object.seal(SpartanService);
-export = SpartanService;
+Object.seal(OrderService);
+export = OrderService;
