@@ -38,7 +38,7 @@ class OrderSchema {
         const StatusSchema = new mongoose.Schema(
             {
                 status: {
-                    type: Status,
+                    type: String,
                     required: true,
                 }
             }

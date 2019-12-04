@@ -1,7 +1,7 @@
 import BaseBusiness = require("./base/BaseService");
-import IOrderModel = require("../../model/orders/interfaces/Order");
+import IOrderDTO = require("../../dtos/orders/OrderDTO");
 
-interface OrderService extends BaseBusiness<IOrderModel> {
+interface OrderService extends BaseBusiness<IOrderDTO> {
 
 }
 export = OrderService;

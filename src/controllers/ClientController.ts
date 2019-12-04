@@ -38,6 +38,12 @@ class ClientController implements IBaseController <ClientService> {
 
         }
     }*/
+    updateNameAndAddress(req: express.Request, res: express.Response) : void {
+        try {
+            let _id: string = req.params._id;
+            let clientService = new ClientService();
+        }
+    }
 
     update(req: express.Request, res: express.Response): void {
         try {
@@ -51,7 +57,6 @@ class ClientController implements IBaseController <ClientService> {
         } catch (e) {
             console.log(e);
             res.send({"error": "error in your request"});
-
         }
     }
 

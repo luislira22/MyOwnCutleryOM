@@ -1,23 +1,25 @@
 import {BaseMapper} from "../BaseMapper";
-import Order = require("../../model/orders/Order");
-import OrderDTO = require("../../dtos/orders/OrderDTO");
+import IOrder = require("../../model/orders/interfaces/Order");
+import OrderDTO  from "../../dtos/orders/OrderDTO";
 
-class OrderMapper extends BaseMapper<Order> {
+class OrderMapper extends BaseMapper<IOrder> {
 
 
-
-    public static toDomain(orderDTO: OrderDTO): Order{
-
-        new Order(
-            {
-                client:orderDTO.client,
-                quantity:orderDTO.quantity,
-                date:orderDTO.date,
-                status:orderDTO.status
+    public static toDomain(orderDTO: OrderDTO): IOrder {
+        let json = {
+            client: null,
+            quantity: {
+                quantity: orderDTO.quantity
+            },
+            date: {
+                date: orderDTO.date,
+            },
+            status: {
+                status: null
             }
-        )
-        return null;
+        };
+        return <IOrder>json;
     }
-
-
 }
+
+export = OrderMapper
