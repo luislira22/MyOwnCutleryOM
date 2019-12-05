@@ -1,6 +1,6 @@
 import ClientRepository = require("./../repository/ClientRepository");
 import IClientService = require("./interfaces/ClientService");
-import ClientDTO = require("../dtos/clients/ClientDTO");
+import ClientDTO from "../dtos/clients/ClientDTO";
 import ClientMapper = require("../mappers/clients/ClientMapper");
 
 class ClientService implements IClientService {

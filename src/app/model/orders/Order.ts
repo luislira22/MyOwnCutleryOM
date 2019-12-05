@@ -27,6 +27,11 @@ class Order {
     get status(): Status {
         return this._order.status
     }
+
+    get productID(): string {
+        return this._order.productID
+    }
+
 }
 
 Object.seal(Order);

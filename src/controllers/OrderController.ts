@@ -36,26 +36,23 @@ class OrderController implements IBaseController <OrderService> {
     }
 
     delete(req: express.Request, res: express.Response): void {
-        throw new Error('Not implemented');
-        /*try {
+        try {
 
             var _id: string = req.params._id;
             var orderService = new OrderService();
             orderService.delete(_id, (error, result) => {
-                if (error) res.send({"error": "error"});
-                else res.send({"success": "success"});
+                if (error) res.status(400).end(error.toString());
+                else res.status(204).send({"204": "no content"});
             });
         } catch (e) {
-            console.log(e);
-            res.send({"error": "error in your request"});
+            res.send({"error": e.message});
 
-        }*/
+        }
     }
 
     retrieve(req: express.Request, res: express.Response): void {
-        //TODO
-        throw new Error('Not implemented');
-        /*try {
+        //throw new Error('Not implemented');
+        try {
             let orderService = new OrderService();
             orderService.retrieve((error, result) => {
                 if (error) res.send({"error": "error"});
@@ -64,14 +61,14 @@ class OrderController implements IBaseController <OrderService> {
                     result.forEach(function(value){
                         fullReponse.push(OrderMapper.toDTOFull(value))
                     });
-                    res.send(fullReponse);
+                    //res.send(fullReponse);
+                    res.status(200).send(fullReponse);
                 }
             });
         } catch (e) {
-            console.log(e);
             res.send({"error": "error in your request"});
 
-        }*/
+        }
     }
 
     findById(req: express.Request, res: express.Response): void {
