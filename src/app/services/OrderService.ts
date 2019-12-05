@@ -2,12 +2,7 @@ import OrderRepository = require("./../repository/OrderRepository");
 import IOrderService = require("./interfaces/OrderService");
 import OrderMapper = require("../mappers/orders/OrderMapper");
 import OrderDTO from "../dtos/orders/OrderDTO";
-import ClientRepository = require("../repository/ClientRepository");
 import ClientService = require("./ClientService");
-import Order = require("../model/orders/interfaces/Order");
-import * as mongoose from "mongoose";
-
-const {parse, stringify} = require('flatted/cjs');
 
 class OrderService implements IOrderService {
     private _orderRepository: OrderRepository;
@@ -19,19 +14,27 @@ class OrderService implements IOrderService {
         this._clientService = new ClientService();
     }
 
+    private verifyProduct(productID: string): boolean {
+        //TODO ligar ao mdp e ver se existe produto!!!!
+        return true;
+    }
+
+    // POST HTTP method
     create(item: OrderDTO, callback: (error: any, result: any) => void) {
         this._clientService.findById(item.client.id, (error, result) => {
             if (error) {
                 throw new Error(error);
             } else {
                 let order = OrderMapper.toDomain(item);
-                this._orderRepository.create(order, callback);
+                if (this.verifyProduct(order.productID))
+                    this._orderRepository.create(order, callback);
+                //TODO check error throwing
+                //else throw new Error("Non existent Product");
             }
         });
-
-
     }
 
+    // GET HTTP method
     retrieve(callback: (error: any, result: any) => void) {
         this._orderRepository.retrieve(callback);
     }
@@ -46,14 +49,14 @@ class OrderService implements IOrderService {
         throw new Error('not implemented');
     }
 
+    // DELETE HTTP method
     delete(_id: string, callback: (error: any, result: any) => void) {
         this._orderRepository.delete(_id, callback);
-        //throw new Error('not implemented');
     }
 
-    findById(_id: string, callback: (error: any, result: OrderDTO) => void) {
-        //this._orderRepository.findById(_id, callback);
-        throw new Error('not implemented');
+    // GET/{id} HTTP method
+    findById(_id: string, callback: (error: any, result: any) => void) {
+        this._orderRepository.findById(_id, callback);
     }
 
 }
