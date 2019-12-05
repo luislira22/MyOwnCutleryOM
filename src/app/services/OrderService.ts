@@ -40,13 +40,22 @@ class OrderService implements IOrderService {
     }
 
     update(_id: string, item: OrderDTO, callback: (error: any, result: any) => void) {
-        // this._orderRepository.findById(_id, (err, res) => {
-        //     if(err) callback(err, res);
-        //     else
-        //         this._orderRepository.update(res._id, item, callback);
-        //
-        // });
-        throw new Error('not implemented');
+        this._orderRepository.findById(_id, (err, res) => {
+            if (err) callback(err, res);
+            else {
+                if (item.quantity == undefined) {
+                }
+            }
+
+            item.client = res.client.id;
+            item.date = res.date[0].date;
+            item.status = res.status[0].status;
+            item.productID = res.productID;
+
+
+            let order = OrderMapper.toDomain(item);
+            this._orderRepository.update(res._id, order, callback);
+        });
     }
 
     // DELETE HTTP method
