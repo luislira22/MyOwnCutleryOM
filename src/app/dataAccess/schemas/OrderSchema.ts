@@ -55,6 +55,10 @@ class OrderSchema {
                     type: [StatusSchema],
                     required: true,
                 },
+                productID: {
+                    type: String,
+                    required: true,
+                }
             }
         );
     }
