@@ -8,14 +8,6 @@ const mongooseConnection = DataAccess.mongooseConnection;
 class OrderSchema {
 
     static get schema() {
-        const ClientSchema = new mongoose.Schema(
-            {
-                id: {
-                    type: Number,
-                    required: true,
-                }
-            }
-        )
 
         const QuantitySchema = new mongoose.Schema(
             {
@@ -24,16 +16,16 @@ class OrderSchema {
                     required: true
                 }
             }
-        )
+        );
 
         const OrderDateSchema = new mongoose.Schema(
             {
-               date: {
+                date: {
                     type: Date,
                     required: true,
                 }
-                }
-        )
+            }
+        );
 
         const StatusSchema = new mongoose.Schema(
             {
@@ -47,13 +39,13 @@ class OrderSchema {
         return new mongoose.Schema(
             {
                 client: {
-                    type: [ClientSchema],
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "Clients",
                     required: true,
                 },
                 quantity: {
                     type: [QuantitySchema],
                     required: true,
-                    unique: true,
                 },
                 date: {
                     type: [OrderDateSchema],

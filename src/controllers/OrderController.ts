@@ -1,8 +1,8 @@
 import express = require("express");
 import OrderService = require("../app/services/OrderService");
 import IBaseController = require("./interfaces/base/BaseController");
-import IOrder = require("../app/model/orders/interfaces/Order");
 import OrderDTO from "../app/dtos/orders/OrderDTO";
+import OrderMapper = require("../app/mappers/orders/OrderMapper");
 
 class OrderController implements IBaseController <OrderService> {
 
@@ -12,32 +12,16 @@ class OrderController implements IBaseController <OrderService> {
             let orderService = new OrderService();
             orderService.create(orderDTO, (error, result) => {
                 if (error) res.status(400).end(error.toString());
-                else //res.send({"success": "success"});
-                    res.status(201).send(res);
+                else res.status(201).send(OrderMapper.toDTOLight(result));
             });
         } catch (e) {
-            console.log(e);
-            res.send({"error": "error in your request"});
-        }
-    }
-
-    create2(req: express.Request, res: express.Response): void {
-        try {
-            var order: IOrder = <IOrder>req.body;
-            var orderService = new OrderService();
-            orderService.create(order, (error, result) => {
-                if (error) res.status(400).end(error.toString());
-                else //res.send({"success": "success"});
-                    res.status(201).send(res);
-            });
-        } catch (e) {
-            console.log(e);
-            res.send({"error": "error in your request"});
+            res.send({"error": e.message});
         }
     }
 
     update(req: express.Request, res: express.Response): void {
-        try {
+        throw new Error('Not implemented');
+        /*try {
             var order: IOrder = <IOrder>req.body;
             var _id: string = req.params._id;
             var orderService = new OrderService();
@@ -48,12 +32,12 @@ class OrderController implements IBaseController <OrderService> {
         } catch (e) {
             console.log(e);
             res.send({"error": "error in your request"});
-
-        }
+        }*/
     }
 
     delete(req: express.Request, res: express.Response): void {
-        try {
+        throw new Error('Not implemented');
+        /*try {
 
             var _id: string = req.params._id;
             var orderService = new OrderService();
@@ -65,26 +49,34 @@ class OrderController implements IBaseController <OrderService> {
             console.log(e);
             res.send({"error": "error in your request"});
 
-        }
+        }*/
     }
 
     retrieve(req: express.Request, res: express.Response): void {
-        try {
-
-            var orderService = new OrderService();
+        //TODO
+        throw new Error('Not implemented');
+        /*try {
+            let orderService = new OrderService();
             orderService.retrieve((error, result) => {
                 if (error) res.send({"error": "error"});
-                else res.send(result);
+                else {
+                    let fullReponse = [];
+                    result.forEach(function(value){
+                        fullReponse.push(OrderMapper.toDTOFull(value))
+                    });
+                    res.send(fullReponse);
+                }
             });
         } catch (e) {
             console.log(e);
             res.send({"error": "error in your request"});
 
-        }
+        }*/
     }
 
     findById(req: express.Request, res: express.Response): void {
-        try {
+        throw new Error('Not implemented');
+        /*try {
 
             var _id: string = req.params._id;
 
@@ -97,7 +89,7 @@ class OrderController implements IBaseController <OrderService> {
             console.log(e);
             res.send({"error": "error in your request"});
 
-        }
+        }*/
     }
 }
 

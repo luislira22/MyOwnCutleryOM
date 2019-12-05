@@ -13,40 +13,24 @@ class ClientController implements IBaseController <ClientService> {
             let clientService = new ClientService();
             clientService.create(clientDTO, (error, result) => {
                 if (error) res.status(400).end(error.toString());
-                else res.send(ClientMapper.toDTO(result));
+                else res.status(201).send(ClientMapper.toDTO(result));
             });
         } catch (e) {
-            console.log(e);
             res.send({"error": "error in your request"});
-
         }
     }
 
-    /*
-    create2(req: express.Request, res: express.Response): void {
-        try {
-            var client: IClient = <IClient>req.body;
-            var clientService = new ClientService();
-            clientService.create(client, (error, result) => {
-                if (error) res.status(400).end(error.toString());
-
-                else res.send({"success": "success"});
-            });
-        } catch (e) {
-            console.log(e);
-            res.send({"error": "error in your request"});
-
-        }
-    }*/
     updateNameAndAddress(req: express.Request, res: express.Response) : void {
-        try {
+        throw new Error('Not implemented');
+       /* try {
             let _id: string = req.params._id;
             let clientService = new ClientService();
-        }
+        }*/
     }
 
     update(req: express.Request, res: express.Response): void {
-        try {
+        throw new Error('Not implemented');
+        /*try {
             var client: IClient = <IClient>req.body;
             var _id: string = req.params._id;
             var clientService = new ClientService();
@@ -57,11 +41,12 @@ class ClientController implements IBaseController <ClientService> {
         } catch (e) {
             console.log(e);
             res.send({"error": "error in your request"});
-        }
+        }*/
     }
 
     delete(req: express.Request, res: express.Response): void {
-        try {
+        throw new Error('Not implemented');
+        /*try {
             var _id: string = req.params._id;
             var clientService = new ClientService();
             clientService.delete(_id, (error, result) => {
@@ -72,11 +57,12 @@ class ClientController implements IBaseController <ClientService> {
             console.log(e);
             res.send({"error": "error in your request"});
 
-        }
+        }*/
     }
 
     retrieve(req: express.Request, res: express.Response): void {
-        try {
+        throw new Error('Not implemented');
+        /*try {
             var clientService = new ClientService();
             clientService.retrieve((error, result) => {
                 if (error) res.send({"error": "error"});
@@ -86,11 +72,12 @@ class ClientController implements IBaseController <ClientService> {
             console.log(e);
             res.send({"error": "error in your request"});
 
-        }
+        }*/
     }
 
     findById(req: express.Request, res: express.Response): void {
-        try {
+        throw new Error('Not implemented');
+       /* try {
             var _id: string = req.params._id;
             var clientService = new ClientService();
             clientService.findById(_id, (error, result) => {
@@ -101,10 +88,8 @@ class ClientController implements IBaseController <ClientService> {
             console.log(e);
             res.send({"error": "error in your request"});
 
-        }
+        }*/
     }
-
-
 }
 
 export = ClientController;

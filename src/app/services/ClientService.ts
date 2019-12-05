@@ -34,9 +34,8 @@ class ClientService implements IClientService {
         throw new Error("not implemented")
     }
 
-    findById(_id: string, callback: (error: any, result: ClientDTO) => void) {
-        //this._clientRepository.findById(_id, callback);
-        throw new Error("not implemented")
+    findById(_id: string, callback: (error: any, result: any) => void) {
+        this._clientRepository.findById(_id, callback);
     }
 }
 

@@ -1,9 +1,10 @@
 import ClientDTO from "../../dtos/clients/ClientDTO"
 import {BaseMapper} from "../BaseMapper";
 import IClient = require("../../model/clients/interfaces/Client");
+import * as mongoose from "mongoose";
 
 
-class ClientMapper extends BaseMapper<IClient> {
+class ClientMapper implements BaseMapper<IClient> {
 
     public static toPersistence(client: IClient): any {
         //tojson
@@ -47,7 +48,7 @@ class ClientMapper extends BaseMapper<IClient> {
 
     public static toDTO(client: IClient): ClientDTO {
         let json = {
-            id: client._id,
+            //id: client._id,
             name: {
                 firstname: client.name[0].firstname,
                 lastname: client.name[0].lastname

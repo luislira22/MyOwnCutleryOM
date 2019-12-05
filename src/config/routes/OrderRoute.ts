@@ -11,11 +11,11 @@ class OrderRoutes {
     get routes () : express.Router {
 
         var controller = this._orderController;
-        router.get("/api/orders", controller.retrieve);
-        router.post("/api/orders", controller.create);
-        router.put("/api/orders/:_id", controller.update);
-        router.get("/api/orders/:_id", controller.findById);
-        router.delete("/api/orders/:_id", controller.delete);
+        router.get("/orders", controller.retrieve);
+        router.post("/orders", controller.create);
+        router.put("/orders/:_id", controller.update);
+        router.get("/orders/:_id", controller.findById);
+        router.delete("/orders/:_id", controller.delete);
 
         return router;
     }
