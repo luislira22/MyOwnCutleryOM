@@ -9,6 +9,7 @@ interface Order extends mongoose.Document {
     quantity: Quantity;
     date: OrderDate;
     status: Status;
+    productID: string;
 }
 
 export = Order;

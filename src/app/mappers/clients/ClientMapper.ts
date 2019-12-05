@@ -4,7 +4,7 @@ import IClient = require("../../model/clients/interfaces/Client");
 import * as mongoose from "mongoose";
 
 
-class ClientMapper implements BaseMapper<IClient> {
+class ClientMapper implements BaseMapper<IClient,ClientDTO> {
 
     public static toPersistence(client: IClient): any {
         //tojson

@@ -1,7 +1,7 @@
 import OrderRepository = require("./../repository/OrderRepository");
 import IOrderService = require("./interfaces/OrderService");
 import OrderMapper = require("../mappers/orders/OrderMapper");
-import OrderDTO = require("../dtos/orders/OrderDTO");
+import OrderDTO from "../dtos/orders/OrderDTO";
 import ClientRepository = require("../repository/ClientRepository");
 import ClientService = require("./ClientService");
 import Order = require("../model/orders/interfaces/Order");
@@ -47,8 +47,8 @@ class OrderService implements IOrderService {
     }
 
     delete(_id: string, callback: (error: any, result: any) => void) {
-        //this._orderRepository.delete(_id, callback);
-        throw new Error('not implemented');
+        this._orderRepository.delete(_id, callback);
+        //throw new Error('not implemented');
     }
 
     findById(_id: string, callback: (error: any, result: OrderDTO) => void) {

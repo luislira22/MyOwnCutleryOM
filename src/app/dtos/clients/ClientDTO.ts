@@ -3,7 +3,7 @@ import IAddressDTO from "./AddressDTO"
 import IEmailDTO from "./EmailDTO"
 import {DTO} from "../DTO";
 
-interface ClientDTO extends DTO {
+export default interface ClientDTO extends DTO {
     id: string
     name: IFullnameDTO
     address: IAddressDTO
@@ -11,4 +11,4 @@ interface ClientDTO extends DTO {
     password: string
 }
 
-export = ClientDTO
+

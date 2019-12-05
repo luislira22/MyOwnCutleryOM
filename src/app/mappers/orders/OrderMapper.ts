@@ -1,10 +1,6 @@
 import {BaseMapper} from "../BaseMapper";
 import IOrder = require("../../model/orders/interfaces/Order");
-import OrderDTO = require("../../dtos/orders/OrderDTO");
-
-"../../dtos/orders/OrderDTO";
-import * as mongoose from "mongoose";
-import ClientDTO from "../../dtos/clients/ClientDTO";
+import OrderDTO from "../../dtos/orders/OrderDTO";
 import ClientMapper = require("../clients/ClientMapper");
 
 class OrderMapper implements BaseMapper<IOrder, OrderDTO> {
@@ -20,7 +16,8 @@ class OrderMapper implements BaseMapper<IOrder, OrderDTO> {
             },
             status: {
                 status: orderDTO.status
-            }
+            },
+            productID: orderDTO.productID
         };
         // @ts-ignore
         return <IOrder>json;
@@ -32,7 +29,8 @@ class OrderMapper implements BaseMapper<IOrder, OrderDTO> {
             client: order.client,
             quantity: order.quantity[0].quantity,
             date: order.date[0].date,
-            status: order.status[0].status
+            status: order.status[0].status,
+            productID: order.productID
         };
         // @ts-ignore
         return <OrderDTO>json;
@@ -44,7 +42,8 @@ class OrderMapper implements BaseMapper<IOrder, OrderDTO> {
             client: ClientMapper.toDTO(order.client),
             quantity: order.quantity[0].quantity,
             date: order.date[0].date,
-            status: order.status[0].status
+            status: order.status[0].status,
+            productID: order.productID
         };
         return <OrderDTO>json;
     }
