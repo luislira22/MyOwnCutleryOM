@@ -48,7 +48,7 @@ class ClientMapper implements BaseMapper<IClient,ClientDTO> {
 
     public static toDTO(client: IClient): ClientDTO {
         let json = {
-            //id: client._id,
+            id: client._id,
             name: {
                 firstname: client.name[0].firstname,
                 lastname: client.name[0].lastname
