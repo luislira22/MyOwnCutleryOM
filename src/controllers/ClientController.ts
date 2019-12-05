@@ -1,7 +1,6 @@
 import express = require("express");
 import ClientService = require("../app/services/ClientService");
 import IBaseController = require("./interfaces/base/BaseController");
-import IClient = require("../app/model/clients/interfaces/Client");
 import ClientDTO from "../app/dtos/clients/ClientDTO";
 import ClientMapper = require("../app/mappers/clients/ClientMapper");
 
@@ -16,79 +15,70 @@ class ClientController implements IBaseController <ClientService> {
                 else res.status(201).send(ClientMapper.toDTO(result));
             });
         } catch (e) {
-            res.send({"error": "error in your request"});
+            res.send(e.message);
         }
     }
 
-    updateNameAndAddress(req: express.Request, res: express.Response) : void {
-        throw new Error('Not implemented');
-       /* try {
+    updateNameAndAddres(req: express.Request, res: express.Response): void {
+        try {
+            let client: ClientDTO = <ClientDTO>req.body;
             let _id: string = req.params._id;
             let clientService = new ClientService();
-        }*/
-    }
-
-    update(req: express.Request, res: express.Response): void {
-        throw new Error('Not implemented');
-        /*try {
-            var client: IClient = <IClient>req.body;
-            var _id: string = req.params._id;
-            var clientService = new ClientService();
-            clientService.update(_id, client, (error, result) => {
-                if (error) res.send({"error": "error"});
-                else res.send({"success": "success"});
+            clientService.updateNameAndAddress(_id, client, (error, result) => {
+                if (error) res.status(400).send();
+                else res.status(200).send(result);
             });
         } catch (e) {
-            console.log(e);
-            res.send({"error": "error in your request"});
-        }*/
+            res.send(e.message);
+        }
     }
 
     delete(req: express.Request, res: express.Response): void {
-        throw new Error('Not implemented');
-        /*try {
-            var _id: string = req.params._id;
-            var clientService = new ClientService();
+        try {
+            let _id: string = req.params._id;
+            let clientService = new ClientService();
             clientService.delete(_id, (error, result) => {
-                if (error) res.send({"error": "error"});
-                else res.send({"success": "success"});
+                if (error) res.status(400).send(error.toString());
+                else res.status(200).send({"success": "success"});
             });
         } catch (e) {
-            console.log(e);
-            res.send({"error": "error in your request"});
-
-        }*/
+            res.send(e.message);
+        }
     }
 
     retrieve(req: express.Request, res: express.Response): void {
-        throw new Error('Not implemented');
-        /*try {
+        try {
             var clientService = new ClientService();
             clientService.retrieve((error, result) => {
-                if (error) res.send({"error": "error"});
-                else res.send(result);
+                if (error) res.status(400).end(error.toString());
+                else {
+                    let fullReponse = [];
+                    result.forEach(function(value){
+                        fullReponse.push(ClientMapper.toDTO(value))
+                    });
+                    res.status(200).send(fullReponse);
+                }
             });
         } catch (e) {
-            console.log(e);
-            res.send({"error": "error in your request"});
-
-        }*/
+            res.send(e.message);
+        }
     }
 
     findById(req: express.Request, res: express.Response): void {
-        throw new Error('Not implemented');
-       /* try {
-            var _id: string = req.params._id;
-            var clientService = new ClientService();
+        try {
+            let _id: string = req.params._id;
+            let clientService = new ClientService();
             clientService.findById(_id, (error, result) => {
-                if (error) res.send({"error": "error"});
-                else res.send(result);
+                if (error) res.status(400).send(error.toString());
+                else res.send(ClientMapper.toDTO(result));
             });
         } catch (e) {
-            console.log(e);
-            res.send({"error": "error in your request"});
+            res.send(e.message);
+        }
+    }
 
-        }*/
+    update(req: express.Request, res: express.Response): void {
+        throw new Error('not implemented');
     }
 }
 
