@@ -1,6 +1,6 @@
 import IOrderDate = require('./interfaces/OrderDate');
 
-class OrderDate {
+export default class OrderDate {
 
     private _orderDate: IOrderDate;
 
@@ -23,5 +23,5 @@ class OrderDate {
 }
 
 Object.seal(OrderDate);
-export = OrderDate;
+
 

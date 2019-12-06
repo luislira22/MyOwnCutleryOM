@@ -4,7 +4,7 @@ import Quantity = require("./interfaces/Quantity");
 import OrderDate = require("./interfaces/OrderDate");
 import Status = require("./interfaces/Status");
 
-class Order {
+export default class Order {
 
     private _order: IOrderModel;
 
@@ -35,4 +35,3 @@ class Order {
 }
 
 Object.seal(Order);
-export = Order;

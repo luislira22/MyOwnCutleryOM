@@ -1,6 +1,6 @@
 import IQuantity = require('./interfaces/Quantity');
 
-class Quantity {
+export default class Quantity {
 
     private _quantity: IQuantity;
 
@@ -21,5 +21,5 @@ class Quantity {
 }
 
 Object.seal(Quantity);
-export = Quantity;
+
 
