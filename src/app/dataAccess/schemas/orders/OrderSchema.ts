@@ -1,6 +1,5 @@
-import DataAccess = require("./../../dataAccess/DataAccess");
-import IOrderModel = require("../../model/orders/interfaces/Order");
-import Status = require("../../model/orders/Status");
+import DataAccess = require("../../DataAccess");
+import IOrderModel from "./interfaces/Order";
 
 const mongoose = DataAccess.mongooseInstance;
 const mongooseConnection = DataAccess.mongooseConnection;

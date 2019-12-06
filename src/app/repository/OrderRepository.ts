@@ -1,7 +1,7 @@
-import IOrderModel = require("../model/orders/interfaces/Order");
-import OrderSchema = require("./../dataAccess/schemas/OrderSchema");
+import IOrderModel from "../dataAccess/schemas/orders/interfaces/Order";
+import OrderSchema = require("../dataAccess/schemas/orders/OrderSchema");
 import RepositoryBase = require("./base/RepositoryBase");
-import * as mongoose from "mongoose";
+import mongoose = require( "mongoose");
 
 class OrderRepository extends RepositoryBase<IOrderModel> {
 

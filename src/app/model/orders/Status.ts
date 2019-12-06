@@ -1,4 +1,4 @@
-import IStatus = require('./interfaces/Status');
+import IStatus = require('../../dataAccess/schemas/orders/interfaces/Status');
 import {ValidStatus} from "./enums/ValidStatus";
 
 export default class Status implements ValueObject<Status> {

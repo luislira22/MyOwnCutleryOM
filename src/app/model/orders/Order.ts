@@ -1,8 +1,8 @@
-import IOrderModel = require("./interfaces/Order");
+import IOrderModel = require("../../dataAccess/schemas/orders/interfaces/Order");
 import Client = require("../clients/interfaces/Client");
-import Quantity = require("./interfaces/Quantity");
-import OrderDate = require("./interfaces/OrderDate");
-import Status = require("./interfaces/Status");
+import Quantity = require("../../dataAccess/schemas/orders/interfaces/Quantity");
+import OrderDate = require("../../dataAccess/schemas/orders/interfaces/OrderDate");
+import Status = require("../../dataAccess/schemas/orders/interfaces/Status");
 
 export default class Order implements Entity<Order> {
 

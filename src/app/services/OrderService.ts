@@ -7,7 +7,6 @@ import Constants = require("../../config/constants/Constants");
 
 const axios = require('axios');
 
-
 class OrderService implements IOrderService {
     private _orderRepository: OrderRepository;
 
@@ -21,7 +20,8 @@ class OrderService implements IOrderService {
 
     // POST HTTP method (CONNECTS TO MASTER DATA PRODUCT)
     create(item: OrderDTO, callback: (error: any, result: any) => void) {
-        this._clientService.findById(item.client.id, (error, result) => {
+        //TODO falta implementar a nova logica
+        /*this._clientService.findById(item.client.id, (error, result) => {
             if (error) {
                 throw new Error(error);
             } else {
@@ -33,7 +33,7 @@ class OrderService implements IOrderService {
                 })
                 //TODO handle errors
             }
-        });
+        });*/
     }
 
     // GET HTTP method
@@ -42,22 +42,22 @@ class OrderService implements IOrderService {
     }
 
     update(_id: string, item: OrderDTO, callback: (error: any, result: any) => void) {
-        this._orderRepository.findById(_id, (err, res) => {
+        //TODO falta implementar a nova logica
+       /* this._orderRepository.findById(_id, (err, res) => {
             if (err) callback(err, res);
             else {
                 if (item.quantity == undefined) {
                 }
             }
-
             item.client = res.client.id;
-            item.date = res.date[0].date;
-            item.status = res.status[0].status;
+            item.date = res.date.date;
+            item.status = res.status.status;
             item.productID = res.productID;
 
 
             let order = OrderMapper.toDomain(item);
             this._orderRepository.update(res._id, order, callback);
-        });
+        });*/
     }
 
     // DELETE HTTP method

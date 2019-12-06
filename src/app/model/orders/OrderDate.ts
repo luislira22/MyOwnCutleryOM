@@ -1,4 +1,4 @@
-import IOrderDate = require('./interfaces/OrderDate');
+import IOrderDate = require('../../dataAccess/schemas/orders/interfaces/OrderDate');
 
 export default class OrderDate implements ValueObject<OrderDate> {
 

@@ -1,4 +1,4 @@
-import IQuantity = require('./interfaces/Quantity');
+import IQuantity = require('../../dataAccess/schemas/orders/interfaces/Quantity');
 
 export default class Quantity implements ValueObject<Quantity> {
 
