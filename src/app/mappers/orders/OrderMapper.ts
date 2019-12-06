@@ -27,9 +27,9 @@ class OrderMapper implements BaseMapper<IOrder, OrderDTO> {
         let json = {
             id: order._id,
             client: order.client,
-            quantity: order.quantity[0].quantity,
-            date: order.date[0].date,
-            status: order.status[0].status,
+            quantity: order.quantity.quantity,
+            date: order.date.date,
+            status: order.status.status,
             productID: order.productID
         };
         // @ts-ignore
@@ -40,9 +40,9 @@ class OrderMapper implements BaseMapper<IOrder, OrderDTO> {
         let json = {
             id: order._id,
             client: ClientMapper.toDTO(order.client),
-            quantity: order.quantity[0].quantity,
-            date: order.date[0].date,
-            status: order.status[0].status,
+            quantity: order.quantity.quantity,
+            date: order.date.date,
+            status: order.status.status,
             productID: order.productID
         };
         return <OrderDTO>json;

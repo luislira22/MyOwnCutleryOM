@@ -27,17 +27,11 @@ class OrderService implements IOrderService {
             } else {
                 let order = OrderMapper.toDomain(item);
                 axios.get(Constants.MPD_API_URL + order.productID).then(response => {
-                    console.log(response.data.status)
-                    console.log(response)
                     if (response.status == 200)
                         this._orderRepository.create(order, callback);
                     else throw new Error(error);
                 })
-                    .catch(error => {
-
-                    });
-
-
+                //TODO handle errors
             }
         });
     }
