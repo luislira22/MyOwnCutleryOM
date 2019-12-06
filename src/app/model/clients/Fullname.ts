@@ -1,6 +1,6 @@
 import IFullname = require('./interfaces/Fullname');
 
-class Fullname {
+class Fullname implements ValueObject<Fullname> {
 
     private _fullname: IFullname;
 
@@ -19,6 +19,11 @@ class Fullname {
         } else {
             this._fullname = fullname
         }
+    }
+
+    equals(object: Fullname): boolean {
+        return this.firstname === object.firstname
+            && this.lastname === object.lastname;
     }
 }
 

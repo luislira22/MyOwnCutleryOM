@@ -1,6 +1,6 @@
 import IOrderDate = require('./interfaces/OrderDate');
 
-class OrderDate {
+export default class OrderDate implements ValueObject<OrderDate> {
 
     private _orderDate: IOrderDate;
 
@@ -20,8 +20,12 @@ class OrderDate {
         }
     }
 
+    equals(object: OrderDate): boolean {
+        return this.date === object.date;
+    }
+
 }
 
 Object.seal(OrderDate);
-export = OrderDate;
+
 

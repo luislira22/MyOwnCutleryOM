@@ -12,6 +12,10 @@ class OrderRepository extends RepositoryBase<IOrderModel> {
     retrieve(callback: (error: any, result: mongoose.Document[]) => void) {
         this._model.find({}, callback).populate('client');
     }
+
+    findById(_id: string, callback: (error: any, result: IOrderModel) => void) {
+        this._model.findById(_id, callback).populate('client');
+    }
 }
 
 Object.seal(OrderRepository);
