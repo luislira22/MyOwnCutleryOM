@@ -20,6 +20,7 @@
         "gulp-typescript": "^3.1.5"
     },
     "dependencies": {
+        "axios": "^0.19.0",
         "body-parser": "^1.16.1",
         "express": "^4.14.1",
         "gulp-plumber": "^1.2.1",

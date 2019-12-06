@@ -3,6 +3,10 @@ import IOrderService = require("./interfaces/OrderService");
 import OrderMapper = require("../mappers/orders/OrderMapper");
 import OrderDTO from "../dtos/orders/OrderDTO";
 import ClientService = require("./ClientService");
+import Constants = require("../../config/constants/Constants");
+
+const axios = require('axios');
+
 
 class OrderService implements IOrderService {
     private _orderRepository: OrderRepository;
@@ -14,22 +18,26 @@ class OrderService implements IOrderService {
         this._clientService = new ClientService();
     }
 
-    private verifyProduct(productID: string): boolean {
-        //TODO ligar ao mdp e ver se existe produto!!!!
-        return true;
-    }
 
-    // POST HTTP method
+    // POST HTTP method (CONNECTS TO MASTER DATA PRODUCT)
     create(item: OrderDTO, callback: (error: any, result: any) => void) {
         this._clientService.findById(item.client.id, (error, result) => {
             if (error) {
                 throw new Error(error);
             } else {
                 let order = OrderMapper.toDomain(item);
-                if (this.verifyProduct(order.productID))
-                    this._orderRepository.create(order, callback);
-                //TODO check error throwing
-                //else throw new Error("Non existent Product");
+                axios.get(Constants.MPD_API_URL + order.productID).then(response => {
+                    console.log(response.data.status)
+                    console.log(response)
+                    if (response.status == 200)
+                        this._orderRepository.create(order, callback);
+                    else throw new Error(error);
+                })
+                    .catch(error => {
+
+                    });
+
+
             }
         });
     }
