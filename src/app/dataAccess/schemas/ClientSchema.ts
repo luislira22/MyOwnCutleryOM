@@ -17,8 +17,8 @@ class ClientSchema {
                     type: String,
                     required: true,
                 }
-            }
-        )
+            },{ _id : false }
+        );
 
         const EmailSchema = new mongoose.Schema(
             {
@@ -26,8 +26,8 @@ class ClientSchema {
                     type: String,
                     required: true
                 }
-            }
-        )
+            },{ _id : false }
+        );
 
         const AddressSchema = new mongoose.Schema(
             {
@@ -47,10 +47,31 @@ class ClientSchema {
                     type: String,
                     required: true,
                 }
-            }
-        )
+            }, { _id : false }
+        );
 
         return new mongoose.Schema(
+            {
+                name: {
+                    type: FullnameSchema,
+                    required: true,
+                },
+                email: {
+                    type: EmailSchema,
+                    required: true,
+                    unique: true,
+                },
+                address: {
+                    type: AddressSchema,
+                    required: true,
+                },
+                password: {
+                    type: String,
+                    required: true,
+                },
+            }
+        );
+        /*return new mongoose.Schema(
             {
                 name: {
                     type: [FullnameSchema],
@@ -70,7 +91,7 @@ class ClientSchema {
                     required: true,
                 },
             }
-        );
+        );*/
     }
 }
 

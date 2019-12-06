@@ -1,6 +1,6 @@
 import IQuantity = require('./interfaces/Quantity');
 
-class Quantity {
+export default class Quantity implements ValueObject<Quantity> {
 
     private _quantity: IQuantity;
 
@@ -18,8 +18,12 @@ class Quantity {
         }
     }
 
+    equals(object: Quantity): boolean {
+        return this.quantity === object.quantity;
+    }
+
 }
 
 Object.seal(Quantity);
-export = Quantity;
+
 

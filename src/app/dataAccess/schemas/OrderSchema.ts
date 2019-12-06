@@ -15,7 +15,7 @@ class OrderSchema {
                     type: Number,
                     required: true
                 }
-            }
+            },{ _id : false }
         );
 
         const OrderDateSchema = new mongoose.Schema(
@@ -24,7 +24,7 @@ class OrderSchema {
                     type: Date,
                     required: true,
                 }
-            }
+            },{ _id : false }
         );
 
         const StatusSchema = new mongoose.Schema(
@@ -33,7 +33,7 @@ class OrderSchema {
                     type: String,
                     required: true,
                 }
-            }
+            },{ _id : false }
         );
 
         return new mongoose.Schema(
@@ -44,15 +44,15 @@ class OrderSchema {
                     required: true,
                 },
                 quantity: {
-                    type: [QuantitySchema],
+                    type: QuantitySchema,
                     required: true,
                 },
                 date: {
-                    type: [OrderDateSchema],
+                    type: OrderDateSchema,
                     required: true,
                 },
                 status: {
-                    type: [StatusSchema],
+                    type: StatusSchema,
                     required: true,
                 },
                 productID: {
