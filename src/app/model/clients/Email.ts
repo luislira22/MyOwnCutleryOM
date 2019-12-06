@@ -1,6 +1,6 @@
 import IEmail = require('./interfaces/Email');
 
-class Email {
+class Email implements ValueObject<Email> {
 
     private _email: IEmail;
 
@@ -15,6 +15,10 @@ class Email {
         } else {
             this._email = email
         }
+    }
+
+    equals(object: Email): boolean {
+        return this.email === object.email;
     }
 }
 

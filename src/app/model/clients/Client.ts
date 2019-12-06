@@ -3,7 +3,7 @@ import Fullname = require("./interfaces/Fullname");
 import Email = require("./interfaces/Email");
 import Address = require("./interfaces/Address");
 
-class Client {
+class Client implements AggregateRoot<Client> {
 
     private _client: IClientModel;
 
@@ -25,6 +25,18 @@ class Client {
 
     get password(): string {
         return this._client.password;
+    }
+
+
+    equals(object: Client): boolean {
+        if (object == null) return false;
+        if (this === object) return true;
+        if (!this.isEntity()) return false;
+        return this._client.id.equals(object._client.id);
+    }
+
+    isEntity(): boolean {
+        return this._client.id != undefined;
     }
 }
 

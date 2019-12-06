@@ -1,6 +1,6 @@
 import IAddress = require('./interfaces/Address');
 
-class Address {
+class Address implements ValueObject<Address> {
 
     private _address: IAddress;
 
@@ -29,6 +29,14 @@ class Address {
         } else {
             this._address = address
         }
+    }
+
+    equals(object: Address): boolean {
+
+        return this.address === object.address
+            && this.postalcode === object.postalcode
+            && this.city === object.city
+            && this.country === object.country;
     }
 }
 

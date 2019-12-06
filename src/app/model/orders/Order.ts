@@ -4,7 +4,7 @@ import Quantity = require("./interfaces/Quantity");
 import OrderDate = require("./interfaces/OrderDate");
 import Status = require("./interfaces/Status");
 
-export default class Order {
+export default class Order implements Entity<Order> {
 
     private _order: IOrderModel;
 
@@ -30,6 +30,17 @@ export default class Order {
 
     get productID(): string {
         return this._order.productID
+    }
+
+    public equals(object: Order): boolean {
+        if (object == null) return false;
+        if (this === object) return true;
+        if (!this.isEntity()) return false;
+        return this._order.id.equals(object._order.id);
+    }
+
+    isEntity(): boolean {
+        return this._order.id != undefined;
     }
 
 }

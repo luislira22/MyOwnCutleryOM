@@ -1,7 +1,7 @@
 import IStatus = require('./interfaces/Status');
 import {ValidStatus} from "./enums/ValidStatus";
 
-export default class Status {
+export default class Status implements ValueObject<Status> {
 
     private _status: IStatus;
 
@@ -23,6 +23,10 @@ export default class Status {
         } else {
             this._status = status
         }
+    }
+
+    equals(object: Status): boolean {
+        return this.status === object.status;
     }
 
 }
