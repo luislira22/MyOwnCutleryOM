@@ -4,7 +4,7 @@
     
     var app = express();
 
-    app.use(cors())
+    app.use(cors());
 
     var port = parseInt(process.env.PORT, 10) || 5000;
     app.set("port", port);
@@ -12,5 +12,4 @@
     
     app.listen(port, () => {
         console.log("Node app is running at localhost:" + port);
-       
     });

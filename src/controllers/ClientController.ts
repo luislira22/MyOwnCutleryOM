@@ -48,12 +48,12 @@ class ClientController implements IBaseController <ClientService> {
 
     retrieve(req: express.Request, res: express.Response): void {
         try {
-            var clientService = new ClientService();
+            let clientService = new ClientService();
             clientService.retrieve((error, result) => {
                 if (error) res.status(400).end(error.toString());
                 else {
                     let fullReponse = [];
-                    result.forEach(function(value){
+                    result.forEach(function (value) {
                         fullReponse.push(ClientMapper.toDTO(value))
                     });
                     res.status(200).send(fullReponse);

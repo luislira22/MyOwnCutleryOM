@@ -1,11 +1,10 @@
-import DataAccess = require("./../../dataAccess/DataAccess");
-import IClientModel = require("../../model/clients/interfaces/Client");
+import DataAccess = require("../../DataAccess");
+import IClient from './interfaces/Client'
 
 const mongoose = DataAccess.mongooseInstance;
 const mongooseConnection = DataAccess.mongooseConnection;
 
 class ClientSchema {
-
     static get schema() {
         const FullnameSchema = new mongoose.Schema(
             {
@@ -17,16 +16,17 @@ class ClientSchema {
                     type: String,
                     required: true,
                 }
-            },{ _id : false }
+            }, {_id: false}
         );
 
         const EmailSchema = new mongoose.Schema(
             {
                 email: {
                     type: String,
-                    required: true
+                    required: true,
+                    unique: true
                 }
-            },{ _id : false }
+            }, {_id: false}
         );
 
         const AddressSchema = new mongoose.Schema(
@@ -47,7 +47,7 @@ class ClientSchema {
                     type: String,
                     required: true,
                 }
-            }, { _id : false }
+            }, {_id: false}
         );
 
         return new mongoose.Schema(
@@ -71,29 +71,8 @@ class ClientSchema {
                 },
             }
         );
-        /*return new mongoose.Schema(
-            {
-                name: {
-                    type: [FullnameSchema],
-                    required: true,
-                },
-                email: {
-                    type: [EmailSchema],
-                    required: true,
-                    unique: true,
-                },
-                address: {
-                    type: [AddressSchema],
-                    required: true,
-                },
-                password: {
-                    type: String,
-                    required: true,
-                },
-            }
-        );*/
     }
 }
 
-const schema = mongooseConnection.model<IClientModel>("Clients", ClientSchema.schema);
-export = schema;
+const schema = mongooseConnection.model<IClient>("Clients", ClientSchema.schema);
+export default schema;

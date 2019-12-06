@@ -1,4 +1,4 @@
-export interface BaseMapper<T, E> {
+export default interface BaseMapper<T, E> {
     //toPersistence(model: T): any {}
     //toDomain(any): T;
     //toDTO(T): E;

@@ -1,14 +1,20 @@
 import IClientModel = require("./interfaces/Client");
 import Fullname = require("./interfaces/Fullname");
-import Email = require("./interfaces/Email");
 import Address = require("./interfaces/Address");
+import Email = require("./Email");
+import IEmail = require("./interfaces/Email");
+
+
 
 class Client implements AggregateRoot<Client> {
 
     private _client: IClientModel;
 
-    constructor(heroModel: IClientModel) {
-        this._client = heroModel;
+    constructor(iClient: IClientModel) {
+        let jsonEmail = { email: iClient.email.email};
+        let t = <IEmail> jsonEmail;
+        let email = new Email(t);
+        this._client = iClient;
     }
 
     get name(): Fullname {
@@ -19,7 +25,7 @@ class Client implements AggregateRoot<Client> {
         return this._client.address;
     }
 
-    get email(): Email {
+    get email(): IEmail {
         return this._client.email;
     }
 
