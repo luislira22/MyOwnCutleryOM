@@ -9,7 +9,6 @@ export interface ClientTokenDTO extends DTO{
 export interface ClientTokenDTOTrue extends ClientTokenDTO {
     success: boolean
     message:string
-    id: string
     token: string
 }
 

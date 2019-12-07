@@ -29,7 +29,7 @@ class ClientController implements IBaseController <ClientService> {
             let clientTokenDTO;
             await clientService.login(ClientLoginDTO.email,ClientLoginDTO.password).then((clientTokenDTOR)=>{
                 clientTokenDTO = clientTokenDTOR;
-            })
+            });
             if(clientTokenDTO.success)res.status(200).send(clientTokenDTO);
             else res.status(404).send(clientTokenDTO);
         }
