@@ -1,6 +1,6 @@
-export default class Email implements ValueObject<Email> {
+export default class Email  implements ValueObject<Email> {
 
-    _email: string;
+    private readonly _email: string;
 
     constructor(email: string) {
         let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

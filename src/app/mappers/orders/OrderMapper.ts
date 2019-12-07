@@ -6,12 +6,13 @@ import Quantity from "../../model/orders2/Quantity";
 import Status from "../../model/orders2/Status";
 import OrderDate from "../../model/orders2/OrderDate";
 import IOrderModel from "../../dataAccess/schemas/orders/interfaces/Order"
+import Client from "../../model/clients2/Client";
 
 class OrderMapper implements BaseMapper<OrderDTO, Order> {
 
-    public static fromDTOToDomain(orderDTO: OrderDTO): Order {
+    public static fromDTOToDomain(orderDTO: OrderDTO, client: any): Order {
         return new Order(
-            null, // <---- This is a problem TODO
+            client,
             orderDTO.productID,
             new Quantity(orderDTO.quantity),
             new Status(orderDTO.status),

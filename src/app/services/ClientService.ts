@@ -3,6 +3,7 @@ import IClientService = require("./interfaces/ClientService");
 import ClientDTO from "../dtos/clients/ClientDTO";
 import ClientMapper = require("../mappers/clients/ClientMapper");
 import {ClientTokenDTOTrue,ClientTokenDTOFalse,ClientTokenDTO} from "../dtos/clients/ClientTokenDTO";
+import Client from "../model/clients2/Client";
 
 
 class ClientService implements IClientService {
@@ -34,14 +35,14 @@ class ClientService implements IClientService {
                     id = client._id;
                     password = client.password;
                     resolve();
-                } 
+                }
             })
         })
 
         await fetchDataPromise.catch((message) =>{
             console.log(message)
         })
-        
+
         if(password == null){
             return this.falseTokenDTO("invalid email");
         }
@@ -55,11 +56,11 @@ class ClientService implements IClientService {
         }
     }
 
-    
+
 
     falseTokenDTO(message : string) : ClientTokenDTO{
         let clientTokenDTO : ClientTokenDTOFalse;
-        clientTokenDTO = 
+        clientTokenDTO =
         {
             success:false,
             message:message
@@ -68,7 +69,7 @@ class ClientService implements IClientService {
     }
     trueTokenDTO(message : string,id : string,token : string) : ClientTokenDTO{
         let clientTokenDTO : ClientTokenDTOTrue;
-        clientTokenDTO = 
+        clientTokenDTO =
         {
             success:true,
             message:message,
@@ -105,7 +106,10 @@ class ClientService implements IClientService {
     }
 
     findById(_id: string, callback: (error: any, result: any) => void) {
-        this._clientRepository.findById(_id, callback);
+        this._clientRepository.findById(_id, (error2, result2) => {
+            if(error2) callback(error2, null);
+            else callback(null, ClientMapper.fromPersistenceToDomain(result2))
+        });
     }
 }
 

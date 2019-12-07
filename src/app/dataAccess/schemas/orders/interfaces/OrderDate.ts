@@ -1,7 +1,5 @@
 import mongoose = require("mongoose");
 
-interface OrderDate extends mongoose.Document {
+export default interface OrderDate extends mongoose.Document {
     date: Date
 }
-
-export = OrderDate;

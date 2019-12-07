@@ -5,9 +5,9 @@ import DateDTO from "./DateDTO";
 import QuantityDTO from "./QuantityDTO";
 
 export default interface OrderDTO extends DTO {
-    client: ClientDTO
+    client: string
     quantity: number
-    date: Date
+    date: string
     status: string
     productID: string
 }

@@ -1,7 +1,5 @@
 import mongoose = require("mongoose");
 
-interface Quantity extends mongoose.Document {
+export default interface Quantity extends mongoose.Document {
     quantity: number
 }
-
-export = Quantity;

@@ -4,6 +4,9 @@ import OrderMapper = require("../mappers/orders/OrderMapper");
 import OrderDTO from "../dtos/orders/OrderDTO";
 import ClientService = require("./ClientService");
 import Constants = require("../../config/constants/Constants");
+import {message} from "gulp-typescript/release/utils";
+import Client from "../model/clients2/Client";
+import ClientMapper = require("../mappers/clients/ClientMapper");
 
 const axios = require('axios');
 
@@ -19,21 +22,25 @@ class OrderService implements IOrderService {
 
 
     // POST HTTP method (CONNECTS TO MASTER DATA PRODUCT)
-    create(item: OrderDTO, callback: (error: any, result: any) => void) {
-        //TODO falta implementar a nova logica
-        /*this._clientService.findById(item.client.id, (error, result) => {
-            if (error) {
-                throw new Error(error);
-            } else {
-                let order = OrderMapper.toDomain(item);
-                axios.get(Constants.MPD_API_URL + order.productID).then(response => {
-                    if (response.status == 200)
-                        this._orderRepository.create(order, callback);
-                    else throw new Error(error);
-                })
-                //TODO handle errors
-            }
-        });*/
+    async create(item: OrderDTO, callback: (error: any, result: any) => void) {
+        let getClient = new Promise((resolve, reject) => {
+            this._clientService.findById(item.client, (error : any, client : Client) => {
+                if (error || client == null) reject("Client does not exists");
+                resolve(client);
+            });
+        });
+        let client = await getClient.then((client) => {
+                return client;
+            }).catch((message) => {
+                callback(message, null);
+            });
+        try {
+            let order = OrderMapper.fromDTOToDomain(item, client);
+            let persistenceOrder = OrderMapper.fromDomainToPersistence(order);
+            this._orderRepository.create(persistenceOrder, callback);
+        }catch (e) {
+            callback(e, null)
+        }
     }
 
     // GET HTTP method
@@ -43,21 +50,21 @@ class OrderService implements IOrderService {
 
     update(_id: string, item: OrderDTO, callback: (error: any, result: any) => void) {
         //TODO falta implementar a nova logica
-       /* this._orderRepository.findById(_id, (err, res) => {
-            if (err) callback(err, res);
-            else {
-                if (item.quantity == undefined) {
-                }
-            }
-            item.client = res.client.id;
-            item.date = res.date.date;
-            item.status = res.status.status;
-            item.productID = res.productID;
+        /* this._orderRepository.findById(_id, (err, res) => {
+             if (err) callback(err, res);
+             else {
+                 if (item.quantity == undefined) {
+                 }
+             }
+             item.client = res.client.id;
+             item.date = res.date.date;
+             item.status = res.status.status;
+             item.productID = res.productID;
 
 
-            let order = OrderMapper.toDomain(item);
-            this._orderRepository.update(res._id, order, callback);
-        });*/
+             let order = OrderMapper.toDomain(item);
+             this._orderRepository.update(res._id, order, callback);
+         });*/
     }
 
     // DELETE HTTP method

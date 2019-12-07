@@ -1,15 +1,13 @@
 import mongoose = require("mongoose");
-import Client = require("../../clients/interfaces/Client");
-import Quantity = require("./Quantity");
-import OrderDate = require("./OrderDate");
-import Status = require("./Status");
+import Client from "../../clients/interfaces/Client";
+import Quantity from "./Quantity";
+import OrderDate from "./OrderDate";
+import Status from "./Status";
 
-interface Order extends mongoose.Document {
+export default interface Order extends mongoose.Document {
     client: Client;
     quantity: Quantity;
     date: OrderDate;
     status: Status;
     productID: string;
 }
-
-export = Order;

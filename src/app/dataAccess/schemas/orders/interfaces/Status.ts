@@ -1,8 +1,6 @@
 import mongoose = require("mongoose");
-import {ValidStatus} from "../enums/ValidStatus";
+import {ValidStatus} from "../../../../model/orders/enums/ValidStatus";
 
-interface Status extends mongoose.Document {
+export default interface Status extends mongoose.Document {
     status: ValidStatus
 }
-
-export = Status;
