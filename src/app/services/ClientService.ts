@@ -84,13 +84,15 @@ class ClientService implements IClientService {
 
     retrieve(callback: (error: any, result: any) => void) {
         this._clientRepository.retrieve(callback);
+        //TODO not retrieve
     }
 
     update(_id: string, item: ClientDTO, callback: (error: any, result: any) => void) {
         throw new Error("not implemented")
     }
 
-    updateNameAndAddress(_id: string, item: ClientDTO, callback: (error: any, result: any) => void) {
+    updateNameAndAddress(_id: string, item: ClientDTO, callback: (error: any, result: any) => void ) {
+        //FIX
         this._clientRepository.findById(_id, (err, res) => {
             if (err) callback(err, res);
             else {
