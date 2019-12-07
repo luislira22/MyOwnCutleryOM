@@ -2,8 +2,11 @@ import ClientRepository = require("./../repository/ClientRepository");
 import IClientService = require("./interfaces/ClientService");
 import ClientDTO from "../dtos/clients/ClientDTO";
 import ClientMapper = require("../mappers/clients/ClientMapper");
-import {ClientTokenDTOTrue,ClientTokenDTOFalse,ClientTokenDTO} from "../dtos/clients/ClientTokenDTO";
+import {ClientTokenDTOTrue, ClientTokenDTOFalse, ClientTokenDTO} from "../dtos/clients/ClientTokenDTO";
 import Client from "../model/clients2/Client";
+import ClientSchema from "../dataAccess/schemas/clients/interfaces/Client";
+import jwt = require("jsonwebtoken");
+import {SECRET_TOKEN_KEY} from "../../config/secret";
 
 
 class ClientService implements IClientService {
@@ -19,63 +22,62 @@ class ClientService implements IClientService {
         this._clientRepository.create(clientPersistence, callback);
     }
 
-    async login(email : string, insertedPassword: string):Promise<ClientTokenDTO>{
+    async login(email: string, insertedPassword: string): Promise<ClientTokenDTO> {
 
-        let password;
-        let id;
-
-        let fetchDataPromise = new Promise((resolve,reject) =>{
-            this._clientRepository.findClientByEmail(email,(error,client)=>{
-                if(error){
-                    reject("database acess error");
+        let fetchDataPromise = new Promise((resolve, reject) => {
+            this._clientRepository.findClientByEmail(email, (error, client) => {
+                if (error) {
+                    throw new Error("error acessing database");
                 }
-                if(client == null)
-                    reject("client not found");
-                else{
-                    id = client._id;
-                    password = client.password;
-                    resolve();
-                }
+                if (client == null)
+                    reject("");
+                else
+                    resolve(client);
             })
         })
 
-        await fetchDataPromise.catch((message) =>{
-            console.log(message)
-        })
+        let client: Client;
 
-        if(password == null){
-            return this.falseTokenDTO("invalid email");
+        client = await fetchDataPromise.then((clientPersistence: ClientSchema) => {
+            return ClientMapper.fromPersistenceToDomain(clientPersistence);
+        }).catch((message) => {
+            return null;
+        });
+
+        if (client == null) {
+            return this.falseTokenDTO("invalid email, client not found");
         }
 
-        if(insertedPassword === password){
-            //make token here
-            return this.trueTokenDTO("login sucessful",id,"12345678");
-        }
-        else{
+        //define id and password
+        let password = client.password;
+
+        if (insertedPassword === password) {
+            let token: string = jwt.sign(client.id, SECRET_TOKEN_KEY);
+            return this.trueTokenDTO("login sucessful", token);
+        } else {
             return this.falseTokenDTO("invalid password");
         }
     }
 
 
-
-    falseTokenDTO(message : string) : ClientTokenDTO{
-        let clientTokenDTO : ClientTokenDTOFalse;
+    private falseTokenDTO(message: string): ClientTokenDTO {
+        let clientTokenDTO: ClientTokenDTOFalse;
         clientTokenDTO =
-        {
-            success:false,
-            message:message
-        }
+            {
+                success: false,
+                message: message
+            };
         return clientTokenDTO;
     }
-    trueTokenDTO(message : string,id : string,token : string) : ClientTokenDTO{
-        let clientTokenDTO : ClientTokenDTOTrue;
+
+    private trueTokenDTO(message: string, token: string): ClientTokenDTO {
+        let clientTokenDTO: ClientTokenDTOTrue;
         clientTokenDTO =
-        {
-            success:true,
-            message:message,
-            token: token,
-            id: id
-        }
+            {
+                success: true,
+                message: message,
+                token: token,
+            };
         return clientTokenDTO;
     }
 
@@ -93,8 +95,8 @@ class ClientService implements IClientService {
         this._clientRepository.findById(_id, (err, res) => {
             if (err) callback(err, res);
             else {
-                if(item.address.address == undefined || item.address.postalcode == undefined || item.address.city == undefined || item.address.country == undefined ||
-                    item.name.firstname == undefined || item.name.lastname == undefined ) throw new Error('address and name must be defined');
+                if (item.address.address == undefined || item.address.postalcode == undefined || item.address.city == undefined || item.address.country == undefined ||
+                    item.name.firstname == undefined || item.name.lastname == undefined) throw new Error('address and name must be defined');
                 item.email = res.email.email;
                 item.password = res.password;
                 let client = ClientMapper.fromDTOToDomain(item);
@@ -108,10 +110,7 @@ class ClientService implements IClientService {
     }
 
     findById(_id: string, callback: (error: any, result: any) => void) {
-        this._clientRepository.findById(_id, (error2, result2) => {
-            if(error2) callback(error2, null);
-            else callback(null, ClientMapper.fromPersistenceToDomain(result2))
-        });
+        this._clientRepository.findById(_id, callback);
     }
 }
 
