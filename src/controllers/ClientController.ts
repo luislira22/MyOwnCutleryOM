@@ -2,9 +2,12 @@ import express = require("express");
 import ClientService = require("../app/services/ClientService");
 import IBaseController = require("./interfaces/base/BaseController");
 import ClientDTO from "../app/dtos/clients/ClientDTO";
+import ClientLoginDTO from "../app/dtos/clients/ClientLoginDTO";
 import ClientMapper = require("../app/mappers/clients/ClientMapper");
+import { ClientTokenDTO } from "../app/dtos/clients/ClientTokenDTO";
 
 class ClientController implements IBaseController <ClientService> {
+
 
     create(req: express.Request, res: express.Response): void {
         try {
@@ -16,6 +19,22 @@ class ClientController implements IBaseController <ClientService> {
             });
         } catch (e) {
             res.send(e.message);
+        }
+    }
+
+    async login(req: express.Request,res :express.Response){
+        try{
+            let ClientLoginDTO = <ClientLoginDTO>req.body;
+            let clientService = new ClientService();
+            let clientTokenDTO;
+            await clientService.login(ClientLoginDTO.email,ClientLoginDTO.password).then((clientTokenDTOR)=>{
+                clientTokenDTO = clientTokenDTOR;
+            })
+            if(clientTokenDTO.success)res.status(200).send(clientTokenDTO);
+            else res.status(404).send(clientTokenDTO);
+        }
+        catch(e){
+            res.status(500).send(e.message);
         }
     }
 

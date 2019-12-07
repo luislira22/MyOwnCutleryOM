@@ -15,6 +15,7 @@ class ClientRoutes {
         router.get("/clients", controller.retrieve);
         router.post("/clients", controller.create);
         //router.put("/clients/:_id", controller.update);
+        router.post("/clients/login",controller.login);
         router.put("/clients/:_id", controller.updateNameAndAddres);
         router.get("/clients/:_id", controller.findById);
         router.delete("/clients/:_id", controller.delete);

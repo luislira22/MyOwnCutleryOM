@@ -1,7 +1,7 @@
 import BaseBusiness = require("./base/BaseService");
-import IClientDTO from "../../dtos/clients/ClientDTO";
+import IDTO from "../../dtos/DTO"
 
-interface ClientService extends BaseBusiness<IClientDTO> {
+interface ClientService extends BaseBusiness<IDTO> {
 
 }
 

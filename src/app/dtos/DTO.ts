@@ -1,2 +1,2 @@
-export interface DTO {
+export default interface DTO {
 }

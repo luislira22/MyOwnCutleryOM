@@ -2,6 +2,7 @@ import ClientRepository = require("./../repository/ClientRepository");
 import IClientService = require("./interfaces/ClientService");
 import ClientDTO from "../dtos/clients/ClientDTO";
 import ClientMapper = require("../mappers/clients/ClientMapper");
+import {ClientTokenDTOTrue,ClientTokenDTOFalse,ClientTokenDTO} from "../dtos/clients/ClientTokenDTO";
 
 
 class ClientService implements IClientService {
@@ -15,6 +16,66 @@ class ClientService implements IClientService {
         let clientDomaim = ClientMapper.fromDTOToDomain(item);
         let clientPersistence = ClientMapper.fromDomainToPersistence(clientDomaim);
         this._clientRepository.create(clientPersistence, callback);
+    }
+
+    async login(email : string, insertedPassword: string):Promise<ClientTokenDTO>{
+
+        let password;
+        let id;
+
+        let fetchDataPromise = new Promise((resolve,reject) =>{
+            this._clientRepository.findClientByEmail(email,(error,client)=>{
+                if(error){
+                    reject("database acess error");
+                }
+                if(client == null)
+                    reject("client not found");
+                else{
+                    id = client._id;
+                    password = client.password;
+                    resolve();
+                } 
+            })
+        })
+
+        await fetchDataPromise.catch((message) =>{
+            console.log(message)
+        })
+        
+        if(password == null){
+            return this.falseTokenDTO("invalid email");
+        }
+
+        if(insertedPassword === password){
+            //make token here
+            return this.trueTokenDTO("login sucessful",id,"12345678");
+        }
+        else{
+            return this.falseTokenDTO("invalid password");
+        }
+    }
+
+    
+
+    falseTokenDTO(message : string) : ClientTokenDTO{
+        let clientTokenDTO : ClientTokenDTOFalse;
+        clientTokenDTO = 
+        {
+            success:false,
+            message:message
+        }
+        return clientTokenDTO;
+    }
+    trueTokenDTO(message : string,id : string,token : string) : ClientTokenDTO{
+        let clientTokenDTO : ClientTokenDTOTrue;
+        clientTokenDTO = 
+        {
+            success:true,
+            message:message,
+            token: token,
+            id: id
+        }
+        return clientTokenDTO;
     }
 
     retrieve(callback: (error: any, result: any) => void) {

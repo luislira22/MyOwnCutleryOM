@@ -1,5 +1,5 @@
     import express = require("express");
-    import cors = require("cors")
+    import cors = require("cors");
     import Middlewares = require("./config/middlewares/base/MiddlewaresBase");
     
     var app = express();
