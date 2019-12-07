@@ -34,7 +34,7 @@ class ClientService implements IClientService {
                 else
                     resolve(client);
             })
-        })
+        });
 
         let client: Client;
 
@@ -52,7 +52,8 @@ class ClientService implements IClientService {
         let password = client.password;
 
         if (insertedPassword === password) {
-            let token: string = jwt.sign(client.id, SECRET_TOKEN_KEY);
+            let payload = {id:client.id};
+            let token: string = jwt.sign(payload, SECRET_TOKEN_KEY);
             return this.trueTokenDTO("login sucessful", token);
         } else {
             return this.falseTokenDTO("invalid password");

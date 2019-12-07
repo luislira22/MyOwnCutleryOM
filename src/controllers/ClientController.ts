@@ -85,11 +85,12 @@ class ClientController implements IBaseController <ClientService> {
 
     findById(req: express.Request, res: express.Response): void {
         try {
-            let _id: string = req.params._id;
+            //@ts-ignore
+            let _id: string = req.decoded.id;
             let clientService = new ClientService();
             clientService.findById(_id, (error, result) => {
                 if (error) res.status(400).send(error.toString());
-                else res.send(ClientMapper.toDTO(result));
+                else res.status(200).send(ClientMapper.toDTO(result));
             });
         } catch (e) {
             res.send(e.message);
