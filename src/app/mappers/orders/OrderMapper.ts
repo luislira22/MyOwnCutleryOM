@@ -34,6 +34,7 @@ class OrderMapper implements BaseMapper<OrderDTO, Order> {
             },
             productID: order.productID
         };
+        // @ts-ignore
         return <IOrderModel>json;
     }
 
@@ -50,6 +51,17 @@ class OrderMapper implements BaseMapper<OrderDTO, Order> {
         return <OrderDTO>json;
     }
 
+    public static fromPersistenceToDomain(iOrder: IOrderModel) : Order {
+        return new Order(
+            ClientMapper.fromPersistenceToDomain(iOrder.client),
+            iOrder.productID,
+            new Quantity(iOrder.quantity.quantity),
+            new Status(iOrder.status.status),
+            new OrderDate(iOrder.date.date.toString()),
+            iOrder.id
+        )
+    }
+
     public static toDTOFull(order: Order): OrderDTO {
         let json = {
             id: order.id,
@@ -59,6 +71,7 @@ class OrderMapper implements BaseMapper<OrderDTO, Order> {
             status: order.status.status,
             productID: order.productID
         };
+        // @ts-ignore
         return <OrderDTO>json;
     }
 }

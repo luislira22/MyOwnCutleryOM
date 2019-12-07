@@ -8,7 +8,7 @@ export default class Order implements Entity<Order> {
     private readonly _id: string;
     private readonly _client: Client;
     private readonly _productID: string;
-    private readonly _quantity: Quantity;
+    private _quantity: Quantity;
     private _status: Status;
     private readonly _date: OrderDate;
 
@@ -38,6 +38,10 @@ export default class Order implements Entity<Order> {
 
     get quantity(): Quantity {
         return this._quantity;
+    }
+
+    set quantity(quantity: Quantity) {
+        this._quantity = quantity;
     }
 
     get date(): OrderDate {
