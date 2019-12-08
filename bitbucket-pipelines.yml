@@ -6,16 +6,11 @@ pipelines:
               script:
                   - npm install
                   - npm install -g gulp
-                  - gulp compile
+                  - gulp
         - step:
               name: Unit Tests
               script:
                   - echo "Unit Tests"
-        - step:
-              name: E2E Tests
-              script:
-                  #- npm run test:cypress
-                  - echo "End2End"
         - step:
               name: Create Artifact
               script:
