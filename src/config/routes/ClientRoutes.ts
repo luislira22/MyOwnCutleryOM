@@ -1,5 +1,6 @@
 import express = require("express");
 import ClientController = require("../../controllers/ClientController");
+import AuthMiddlewares from "../middlewares/AuthMiddlewares";
 
 var router = express.Router();
 
@@ -16,9 +17,9 @@ class ClientRoutes {
         router.post("/clients", controller.create);
         //router.put("/clients/:_id", controller.update);
         router.post("/clients/login",controller.login);
-        router.put("/clients/:_id", controller.updateNameAndAddres);
-        router.get("/clients/:_id", controller.findById);
-        router.delete("/clients/:_id", controller.delete);
+        router.put("/clients/:_id",AuthMiddlewares.checkToken ,controller.updateNameAndAddres);
+        router.get("/client",AuthMiddlewares.checkToken,controller.findById);
+        router.delete("/clients",AuthMiddlewares.checkToken, controller.delete);
 
         return router;
     }
