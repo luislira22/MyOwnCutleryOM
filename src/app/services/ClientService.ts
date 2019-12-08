@@ -48,7 +48,6 @@ class ClientService implements IClientService {
         }).catch((message) => {
             return null;
         });
-
         if (client == null) {
             return this.falseTokenDTO("invalid email, client not found");
         }

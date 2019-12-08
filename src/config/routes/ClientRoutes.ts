@@ -15,7 +15,6 @@ class ClientRoutes {
         var controller = this._clientController;
         router.get("/clients", controller.retrieve);
         router.post("/clients", controller.create);
-        //router.put("/clients/:_id", controller.update);
         router.post("/clients/login",controller.login);
         router.put("/clients",AuthMiddlewares.checkToken ,controller.updateNameAndAddres);
         router.get("/client",AuthMiddlewares.checkToken,controller.findById);

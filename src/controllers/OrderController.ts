@@ -25,9 +25,8 @@ class OrderController implements IBaseController <OrderService> {
 
     async getOrdersByClient(req: express.Request, res:express.Response){
         try{
-            let id : string;
             //@ts-ignore
-            id = req.decoded.id;
+            let id : string = req.decoded.id;
             let orderService : OrderService = new OrderService();
             let ordersDomain : Order[] = await orderService.getOrdersByClient(id).then((result)=>{
                 return result;
@@ -40,7 +39,23 @@ class OrderController implements IBaseController <OrderService> {
             });
             return res.status(200).send(ordersDTO);
         }catch(error){
-            res.status(400).send(error.message);
+            res.status(500).send(error.message);
+        }
+    }
+
+    async deleteOrderByClient(req: express.Request, res:express.Response){
+        try{
+            //@ts-ignore
+            let clientId : string = req.decoded.id;
+            let orderId :string = req.params.id;
+            let orderService : OrderService = new OrderService();
+            await orderService.deleteOrderByClient(clientId,orderId).catch((error) =>{
+                throw new Error(error);
+            });
+            res.status(204).send();
+        }
+        catch(error){
+            res.status(500).send(error.message);
         }
     }
 //TODO

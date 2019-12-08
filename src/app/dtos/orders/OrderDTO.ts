@@ -1,4 +1,4 @@
-import {DTO} from "../DTO";
+import DTO from "../DTO";
 import ClientDTO from "../clients/ClientDTO";
 import StatusDTO from "./StatusDTO";
 import DateDTO from "./DateDTO";

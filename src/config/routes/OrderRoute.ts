@@ -16,8 +16,8 @@ class OrderRoutes {
 
         var controller = this._orderController;
         router.get("/orders/client", AuthMiddlewares.checkToken, controller.getOrdersByClient);
-        //router.delete("/orders/:_id",AuthMiddlewares.checkToken,controller.deleteOrderByClient);
-        router.get("/orders", controller.retrieve); 
+        router.delete("/orders/:id",AuthMiddlewares.checkToken,controller.deleteOrderByClient);
+        router.get("/orders", controller.retrieve);
         router.post("/orders",AuthMiddlewares.checkToken, controller.create);
         router.put("/orders/:_id", controller.update);
         router.get("/orders", AuthMiddlewares.checkToken, controller.findById);

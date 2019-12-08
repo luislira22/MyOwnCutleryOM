@@ -1,13 +1,15 @@
 import OrderRepository = require("./../repository/OrderRepository");
 import IOrderService = require("./interfaces/OrderService");
 import OrderMapper = require("../mappers/orders/OrderMapper");
-import OrderDTO from "../dtos/orders/OrderDTO";
 import ClientService = require("./ClientService");
 import Constants = require("../../config/constants/Constants");
+import OrderDTO from "../dtos/orders/OrderDTO";
 import Client from "../model/clients2/Client";
 import Order from "../model/orders2/Order";
 import Quantity from "../model/orders2/Quantity";
 import OrderSchema from "../dataAccess/schemas/orders/interfaces/Order";
+import {ValidStatus} from "../model/orders2/enums/ValidStatus";
+import Status from "../model/orders2/Status";
 
 const axios = require('axios');
 
@@ -49,25 +51,71 @@ class OrderService implements IOrderService {
         }
     }
 
-    async getOrdersByClient(id : string) : Promise<Order[]>{
-        let fetchDataOrders = new Promise((resolve,reject) =>{
-            this._orderRepository.findByClientId(id,(error,result) =>{
-                if(error)
+    async getOrdersByClient(id: string): Promise<Order[]> {
+        let fetchDataOrders = new Promise((resolve, reject) => {
+            this._orderRepository.findByClientId(id, (error, result) => {
+                if (error)
                     reject(error);
                 resolve(result);
             });
         });
-        let ordersPersistence : OrderSchema[] = await fetchDataOrders.then((orders : OrderSchema[]) => {
+        let ordersPersistence: OrderSchema[] = await fetchDataOrders.then((orders: OrderSchema[]) => {
             return orders;
-        }).catch((error)=>{
-            throw new Error(error);
+        }).catch((error) => {
+            throw new Error(error.message);
         });
-        let orders : Order[] = [];
+        let orders: Order[] = [];
         await ordersPersistence.forEach((child) => {
-            let orderDomain : Order =  OrderMapper.fromPersistenceToDomain(child);
+            let orderDomain: Order = OrderMapper.fromPersistenceToDomain(child);
             orders.push(orderDomain);
         });
         return orders;
+    }
+
+    async deleteOrderByClient(idClient : string, idOrder: string): Promise<void> {
+        //fetch order promise
+        let fetchOrder = new Promise((resolve, reject) => {
+            this._orderRepository.findById(idOrder, (error, result: OrderSchema) => {
+                if (error)
+                    reject(error);
+                if (!result)
+                    reject(new Error("Order not found"));
+                else if (result.client._id == idClient)
+                    resolve(result);
+                else
+                    reject(new Error("Client does not correspond to the order"));
+            });
+        });
+        //resolve promise
+        let order : Order = await fetchOrder.then((result: OrderSchema) => {
+            return OrderMapper.fromPersistenceToDomain(result);
+        }).catch((error) => {
+            throw new Error(error.message);
+        });
+
+        order.status = new Status(ValidStatus.Cancelled);
+        let orderPersistence = OrderMapper.fromDomainToPersistence(order);
+        // @ts-ignore
+        this._orderRepository.update(idOrder, orderPersistence, (error, result) => {
+            if (error)
+                throw new Error(error.message);
+        });
+        /*
+        let updateOrder = new Promise((reject, resolve) => {
+
+            this._orderRepository.update(idOrder, orderPersistence, (error, result) => {
+                if (error)
+                    throw new Error(error.message);
+            })
+        });
+        let orderPersistenceUpdated: OrderSchema = await updateOrder.then((result: OrderSchema) => {
+            return result;
+        }).catch((error) => {
+            throw new Error(error.message);
+        });
+        return OrderMapper.fromPersistenceToDomain(orderPersistenceUpdated);
+        */
+
     }
 
     // GET HTTP method

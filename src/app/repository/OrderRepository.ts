@@ -1,7 +1,8 @@
 import IOrderModel from "../dataAccess/schemas/orders/interfaces/Order";
 import OrderSchema = require("../dataAccess/schemas/orders/OrderSchema");
 import RepositoryBase = require("./base/RepositoryBase");
-import mongoose = require( "mongoose");
+import * as mongoose from 'mongoose';
+
 
 class OrderRepository extends RepositoryBase<IOrderModel> {
 
@@ -17,7 +18,7 @@ class OrderRepository extends RepositoryBase<IOrderModel> {
         this._model.findById(_id, callback).populate('client');
     }
     findByClientId(id : string,callback: (error: any, result: any) => void){
-        this._model.find({client : Object(id)},callback).populate('client');
+        this._model.find({client : mongoose.Types.ObjectId(id)},callback).populate('client');
     }
 }
 

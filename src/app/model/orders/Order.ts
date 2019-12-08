@@ -1,8 +1,8 @@
-import IOrderModel = require("../../dataAccess/schemas/orders/interfaces/Order");
-import Client = require("../clients/interfaces/Client");
-import Quantity = require("../../dataAccess/schemas/orders/interfaces/Quantity");
-import OrderDate = require("../../dataAccess/schemas/orders/interfaces/OrderDate");
-import Status = require("../../dataAccess/schemas/orders/interfaces/Status");
+import IOrderModel from "../../dataAccess/schemas/orders/interfaces/Order";
+import Quantity from "../../dataAccess/schemas/orders/interfaces/Quantity";
+import OrderDate from "../../dataAccess/schemas/orders/interfaces/OrderDate";
+import Status from "../../dataAccess/schemas/orders/interfaces/Status";
+import Client from "../../dataAccess/schemas/clients/interfaces/Client";
 
 export default class Order implements Entity<Order> {
 
@@ -30,6 +30,10 @@ export default class Order implements Entity<Order> {
 
     get productID(): string {
         return this._order.productID
+    }
+
+    set status(status ){
+        this._order.status = status;
     }
 
     public equals(object: Order): boolean {

@@ -52,6 +52,10 @@ export default class Order implements Entity<Order> {
         return this._status;
     }
 
+    set status(status){
+        this._status = status;
+    }
+
     get productID(): string {
         return this._productID
     }
