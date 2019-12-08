@@ -5,6 +5,7 @@ pipelines:
               name: Build
               script:
                   - npm install
+                  - npm install -g gulp
                   - gulp compile
         - step:
               name: Unit Tests
