@@ -4,7 +4,8 @@
     "description": "",
     "main": "lib/index.js",
     "scripts": {
-        "start": "gulp",
+        "gulp": "gulp",
+        "start": "node lib/index.js",
         "test": "jest"
     },
     "jest": {
