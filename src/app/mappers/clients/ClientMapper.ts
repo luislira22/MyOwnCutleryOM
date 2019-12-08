@@ -48,7 +48,7 @@ class ClientMapper implements BaseMapper<ClientDTO, Client> {
         //should be like this: return new ClientModel(json);
     }
 
-    public static fromPersistenceToDomain(iClient: IClientModel) : Client {
+    public static fromPersistenceToDomain(iClient: IClientModel): Client {
         return new Client(
             new Fullname(iClient.name.firstname, iClient.name.lastname),
             new Address(iClient.address.address, iClient.address.postalcode, iClient.address.city, iClient.address.country),
@@ -62,7 +62,7 @@ class ClientMapper implements BaseMapper<ClientDTO, Client> {
 
     public static toDTO(client: Client): ClientDTO {
         let json = {
-            id: client._id,
+            id: client.id,
             name: {
                 firstname: client.name.firstname,
                 lastname: client.name.lastname

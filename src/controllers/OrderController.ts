@@ -13,6 +13,7 @@ class OrderController implements IBaseController <OrderService> {
             let orderDTO: OrderDTO = <OrderDTO>req.body;
             let orderService = new OrderService();
             orderService.create(orderDTO, (error, result)=> {
+                console.log((result))
                 if (error) res.status(400).end(error.toString());
                 else res.status(201).send(OrderMapper.toDTOLight(result));
             });
@@ -93,7 +94,8 @@ class OrderController implements IBaseController <OrderService> {
     findById(req: express.Request, res: express.Response): void {
         try {
 
-            let _id: string = req.params._id;
+            // @ts-ignore
+            let _id: string = /*req.params._id;*/req.decoded.id;
 
             let orderService = new OrderService();
             orderService.findById(_id, (error, result) => {

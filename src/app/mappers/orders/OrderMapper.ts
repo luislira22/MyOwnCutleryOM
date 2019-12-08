@@ -41,7 +41,7 @@ class OrderMapper implements BaseMapper<OrderDTO, Order> {
     public static toDTOLight(order: Order): OrderDTO {
         let json = {
             id: order.id,
-            client: order.client.id,
+            client: order.client,
             quantity: order.quantity.quantity,
             date: order.date.date,
             status: order.status.status,
