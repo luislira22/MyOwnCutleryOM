@@ -1,4 +1,4 @@
-export enum ValidStatus {
+ export enum ValidStatus {
     Accepted = 'ACCEPTED',
     Processing = 'PROCESSING',
     Completed = 'COMPLETED',

@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es6",
         "lib": ["es6", "dom"],
-        "types": ["node", "mongoose", "express", "method-override", "body-parser"],
+        //"types": ["node", "mongoose", "express", "method-override", "body-parser"],
         "sourceMap": true,
         "module": "commonjs",
         "moduleResolution": "node",
@@ -10,9 +10,9 @@
         "preserveConstEnums": true,
         "outDir": "lib",
         "noEmitOnError": false,
-        "typeRoots": [
+       /* "typeRoots": [
             "../node_modules/@types/"
-        ],
+        ],*/
         "suppressImplicitAnyIndexErrors": false
     },
     "exclude": ["node_modules","tests"]

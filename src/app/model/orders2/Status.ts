@@ -15,7 +15,10 @@ export default class Status implements ValueObject<Status> {
         else if (status.toUpperCase() === "COMPLETED") this._status = ValidStatus.Completed;
         else if (status.toUpperCase() === "ON_HOLD") this._status = ValidStatus.On_Hold;
         else if (status.toUpperCase() === "CANCELLED") this._status = ValidStatus.Cancelled;
-        else throw new Error('Should have 1 valid status');
+        else if (status === null) throw  new Error('Status is null');
+        else if (status === '') throw new Error('Status is empty');
+        else
+            throw new Error('Should have 1 valid status');
     }
 
     equals(object: Status): boolean {

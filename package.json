@@ -4,7 +4,19 @@
     "description": "",
     "main": "lib/index.js",
     "scripts": {
-        "start": "gulp"
+        "start": "gulp",
+        "test": "jest"
+    },
+    "jest": {
+        "globals": {
+            "ts-jest": {
+                "diagnostics": false
+            }
+        },
+        "testEnvironment": "node",
+        "coveragePathIgnorePatterns": [
+            "/node_modules/"
+        ]
     },
     "author": "029",
     "license": "ISC",
@@ -18,9 +30,11 @@
         "gulp-nodemon": "^2.0.6",
         "gulp-strip-debug": "^1.1.0",
         "gulp-typescript": "^3.1.5",
-        "jest": "^24.9.0"
+        "jest": "^24.9.0",
+        "supertest": "^4.0.2"
     },
     "dependencies": {
+        "@types/jest": "^24.0.23",
         "axios": "^0.19.0",
         "body-parser": "^1.16.1",
         "cors": "^2.8.5",
@@ -29,6 +43,7 @@
         "jsonwebtoken": "^8.5.1",
         "method-override": "^2.3.7",
         "mongoose": "^5.7.14",
+        "ts-jest": "^24.2.0",
         "typescript": "^2.2.0"
     }
 }
