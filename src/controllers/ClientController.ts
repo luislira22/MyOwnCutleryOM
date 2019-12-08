@@ -4,7 +4,7 @@ import IBaseController = require("./interfaces/base/BaseController");
 import ClientDTO from "../app/dtos/clients/ClientDTO";
 import ClientLoginDTO from "../app/dtos/clients/ClientLoginDTO";
 import ClientMapper = require("../app/mappers/clients/ClientMapper");
-import { ClientTokenDTO } from "../app/dtos/clients/ClientTokenDTO";
+import {ClientTokenDTO} from "../app/dtos/clients/ClientTokenDTO";
 
 class ClientController implements IBaseController <ClientService> {
 
@@ -22,18 +22,17 @@ class ClientController implements IBaseController <ClientService> {
         }
     }
 
-    async login(req: express.Request,res :express.Response){
-        try{
+    async login(req: express.Request, res: express.Response) {
+        try {
             let ClientLoginDTO = <ClientLoginDTO>req.body;
             let clientService = new ClientService();
             let clientTokenDTO;
-            await clientService.login(ClientLoginDTO.email,ClientLoginDTO.password).then((clientTokenDTOR)=>{
+            await clientService.login(ClientLoginDTO.email, ClientLoginDTO.password).then((clientTokenDTOR) => {
                 clientTokenDTO = clientTokenDTOR;
             });
-            if(clientTokenDTO.success)res.status(200).send(clientTokenDTO);
+            if (clientTokenDTO.success) res.status(200).send(clientTokenDTO);
             else res.status(404).send(clientTokenDTO);
-        }
-        catch(e){
+        } catch (e) {
             res.status(500).send(e.message);
         }
     }
@@ -90,7 +89,13 @@ class ClientController implements IBaseController <ClientService> {
             let clientService = new ClientService();
             clientService.findById(_id, (error, result) => {
                 if (error) res.status(400).send(error.toString());
-                else res.status(200).send(ClientMapper.toDTO(result));
+                else {
+                    if (result == null)
+                        res.status(404).send();
+                    else {
+                        res.status(200).send(ClientMapper.toDTO(result));
+                    }
+                }
             });
         } catch (e) {
             res.send(e.message);
