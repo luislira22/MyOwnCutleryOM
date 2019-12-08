@@ -8,6 +8,9 @@ import ClientSchema from "../dataAccess/schemas/clients/interfaces/Client";
 import jwt = require("jsonwebtoken");
 import {SECRET_TOKEN_KEY} from "../../config/secret";
 import Role from "../model/clients2/Role";
+import {message} from "gulp-typescript/release/utils";
+import Email from "../model/clients2/Email";
+import Fullname from "../model/clients2/Fullname";
 
 
 class ClientService implements IClientService {
@@ -18,7 +21,7 @@ class ClientService implements IClientService {
     }
 
     create(item: ClientDTO, callback: (error: any, result: any) => void) {
-        let clientDomaim : Client = ClientMapper.fromDTOToDomain(item);
+        let clientDomaim: Client = ClientMapper.fromDTOToDomain(item);
         let clientPersistence = ClientMapper.fromDomainToPersistence(clientDomaim);
         this._clientRepository.create(clientPersistence, callback);
     }
@@ -53,7 +56,7 @@ class ClientService implements IClientService {
         let password = client.password;
 
         if (insertedPassword === password) {
-            let payload = {id:client.id};
+            let payload = {id: client.id};
             let token: string = jwt.sign(payload, SECRET_TOKEN_KEY);
             return this.trueTokenDTO("login sucessful", token);
         } else {
@@ -89,22 +92,33 @@ class ClientService implements IClientService {
     }
 
     update(_id: string, item: ClientDTO, callback: (error: any, result: any) => void) {
-        throw new Error("not implemented")
+        callback("Not implemented", null)
     }
 
-    updateNameAndAddress(_id: string, item: ClientDTO, callback: (error: any, result: any) => void ) {
-        //FIX
-        this._clientRepository.findById(_id, (err, res) => {
-            if (err) callback(err, res);
-            else {
-                if (item.address.address == undefined || item.address.postalcode == undefined || item.address.city == undefined || item.address.country == undefined ||
-                    item.name.firstname == undefined || item.name.lastname == undefined) throw new Error('address and name must be defined');
-                item.email = res.email.email;
-                item.password = res.password;
-                let client = ClientMapper.fromDTOToDomain(item);
-                this._clientRepository.update(res._id, ClientMapper.fromDomainToPersistence(client), callback);
-            }
+    async updateNameAndAddress(_id: string, item: ClientDTO, callback: (error: any, result: any) => void) {
+        let getClient = new Promise((resolve, reject) => {
+            this.findById(_id, (error: any, client: Client) => {
+                if (error || client == null) reject("Client does not exists");
+                resolve(client);
+            })
         });
+
+        let client: Client = <Client>await getClient.then((client: Client) => {
+            return client;
+        }).catch((message) => {
+            callback(message, null);
+        });
+
+        try {
+            if (item.email != undefined) client.email = new Email(item.email);
+            else if (item.name.firstname != undefined || item.name.lastname) client.name = new Fullname(item.name.firstname, item.name.lastname);
+            else callback("Quantity must be defined", null);
+            let clientPersistence = ClientMapper.fromDomainToPersistence(client);
+            // @ts-ignore
+            this._clientRepository.update(_id,clientPersistence, callback);
+        } catch (e) {
+            callback(e.message, null);
+        }
     }
 
     delete(_id: string, callback: (error: any, result: any) => void) {
@@ -112,7 +126,10 @@ class ClientService implements IClientService {
     }
 
     findById(_id: string, callback: (error: any, result: any) => void) {
-        this._clientRepository.findById(_id, callback);
+        this._clientRepository.findById(_id, (error2, result2) => {
+            if (error2) callback(error2, null);
+            else callback(null, ClientMapper.fromPersistenceToDomain(result2));
+        });
     }
 }
 

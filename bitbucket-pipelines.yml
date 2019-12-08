@@ -2,16 +2,12 @@ image: node:10.15.0
 pipelines:
     default:
         - step:
-              name: Build
+              name: Build & Unit Testing
               script:
                   - npm install
                   - npm install -g gulp
                   - gulp compile
                   - npm test
-        - step:
-              name: Unit Tests
-              script:
-                  - echo "Unit Tests"
         - step:
               name: Create Artifact
               script:
@@ -30,5 +26,3 @@ pipelines:
                         HEROKU_API_KEY: $HEROKU_API_KEY
                         HEROKU_APP_NAME: $HEROKU_APP_NAME
                         ZIP_FILE: "application.tgz"
-                  #- git remote set-url origin https://heroku:b33e38f1-1763-446e-9d23-b7d0771a624d@git.heroku.com/myowncutlery-lapr5.git
-                  #- git push origin `git subtree split --prefix backend master`:master --force
