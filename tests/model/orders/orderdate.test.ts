@@ -1,29 +1,30 @@
-/*
 import OrderDate from '../../../src/app/model/orders2/OrderDate';
 
-test('Create a valid quantity', () => {
+test('Create a valid order date', () => {
 
-    let quantity = new Quantity(200);
-    expect(quantity.quantity).toBe(200);
+    let orderDate = new OrderDate("2019-10-10");
+    expect(orderDate.date.toDateString()).toBe("Thu Oct 10 2019");
 });
 
-describe('Create an invalid quantity', () => {
-    it('null quantity', () => {
+
+describe('Create an invalid order date', () => {
+    it('invalid month', () => {
         try {
-            let quantity = new Quantity(null);
-            expect(true).toBe(false);
+            let orderDate = new OrderDate("2019-16-10");
         } catch (e) {
-            expect(e.message).toBe('Quantity shouldn\'t be null');
+            expect(e.message).toBe('Date format is incorrect');
         }
     });
-    it('negative quantity', () => {
-        try {
-            let quantity = new Quantity(-5);
-            expect(true).toBe(false);
-        } catch (e) {
-            expect(e.message).toBe('Quantity shouldn\'t be a negative value');
-        }
+
+    describe('Create an invalid order date', () => {
+        it('invalid day', () => {
+            try {
+                let orderDate = new OrderDate("2019-16-10");
+            } catch (e) {
+                expect(e.message).toBe('Date format is incorrect');
+            }
+        });
     });
+
 });
-*/
 
