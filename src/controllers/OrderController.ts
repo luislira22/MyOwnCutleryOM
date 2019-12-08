@@ -4,16 +4,17 @@ import IBaseController = require("./interfaces/base/BaseController");
 import OrderDTO from "../app/dtos/orders/OrderDTO";
 import OrderMapper = require("../app/mappers/orders/OrderMapper");
 import Order from "../app/model/orders2/Order";
-import OrderSchema from "../app/dataAccess/schemas/orders/interfaces/Order";
 
 class OrderController implements IBaseController <OrderService> {
 
     create(req: express.Request, res: express.Response): void {
         try {
+            //@ts-ignore
+            let id = req.decoded.id;
             let orderDTO: OrderDTO = <OrderDTO>req.body;
+            orderDTO.client = id;
             let orderService = new OrderService();
             orderService.create(orderDTO, (error, result)=> {
-                console.log((result))
                 if (error) res.status(400).end(error.toString());
                 else res.status(201).send(OrderMapper.toDTOLight(result));
             });
