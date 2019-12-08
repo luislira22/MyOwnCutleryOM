@@ -34,7 +34,7 @@ class ClientService implements IClientService {
                 else
                     resolve(client);
             })
-        })
+        });
 
         let client: Client;
 

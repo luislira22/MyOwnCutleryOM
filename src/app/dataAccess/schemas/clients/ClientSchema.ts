@@ -1,8 +1,17 @@
 import DataAccess = require("../../DataAccess");
 import IClient from './interfaces/Client'
+import mongoose = require("mongoose");
+import Constants = require("../../../../config/constants/Constants");
 
-const mongoose = DataAccess.mongooseInstance;
+/*const mongoose = DataAccess.mongooseInstance;
 const mongooseConnection = DataAccess.mongooseConnection;
+
+*/
+const mongooseConnection = mongoose.connection;
+mongooseConnection.once("open", () => {
+    console.log("Connected to mongodb. [CLIENT]");
+});
+mongoose.connect(Constants.DB_CONNECTION_STRING, {useNewUrlParser: true});
 
 class ClientSchema {
     static get schema() {
