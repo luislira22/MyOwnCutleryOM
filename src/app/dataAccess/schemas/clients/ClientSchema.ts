@@ -11,10 +11,30 @@ const mongooseConnection = mongoose.connection;
 mongooseConnection.once("open", () => {
     console.log("Connected to mongodb. [CLIENT]");
 });
+
+// @ts-ignore
 mongoose.connect(Constants.DB_CONNECTION_STRING, {useNewUrlParser: true});
 
 class ClientSchema {
     static get schema() {
+        const RoleSchema = new mongoose.Schema(
+            {
+                role: {
+                    type: String,
+                    required: true
+                }
+            }, {_id: false}
+        );
+
+        const NIFSchema = new mongoose.Schema(
+            {
+                nif: {
+                    type: Number,
+                    required: true
+                }
+            }, {_id: false}
+        )
+
         const FullnameSchema = new mongoose.Schema(
             {
                 firstname: {
@@ -74,10 +94,19 @@ class ClientSchema {
                     type: AddressSchema,
                     required: true,
                 },
+                nif: {
+                    type: NIFSchema,
+                    required: true,
+                },
+                role:  {
+                    type: RoleSchema,
+                    required: true,
+                },
                 password: {
                     type: String,
                     required: true,
                 },
+
             }
         );
     }

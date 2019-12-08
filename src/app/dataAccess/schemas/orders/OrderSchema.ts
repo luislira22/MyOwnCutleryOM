@@ -11,6 +11,8 @@ const mongooseConnection = mongoose.connection;
 mongooseConnection.once("open", () => {
     console.log("Connected to mongodb. [ORDER]");
 });
+
+// @ts-ignore
 mongoose.connect(Constants.DB_CONNECTION_STRING, {useNewUrlParser: true});
 
 class OrderSchema {

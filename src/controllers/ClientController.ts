@@ -18,7 +18,7 @@ class ClientController implements IBaseController<ClientService> {
                 else res.status(201).send(ClientMapper.toDTO(result));
             });
         } catch (e) {
-            res.send(e.message);
+            res.status(400).send(e.message);
         }
     }
 
