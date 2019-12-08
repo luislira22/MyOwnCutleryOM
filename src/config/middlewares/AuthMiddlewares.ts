@@ -16,7 +16,7 @@ export default class Auth{
 
       jwt.verify(token, SECRET_TOKEN_KEY, (err, decoded) => {
         if (err) {
-          return res.json({
+          return res.status(403).json({
             success: false,
             message: 'Token is not valid'
           });
@@ -26,7 +26,7 @@ export default class Auth{
         }
       });
     } else {
-      return res.json({
+      return res.status(403).json({
         success: false,
         message: 'Auth token is not supplied'
       });
