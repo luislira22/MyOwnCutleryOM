@@ -6,7 +6,7 @@ import ClientLoginDTO from "../app/dtos/clients/ClientLoginDTO";
 import ClientMapper = require("../app/mappers/clients/ClientMapper");
 
 
-class ClientController implements IBaseController <ClientService> {
+class ClientController implements IBaseController<ClientService> {
 
 
     create(req: express.Request, res: express.Response): void {
@@ -40,7 +40,8 @@ class ClientController implements IBaseController <ClientService> {
     updateNameAndAddres(req: express.Request, res: express.Response): void {
         try {
             let client: ClientDTO = <ClientDTO>req.body;
-            let _id: string = req.params._id;
+            //@ts-ignore
+            let _id: string = req.decoded.id;
             let clientService = new ClientService();
             clientService.updateNameAndAddress(_id, client, (error, result) => {
                 if (error) res.status(400).send();
