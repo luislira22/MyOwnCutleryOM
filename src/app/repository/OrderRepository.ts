@@ -16,6 +16,9 @@ class OrderRepository extends RepositoryBase<IOrderModel> {
     findById(_id: string, callback: (error: any, result: IOrderModel) => void) {
         this._model.findById(_id, callback).populate('client');
     }
+    findByClientId(id : string,callback: (error: any, result: any) => void){
+        this._model.find({client : Object(id)},callback).populate('client');
+    }
 }
 
 Object.seal(OrderRepository);

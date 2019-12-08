@@ -7,6 +7,7 @@ import Constants = require("../../config/constants/Constants");
 import Client from "../model/clients2/Client";
 import Order from "../model/orders2/Order";
 import Quantity from "../model/orders2/Quantity";
+import OrderSchema from "../dataAccess/schemas/orders/interfaces/Order";
 
 const axios = require('axios');
 
@@ -46,6 +47,27 @@ class OrderService implements IOrderService {
         } catch (e) {
             callback(e, null)
         }
+    }
+
+    async getOrdersByClient(id : string) : Promise<Order[]>{
+        let fetchDataOrders = new Promise((resolve,reject) =>{
+            this._orderRepository.findByClientId(id,(error,result) =>{
+                if(error)
+                    reject(error);
+                resolve(result);
+            });
+        });
+        let ordersPersistence : OrderSchema[] = await fetchDataOrders.then((orders : OrderSchema[]) => {
+            return orders;
+        }).catch((error)=>{
+            throw new Error(error);
+        });
+        let orders : Order[] = [];
+        await ordersPersistence.forEach((child) => {
+            let orderDomain : Order =  OrderMapper.fromPersistenceToDomain(child);
+            orders.push(orderDomain);
+        });
+        return orders;
     }
 
     // GET HTTP method

@@ -4,7 +4,7 @@ import IBaseController = require("./interfaces/base/BaseController");
 import ClientDTO from "../app/dtos/clients/ClientDTO";
 import ClientLoginDTO from "../app/dtos/clients/ClientLoginDTO";
 import ClientMapper = require("../app/mappers/clients/ClientMapper");
-import {ClientTokenDTO} from "../app/dtos/clients/ClientTokenDTO";
+
 
 class ClientController implements IBaseController <ClientService> {
 
