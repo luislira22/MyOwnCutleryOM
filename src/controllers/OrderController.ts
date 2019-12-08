@@ -3,6 +3,8 @@ import OrderService = require("../app/services/OrderService");
 import IBaseController = require("./interfaces/base/BaseController");
 import OrderDTO from "../app/dtos/orders/OrderDTO";
 import OrderMapper = require("../app/mappers/orders/OrderMapper");
+import Order from "../app/model/orders2/Order";
+import OrderSchema from "../app/dataAccess/schemas/orders/interfaces/Order";
 
 class OrderController implements IBaseController <OrderService> {
 
@@ -10,7 +12,7 @@ class OrderController implements IBaseController <OrderService> {
         try {
             let orderDTO: OrderDTO = <OrderDTO>req.body;
             let orderService = new OrderService();
-            orderService.create(orderDTO, (error, result) => {
+            orderService.create(orderDTO, (error, result)=> {
                 if (error) res.status(400).end(error.toString());
                 else res.status(201).send(OrderMapper.toDTOLight(result));
             });
@@ -19,6 +21,26 @@ class OrderController implements IBaseController <OrderService> {
         }
     }
 
+    async getOrdersByClient(req: express.Request, res:express.Response){
+        try{
+            let id : string;
+            //@ts-ignore
+            id = req.decoded.id;
+            let orderService : OrderService = new OrderService();
+            let ordersDomain : Order[] = await orderService.getOrdersByClient(id).then((result)=>{
+                return result;
+            }).catch((error)=>{
+                throw new Error(error);
+            });
+            let ordersDTO : OrderDTO[] = [];
+            await ordersDomain.forEach(child => {
+                ordersDTO.push(OrderMapper.toDTOLight(child))
+            });
+            return res.status(200).send(ordersDTO);
+        }catch(error){
+            res.status(400).send(error.message);
+        }
+    }
 //TODO
     update(req: express.Request, res: express.Response): void {
         try {
