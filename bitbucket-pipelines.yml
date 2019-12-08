@@ -14,6 +14,8 @@ pipelines:
         - step:
               name: Create Artifact
               script:
+                  - npm install
+                  - npm install -g gulp
                   - gulp compile
                   - tar -cvzf application.tgz lib/ package-lock.json package.json
               artifacts:
