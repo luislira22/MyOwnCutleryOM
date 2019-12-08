@@ -53,11 +53,14 @@ class ClientController implements IBaseController <ClientService> {
 
     delete(req: express.Request, res: express.Response): void {
         try {
-            let _id: string = req.params._id;
+            //@ts-ignore
+            let _id: string = req.decoded.id;
             let clientService = new ClientService();
             clientService.delete(_id, (error, result) => {
                 if (error) res.status(400).send(error.toString());
-                else res.status(200).send({"success": "success"});
+                else {
+                    res.status(204).send({ "success": "success" });
+                }
             });
         } catch (e) {
             res.send(e.message);

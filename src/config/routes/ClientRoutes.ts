@@ -19,7 +19,7 @@ class ClientRoutes {
         router.post("/clients/login",controller.login);
         router.put("/clients/:_id",AuthMiddlewares.checkToken ,controller.updateNameAndAddres);
         router.get("/client",AuthMiddlewares.checkToken,controller.findById);
-        router.delete("/clients/:_id", controller.delete);
+        router.delete("/clients",AuthMiddlewares.checkToken, controller.delete);
 
         return router;
     }
