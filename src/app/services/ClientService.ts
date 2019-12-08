@@ -11,6 +11,7 @@ import Role from "../model/clients2/Role";
 import {message} from "gulp-typescript/release/utils";
 import Email from "../model/clients2/Email";
 import Fullname from "../model/clients2/Fullname";
+import Address from "../model/clients2/Address";
 
 
 class ClientService implements IClientService {
@@ -110,9 +111,12 @@ class ClientService implements IClientService {
         });
 
         try {
-            if (item.email != undefined) client.email = new Email(item.email);
-            else if (item.name.firstname != undefined || item.name.lastname) client.name = new Fullname(item.name.firstname, item.name.lastname);
-            else callback("Quantity must be defined", null);
+            if (item.address != undefined && item.name.firstname != undefined && item.name.lastname != undefined) {
+                client.address = new Address(item.address.address,item.address.postalcode,item.address.city,item.address.country);
+                client.name = new Fullname(item.name.firstname, item.name.lastname);
+            } 
+            else callback("Email/Name must be defined", null);
+            console.log(client)
             let clientPersistence = ClientMapper.fromDomainToPersistence(client);
             // @ts-ignore
             this._clientRepository.update(_id,clientPersistence, callback);

@@ -48,12 +48,12 @@ export default class Client implements AggregateRoot<Client> {
         return this._address;
     }
 
-    get email(): Email {
-        return this._email;
+    set address(address:Address) {
+        this._address = address;
     }
 
-    set email(email: Email) {
-        this._email = email;
+    get email(): Email {
+        return this._email;
     }
 
     get password(): string {
