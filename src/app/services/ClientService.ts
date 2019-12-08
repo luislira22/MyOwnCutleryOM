@@ -7,6 +7,7 @@ import Client from "../model/clients2/Client";
 import ClientSchema from "../dataAccess/schemas/clients/interfaces/Client";
 import jwt = require("jsonwebtoken");
 import {SECRET_TOKEN_KEY} from "../../config/secret";
+import Role from "../model/clients2/Role";
 
 
 class ClientService implements IClientService {
@@ -17,7 +18,7 @@ class ClientService implements IClientService {
     }
 
     create(item: ClientDTO, callback: (error: any, result: any) => void) {
-        let clientDomaim = ClientMapper.fromDTOToDomain(item);
+        let clientDomaim : Client = ClientMapper.fromDTOToDomain(item);
         let clientPersistence = ClientMapper.fromDomainToPersistence(clientDomaim);
         this._clientRepository.create(clientPersistence, callback);
     }

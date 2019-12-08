@@ -9,6 +9,8 @@ export default interface ClientDTO extends DTO {
     address: IAddressDTO
     email: string
     password: string
+    nif: number
+    role: string
 }
 
 
