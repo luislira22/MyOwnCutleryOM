@@ -4,9 +4,7 @@
  */
 
 interface ValueObject<T> {
-
     equals(object: T): boolean;
-
 }
 
 

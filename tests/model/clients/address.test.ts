@@ -1,8 +1,8 @@
-import Address from "../../../src/app/model/clients2/Address";
+import Address from "../../../src/app/model/clients2/IAddress";
 
 describe('Create a valid address', () => {
     let address = new Address('Rua da Avenida', '4010-200', 'Porto', 'Portugal')
-    it('Address correct', () => {
+    it('IAddress correct', () => {
         expect(address.address).toBe('Rua da Avenida')
     });
     it('Postalcode correct', () => {
@@ -23,7 +23,7 @@ describe('Create an invalid address', () => {
             expect(true).toBe(false)
         }
         catch (e) {
-            expect(e.message).toBe('Address, city, postalcode and country must be filled.')
+            expect(e.message).toBe('IAddress, city, postalcode and country must be filled.')
         }
     });
     it('empty postalcode', () => {
@@ -32,7 +32,7 @@ describe('Create an invalid address', () => {
             expect(true).toBe(false)
         }
         catch (e) {
-            expect(e.message).toBe('Address, city, postalcode and country must be filled.')
+            expect(e.message).toBe('IAddress, city, postalcode and country must be filled.')
         }
     });
     it('empty city', () => {
@@ -41,7 +41,7 @@ describe('Create an invalid address', () => {
             expect(true).toBe(false)
         }
         catch (e) {
-            expect(e.message).toBe('Address, city, postalcode and country must be filled.')
+            expect(e.message).toBe('IAddress, city, postalcode and country must be filled.')
         }
     });
     it('empty country', () => {
@@ -50,7 +50,7 @@ describe('Create an invalid address', () => {
             expect(true).toBe(false)
         }
         catch (e) {
-            expect(e.message).toBe('Address, city, postalcode and country must be filled.')
+            expect(e.message).toBe('IAddress, city, postalcode and country must be filled.')
 
         }
     });
@@ -60,7 +60,7 @@ describe('Create an invalid address', () => {
             expect(true).toBe(false)
         }
         catch (e) {
-            expect(e.message).toBe('Address, city, postalcode and country must be filled.')
+            expect(e.message).toBe('IAddress, city, postalcode and country must be filled.')
         }
     });
     it('address should not be undefined', () => {
@@ -69,7 +69,7 @@ describe('Create an invalid address', () => {
             expect(true).toBe(false)
         }
         catch (e) {
-            expect(e.message).toBe('Address, city, postalcode and country must be filled.')
+            expect(e.message).toBe('IAddress, city, postalcode and country must be filled.')
         }
     });
 });

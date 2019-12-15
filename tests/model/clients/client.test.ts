@@ -1,8 +1,8 @@
 import Client from "../../../src/app/model/clients2/Client";
-import Fullname from "../../../src/app/model/clients2/Fullname";
-import Address from "../../../src/app/model/clients2/Address";
+import Fullname from "../../../src/app/model/clients2/IFullname";
+import Address from "../../../src/app/model/clients2/IAddress";
 import Email from "../../../src/app/model/clients2/Email";
-import NIF from "../../../src/app/model/clients2/NIF";
+import NIF from "../../../src/app/model/clients2/Nif";
 import Role from "../../../src/app/model/clients2/Role";
 
 describe('Create a valid client', () => {
@@ -19,7 +19,7 @@ describe('Create a valid client', () => {
         nif,
         null,
     );
-    it('Address is set', () => {
+    it('IAddress is set', () => {
         expect(client.address).toEqual(address);
     });
     it('Email is set', () => {

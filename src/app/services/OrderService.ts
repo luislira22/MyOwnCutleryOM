@@ -1,32 +1,26 @@
-import OrderRepository = require("./../repository/OrderRepository");
+//import OrderRepository = require("./../repository/OrderRepository");
 import IOrderService = require("./interfaces/OrderService");
-import OrderMapper = require("../mappers/orders/OrderMapper");
 import ClientService = require("./ClientService");
 import Constants = require("../../config/constants/Constants");
 import OrderDTO from "../dtos/orders/OrderDTO";
-import Client from "../model/clients2/Client";
-import Order from "../model/orders2/Order";
-import Quantity from "../model/orders2/Quantity";
-import OrderSchema from "../dataAccess/schemas/orders/interfaces/Order";
-import {ValidStatus} from "../model/orders2/enums/ValidStatus";
-import Status from "../model/orders2/Status";
+
 
 const axios = require('axios');
 
 class OrderService implements IOrderService {
-    private _orderRepository: OrderRepository;
+    //private _orderRepository: OrderRepository;
 
     private _clientService: ClientService;
 
     constructor() {
-        this._orderRepository = new OrderRepository();
+        //this._orderRepository = new OrderRepository();
         this._clientService = new ClientService();
     }
 
 
     // POST HTTP method (CONNECTS TO MASTER DATA PRODUCT)
     async create(item: OrderDTO, callback: (error: any, result: any) => void) {
-        let getClient = new Promise((resolve, reject) => {
+        /*let getClient = new Promise((resolve, reject) => {
             this._clientService.findById(item.client, (error: any, client: Client) => {
                 if (error || client == null) reject("Client does not exists");
                 resolve(client);
@@ -48,11 +42,11 @@ class OrderService implements IOrderService {
             });
         } catch (e) {
             callback(e, null)
-        }
+        }*/
     }
 
-    async getOrdersByClient(id: string): Promise<Order[]> {
-        let fetchDataOrders = new Promise((resolve, reject) => {
+    async getOrdersByClient(id: string): Promise<any[]> {
+        /*let fetchDataOrders = new Promise((resolve, reject) => {
             this._orderRepository.findByClientId(id, (error, result) => {
                 if (error)
                     reject(error);
@@ -69,12 +63,13 @@ class OrderService implements IOrderService {
             let orderDomain: Order = OrderMapper.fromPersistenceToDomain(child);
             orders.push(orderDomain);
         });
-        return orders;
+        return orders;*/
+        return null;
     }
 
-    async deleteOrderByClient(idClient : string, idOrder: string): Promise<void> {
+    async deleteOrderByClient(idClient: string, idOrder: string): Promise<void> {
         //fetch order promise
-        let fetchOrder = new Promise((resolve, reject) => {
+        /*let fetchOrder = new Promise((resolve, reject) => {
             this._orderRepository.findById(idOrder, (error, result: OrderSchema) => {
                 if (error)
                     reject(error);
@@ -99,7 +94,7 @@ class OrderService implements IOrderService {
         this._orderRepository.update(idOrder, orderPersistence, (error, result) => {
             if (error)
                 throw new Error(error.message);
-        });
+        });*/
         /*
         let updateOrder = new Promise((reject, resolve) => {
 
@@ -120,11 +115,11 @@ class OrderService implements IOrderService {
 
     // GET HTTP method
     retrieve(callback: (error: any, result: any) => void) {
-        this._orderRepository.retrieve(callback);
+        /* this._orderRepository.retrieve(callback);*/
     }
 
     async update(_id: string, item: OrderDTO, callback: (error: any, result: any) => void) {
-        let getOrder = new Promise((resolve, reject) => {
+        /*let getOrder = new Promise((resolve, reject) => {
             this.findById(_id, (error: any, order: Order) => {
                 if (error || order == null) reject("Order does not exists");
                 resolve(order);
@@ -143,20 +138,20 @@ class OrderService implements IOrderService {
             this._orderRepository.update(_id, orderPersistence, callback);
         } catch (e) {
             callback(e.message, null);
-        }
+        }*/
     }
 
     // DELETE HTTP method
     delete(_id: string, callback: (error: any, result: any) => void) {
-        this._orderRepository.delete(_id, callback);
+        /*this._orderRepository.delete(_id, callback);*/
     }
 
     // GET/{id} HTTP method
     findById(_id: string, callback: (error: any, result: any) => void) {
-        this._orderRepository.findById(_id, (error2, result2) => {
-            if (error2) callback(error2, null);
-            else callback(null, OrderMapper.fromPersistenceToDomain(result2));
-        });
+        /* this._orderRepository.findById(_id, (error2, result2) => {
+             if (error2) callback(error2, null);
+             else callback(null, OrderMapper.fromPersistenceToDomain(result2));
+         });*/
     }
 
 }

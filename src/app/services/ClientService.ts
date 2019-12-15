@@ -1,4 +1,4 @@
-import ClientRepository = require("./../repository/ClientRepository");
+import ClientRepository = require("../repository/ClientRepository");
 import IClientService = require("./interfaces/ClientService");
 import ClientDTO from "../dtos/clients/ClientDTO";
 import ClientMapper = require("../mappers/clients/ClientMapper");
@@ -10,8 +10,8 @@ import {SECRET_TOKEN_KEY} from "../../config/secret";
 import Role from "../model/clients2/Role";
 import {message} from "gulp-typescript/release/utils";
 import Email from "../model/clients2/Email";
-import Fullname from "../model/clients2/Fullname";
-import Address from "../model/clients2/Address";
+import Fullname from "../model/clients2/IFullname";
+import Address from "../model/clients2/IAddress";
 
 
 class ClientService implements IClientService {

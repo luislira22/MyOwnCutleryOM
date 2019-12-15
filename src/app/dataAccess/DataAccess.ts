@@ -17,7 +17,7 @@
                 console.log("Conectado ao mongodb.");
             });
 
-           this.mongooseInstance = Mongoose.connect(Constants.DB_CONNECTION_STRING, {useNewUrlParser: true});
+           this.mongooseInstance = Mongoose.connect(Constants.DB_CONNECTION_STRING);
            return this.mongooseInstance;
         }
     }

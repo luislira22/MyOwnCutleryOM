@@ -1,6 +1,5 @@
-import IFullnameDTO from "./FullnameDTO"
-import IAddressDTO from "./AddressDTO"
-import IEmailDTO from "./EmailDTO"
+import IFullnameDTO from "../users/clients/FullnameDTO"
+import IAddressDTO from "../users/clients/AddressDTO"
 import DTO from "../DTO";
 
 export default interface ClientDTO extends DTO {

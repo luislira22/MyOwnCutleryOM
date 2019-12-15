@@ -2,13 +2,11 @@ import express = require("express");
 import OrderService = require("../app/services/OrderService");
 import IBaseController = require("./interfaces/base/BaseController");
 import OrderDTO from "../app/dtos/orders/OrderDTO";
-import OrderMapper = require("../app/mappers/orders/OrderMapper");
-import Order from "../app/model/orders2/Order";
 
 class OrderController implements IBaseController <OrderService> {
 
     create(req: express.Request, res: express.Response): void {
-        try {
+       /* try {
             //@ts-ignore
             let id = req.decoded.id;
             let orderDTO: OrderDTO = <OrderDTO>req.body;
@@ -20,11 +18,11 @@ class OrderController implements IBaseController <OrderService> {
             });
         } catch (e) {
             res.send({"error": e.message});
-        }
+        }*/
     }
 
     async getOrdersByClient(req: express.Request, res:express.Response){
-        try{
+        /*try{
             //@ts-ignore
             let id : string = req.decoded.id;
             let orderService : OrderService = new OrderService();
@@ -40,11 +38,11 @@ class OrderController implements IBaseController <OrderService> {
             return res.status(200).send(ordersDTO);
         }catch(error){
             res.status(500).send(error.message);
-        }
+        }*/
     }
 
     async deleteOrderByClient(req: express.Request, res:express.Response){
-        try{
+        /*try{
             //@ts-ignore
             let clientId : string = req.decoded.id;
             let orderId :string = req.params.id;
@@ -56,11 +54,11 @@ class OrderController implements IBaseController <OrderService> {
         }
         catch(error){
             res.status(500).send(error.message);
-        }
+        }*/
     }
 //TODO
     update(req: express.Request, res: express.Response): void {
-        try {
+        /*try {
             let order: OrderDTO = <OrderDTO>req.body;
             let _id: string = req.params._id;
             let orderService = new OrderService();
@@ -71,11 +69,11 @@ class OrderController implements IBaseController <OrderService> {
         } catch (e) {
             console.log(e);
             res.send({"error": "error in your request"});
-        }
+        }*/
     }
 
     delete(req: express.Request, res: express.Response): void {
-        try {
+        /*try {
             let _id: string = req.params._id;
             let orderService = new OrderService();
             orderService.delete(_id, (error, result) => {
@@ -85,11 +83,11 @@ class OrderController implements IBaseController <OrderService> {
         } catch (e) {
             res.send({"error": e.message});
 
-        }
+        }*/
     }
 
     retrieve(req: express.Request, res: express.Response): void {
-        try {
+        /*try {
             let orderService = new OrderService();
             orderService.retrieve((error, result) => {
                 if (error) res.send({"error": "error"});
@@ -104,14 +102,14 @@ class OrderController implements IBaseController <OrderService> {
         } catch (e) {
             res.send({"error": "error in your request"});
 
-        }
+        }*/
     }
 
     findById(req: express.Request, res: express.Response): void {
-        try {
+        /*try {
 
             // @ts-ignore
-            let _id: string = /*req.params._id;*/req.decoded.id;
+            let _id: string = /!*req.params._id;*!/req.decoded.id;
 
             let orderService = new OrderService();
             orderService.findById(_id, (error, result) => {
@@ -121,7 +119,7 @@ class OrderController implements IBaseController <OrderService> {
         } catch (e) {
             console.log(e);
             res.send({"error": "error in your request"});
-        }
+        }*/
     }
 }
 

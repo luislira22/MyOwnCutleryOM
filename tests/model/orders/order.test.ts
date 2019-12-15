@@ -3,10 +3,10 @@ import Quantity from "../../../src/app/model/orders2/Quantity";
 import Client from "../../../src/app/model/clients2/Client";
 import Status from "../../../src/app/model/orders2/Status";
 import OrderDate from "../../../src/app/model/orders2/OrderDate";
-import Fullname from "../../../src/app/model/clients2/Fullname";
-import Address from "../../../src/app/model/clients2/Address";
+import Fullname from "../../../src/app/model/clients2/IFullname";
+import Address from "../../../src/app/model/clients2/IAddress";
 import Email from "../../../src/app/model/clients2/Email";
-import NIF from "../../../src/app/model/clients2/NIF";
+import NIF from "../../../src/app/model/clients2/Nif";
 import Role from "../../../src/app/model/clients2/Role";
 
 describe('Create a valid order', () => {

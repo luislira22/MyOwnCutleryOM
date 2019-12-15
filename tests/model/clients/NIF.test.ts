@@ -1,4 +1,4 @@
-import NIF from "../../../src/app/model/clients2/NIF";
+import NIF from "../../../src/app/model/clients2/Nif";
 
 test('Create a valid nif', () => {
     new NIF(123456789);
@@ -11,7 +11,7 @@ describe('Create an invalid nif', () => {
             expect(true).toBe(false);
         }
         catch(e) {
-            expect(e.message).toBe('NIF must be correct.');
+            expect(e.message).toBe('Nif must be correct.');
         }
     });
     it('with less than 9 number', () => {
@@ -20,7 +20,7 @@ describe('Create an invalid nif', () => {
             expect(true).toBe(false);
         }
         catch(e) {
-            expect(e.message).toBe('NIF must be correct.');
+            expect(e.message).toBe('Nif must be correct.');
         }
     });
     it('with negative number', () => {
@@ -29,7 +29,7 @@ describe('Create an invalid nif', () => {
             expect(true).toBe(false);
         }
         catch(e) {
-            expect(e.message).toBe('NIF must be correct.');
+            expect(e.message).toBe('Nif must be correct.');
         }
     });
 });
