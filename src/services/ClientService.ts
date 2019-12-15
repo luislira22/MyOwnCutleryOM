@@ -1,6 +1,6 @@
 import ClientRepository = require("../repository/ClientRepository");
 import IClientService = require("./interfaces/ClientService");
-import ClientDTO from "../dtos/clients/ClientDTO";
+import ClientDTO from "./dtos/clients/ClientDTO";
 import ClientMapper = require("../mappers/clients/ClientMapper");
 import {ClientTokenDTOTrue, ClientTokenDTOFalse, ClientTokenDTO} from "../dtos/clients/ClientTokenDTO";
 import Client from "../model/clients2/Client";

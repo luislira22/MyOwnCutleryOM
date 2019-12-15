@@ -1,15 +1,20 @@
-    import express = require("express");
-    import cors = require("cors");
-    import Middlewares = require("./config/middlewares/base/MiddlewaresBase");
-    
-    var app = express();
+require('dotenv').config();
+import {BaseRoutes} from "./config/routes/base/BaseRoutes";
+import express = require("express");
+import bodyParser = require("body-parser");
+import cors = require("cors");
+const config = require("./config/config");
 
-    app.use(cors());
+var app = express();
 
-    var port = parseInt(process.env.PORT, 10) || 5000;
-    app.set("port", port);
-    app.use(Middlewares.configuration);
-    
-    app.listen(port, () => {
-        console.log("Node app is running at localhost:" + port);
-    });
+app.use(bodyParser.json());
+app.use(BaseRoutes.routes);
+app.use(cors());
+
+let port = config.settings.port;
+app.set("port", port);
+
+
+app.listen(port, () => {
+    console.log("Node app is running at localhost:" + port);
+});

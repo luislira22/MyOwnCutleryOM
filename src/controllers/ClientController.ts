@@ -1,14 +1,14 @@
 import express = require("express");
 
 //DOMAIN
-import Address from "../app/model/user/client/Address";
-import Fullname from "../app/model/user/client/Fullname";
+import Address from "../model/user/client/Address";
+import Fullname from "../model/user/client/Fullname";
 //SERVICE
-import ClientService = require("../app/services/users/ClientService");
+import ClientService = require("../services/users/ClientService");
 //DTO
-import InputClientDTO from "../app/dtos/users/clients/InputClientDTO";
+import InputClientDTO from "../dtos/users/clients/InputClientDTO";
 //MAPPER
-import ClientMapper from "../app/mappers/users/ClientMapper";
+import ClientMapper from "../mappers/users/ClientMapper";
 
 class ClientController {
 

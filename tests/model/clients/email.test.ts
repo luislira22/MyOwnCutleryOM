@@ -1,4 +1,4 @@
-import Email from '../../../src/app/model/clients2/Email';
+import Email from '../../../src/model/clients2/Email';
 
 test('Create a valid email', () => {
     new Email('email@email.com');

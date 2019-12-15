@@ -1,7 +1,7 @@
 import express = require("express");
-import OrderService = require("../app/services/OrderService");
+import OrderService = require("../services/OrderService");
 import IBaseController = require("./interfaces/base/BaseController");
-import OrderDTO from "../app/dtos/orders/OrderDTO";
+import OrderDTO from "../dtos/orders/OrderDTO";
 
 class OrderController implements IBaseController <OrderService> {
 

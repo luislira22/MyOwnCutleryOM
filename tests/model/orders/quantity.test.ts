@@ -1,4 +1,4 @@
-import Quantity from '../../../src/app/model/orders2/Quantity';
+import Quantity from '../../../src/model/orders2/Quantity';
 
 test('Create a valid quantity', () => {
 

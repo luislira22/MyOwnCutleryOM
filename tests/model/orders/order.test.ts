@@ -1,13 +1,13 @@
-import Order from '../../../src/app/model/orders2/Order';
-import Quantity from "../../../src/app/model/orders2/Quantity";
-import Client from "../../../src/app/model/clients2/Client";
-import Status from "../../../src/app/model/orders2/Status";
-import OrderDate from "../../../src/app/model/orders2/OrderDate";
-import Fullname from "../../../src/app/model/clients2/IFullname";
-import Address from "../../../src/app/model/clients2/IAddress";
-import Email from "../../../src/app/model/clients2/Email";
-import NIF from "../../../src/app/model/clients2/Nif";
-import Role from "../../../src/app/model/clients2/Role";
+import Order from '../../../src/model/orders2/Order';
+import Quantity from "../../../src/model/orders2/Quantity";
+import Client from "../../../src/model/clients2/Client";
+import Status from "../../../src/model/orders2/Status";
+import OrderDate from "../../../src/model/orders2/OrderDate";
+import Fullname from "../../../src/model/clients2/IFullname";
+import Address from "../../../src/model/clients2/IAddress";
+import Email from "../../../src/model/clients2/Email";
+import NIF from "../../../src/model/clients2/Nif";
+import Role from "../../../src/model/clients2/Role";
 
 describe('Create a valid order', () => {
 

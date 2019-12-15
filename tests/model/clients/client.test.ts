@@ -1,9 +1,9 @@
-import Client from "../../../src/app/model/clients2/Client";
-import Fullname from "../../../src/app/model/clients2/IFullname";
-import Address from "../../../src/app/model/clients2/IAddress";
-import Email from "../../../src/app/model/clients2/Email";
-import NIF from "../../../src/app/model/clients2/Nif";
-import Role from "../../../src/app/model/clients2/Role";
+import Client from "../../../src/model/clients2/Client";
+import Fullname from "../../../src/model/clients2/IFullname";
+import Address from "../../../src/model/clients2/IAddress";
+import Email from "../../../src/model/clients2/Email";
+import NIF from "../../../src/model/clients2/Nif";
+import Role from "../../../src/model/clients2/Role";
 
 describe('Create a valid client', () => {
     let fullname = new Fullname('Daniel', 'Craig');

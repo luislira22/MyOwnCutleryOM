@@ -18,7 +18,6 @@ export default class ClientRepository implements IBaseRepository<Client> {
     public async create(client: Client): Promise<Client> {
         return new Promise<Client>((resolve, reject) => {
             let persistenceClient = ClientMapper.fromDomainToPersistence(client);
-            console.log(persistenceClient);
             this._clientModel.create(persistenceClient, (error: any, result: IClientModel) => {
                 if (error) reject(error);
                 else resolve(ClientMapper.fromPersistenceToDomain(result));

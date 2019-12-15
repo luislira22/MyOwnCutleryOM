@@ -1,6 +1,6 @@
 import IReadController = require("./../common/ReadController");
 import IWriteController = require("./../common/WriteController");
-import IBaseBusiness = require("../../../app/services/interfaces/base/BaseService");
+import IBaseBusiness = require("../../../services/interfaces/base/BaseService");
 interface BaseController<T extends IBaseBusiness<Object>> extends IReadController, IWriteController{
     
     

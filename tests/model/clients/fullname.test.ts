@@ -1,4 +1,4 @@
-import Fullname from "../../../src/app/model/clients2/IFullname";
+import Fullname from "../../../src/model/clients2/IFullname";
 
 describe('Create a valid fullname', () => {
     let fullname = new Fullname('Daniel', 'Craig');

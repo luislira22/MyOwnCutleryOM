@@ -1,4 +1,4 @@
-import NIF from "../../../src/app/model/clients2/Nif";
+import NIF from "../../../src/model/clients2/Nif";
 
 test('Create a valid nif', () => {
     new NIF(123456789);

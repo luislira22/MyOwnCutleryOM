@@ -1,14 +1,15 @@
 import express = require("express");
 import ClientRoutes = require("../ClientRoutes");
 import OrderRoutes = require("../OrderRoute");
-var app = express();
-class BaseRoutes {
+let app = express();
+
+export class BaseRoutes {
     
-    get routes() {
+    public static get routes() {
         app.use("/api/", new ClientRoutes().routes);
         app.use("/api/", new OrderRoutes().routes);
 
         return app;
     }
 }
-export = BaseRoutes;
+

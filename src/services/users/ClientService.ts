@@ -7,6 +7,10 @@ import ClientRepository from "../../repository/ClientRepository";
 //PERSISTENCE MODELS
 const ClientModel = require("../../dataAccess/schemas/users/ClientSchema");
 const UserModel = require("../../dataAccess/schemas/users/UserSchema");
+//CONFIGS
+const config = require("../../config/config");
+//OTHER MODULES
+const bcrypt = require('bcrypt');
 
 class ClientService {
     private _clientRepository: ClientRepository;

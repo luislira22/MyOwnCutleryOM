@@ -1,5 +1,5 @@
 let jwt = require('jsonwebtoken');
-import {SECRET_TOKEN_KEY} from "../secret";
+const SECRET_TOKEN_KEY = process.env.JWT_SECRET;
 
 export default class Auth {
 
@@ -19,7 +19,7 @@ export default class Auth {
                 }
             });
         } else {
-            return res.status(403).send(this.tokenError('Auth token is not supplied'));
+            return res.status(403).send(Auth.tokenError('Auth token is not supplied'));
         }
     };
 

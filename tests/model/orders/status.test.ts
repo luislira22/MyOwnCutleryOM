@@ -1,5 +1,5 @@
-import Status from '../../../src/app/model/orders2/Status';
-import {ValidStatus} from '../../../src/app/model/orders2/enums/ValidStatus'
+import Status from '../../../src/model/orders2/Status';
+import {ValidStatus} from '../../../src/model/orders2/enums/ValidStatus'
 
 test('Create an accepted status', () => {
     let status = new Status('ACCEPTED');
