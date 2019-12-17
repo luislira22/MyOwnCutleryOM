@@ -27,11 +27,10 @@ export default class ClientRepository implements IBaseRepository<Client> {
 
     public async find(): Promise<Client[]> {
         return new Promise<Client[]>((resolve, reject) => {
-            this._userModel.find({_role: "client"}, (error: any, result: IClientModel[]) => {
+            this._userModel.find({role: "client"}, (error: any, result: IClientModel[]) => {
                 if (error) reject(error);
                 else {
                     let clients = [];
-                    console.log(result);
                     result.forEach(function (element: IClientModel) {
                         clients.push(ClientMapper.fromPersistenceToDomain(element))
                     });
