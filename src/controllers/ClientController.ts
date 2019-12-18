@@ -9,6 +9,7 @@ import ClientService = require("../services/users/ClientService");
 import InputClientDTO from "../dtos/users/clients/InputClientDTO";
 //MAPPER
 import ClientMapper from "../mappers/users/ClientMapper";
+import Client from "../model/user/client/Client";
 
 class ClientController {
 
@@ -30,6 +31,7 @@ class ClientController {
 
     async updateNameAndAddres(req: express.Request, res: express.Response): Promise<void> {
         try {
+
             let client: InputClientDTO = <InputClientDTO>req.body;
             //@ts-ignore
             let _id: string = req.decoded.id;
@@ -77,8 +79,8 @@ class ClientController {
                 let clientsDTO = [];
                 result.forEach(function (value) {
                     clientsDTO.push(ClientMapper.fromDomainToDTO(value));
-                    res.status(200).send(clientsDTO);
                 });
+                res.status(200).send(clientsDTO)
             }).catch(value => {
                 res.send(400).send(value);
             });
@@ -87,20 +89,21 @@ class ClientController {
         }
     }
 
-    findById(req: express.Request, res: express.Response): void {
+    async findById(req: express.Request, res: express.Response) {
         try {
-             //@ts-ignore
-             let _id: string = req.decoded.id;
-             let clientService = new ClientService();
-             clientService.findById(_id).then( value => {
-                 res.status(201).send(ClientMapper.fromDomainToDTO(value));
-             }).catch(value => {
-                 res.status(400).send(value);
-             });
-         } catch (e) {
+            //@ts-ignore
+            let id = req.decoded.id;
+            let clientService = new ClientService();
+            clientService.findById(id).then(value => {
+                res.status(201).send(ClientMapper.fromDomainToDTO(value));
+            }).catch(value => {
+                res.status(400).send(value);
+            });
+        } catch (e) {
             res.status(500).send(e.message);
-         }
+        }
     }
 }
+
 
 export = ClientController;

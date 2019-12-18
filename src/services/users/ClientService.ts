@@ -9,8 +9,7 @@ const ClientModel = require("../../dataAccess/schemas/users/ClientSchema");
 const UserModel = require("../../dataAccess/schemas/users/UserSchema");
 //CONFIGS
 const config = require("../../config/config");
-//OTHER MODULES
-const bcrypt = require('bcrypt');
+
 
 class ClientService {
     private _clientRepository: ClientRepository;
@@ -42,6 +41,7 @@ class ClientService {
     async findById(id: string): Promise<Client> {
         return await this._clientRepository.findOne(id);
     }
+
 }
 
 Object.seal(ClientService);

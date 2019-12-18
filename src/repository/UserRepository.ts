@@ -14,7 +14,7 @@ export default class UserRepository implements IBaseRepository<User> {
     private _adminModel: mongoose.Model<mongoose.Document>;
     private _userModel: mongoose.Model<mongoose.Document>;
 
-    constructor(clientModel?: mongoose.Model<mongoose.Document>, adminModel?: mongoose.Model<mongoose.Document>, userModel?: mongoose.Model<mongoose.Document>) {
+    constructor(clientModel: mongoose.Model<mongoose.Document>, adminModel: mongoose.Model<mongoose.Document>, userModel: mongoose.Model<mongoose.Document>) {
         this._clientModel = clientModel;
         this._adminModel = adminModel;
         this._userModel = userModel
@@ -46,6 +46,21 @@ export default class UserRepository implements IBaseRepository<User> {
         });
     }
 
+    public async findByEmail(email: string) : Promise<User> {
+        return new Promise<User>((resolve, reject) => {
+            console.log(this._userModel);
+            this._userModel.findOne({email : email}, (error: any, result: any) => {
+                if (error) reject(error);
+                else if(result == null) resolve(null);
+                else {
+                    if (result.role == 'client') resolve(ClientMapper.fromPersistenceToDomain(result));
+                    else if (result.role == 'admin') resolve(AdminMapper.fromPersistenceToDomain(result));
+                    reject(new Error("invalid role found"));
+                }
+            });
+        })
+    }
+
 
     public async find(): Promise<User[]> {
         return new Promise<User[]>((resolve, reject) => {
@@ -55,8 +70,8 @@ export default class UserRepository implements IBaseRepository<User> {
                     let users: User[] = [];
                     console.log(result);
                     result.forEach(function (element: any) {
-                        if (element._role == 'ClientModel') users.push(ClientMapper.fromPersistenceToDomain(element));
-                        else if (element._role == 'AdminModel') users.push(AdminMapper.fromPersistenceToDomain(element));
+                        if (element.role == 'ClientModel') users.push(ClientMapper.fromPersistenceToDomain(element));
+                        else if (element.role == 'AdminModel') users.push(AdminMapper.fromPersistenceToDomain(element));
                         else console.log("ERRO");
                     });
                     resolve(users);
