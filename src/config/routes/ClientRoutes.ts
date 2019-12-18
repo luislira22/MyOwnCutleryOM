@@ -16,8 +16,8 @@ class ClientRoutes {
         let controller = this._clientController;
         router.get("/clients", controller.retrieve);
         router.post("/clients", controller.create);
-        router.put("/clients/:id?",AuthMiddlewares.isAdmin, AuthMiddlewares.checkTokenByMethod(process.env.updateNameAndAddress), controller.updateNameAndAddres);
-        router.get("/client/:id?",AuthMiddlewares.isAdmin, AuthMiddlewares.checkTokenByMethod(process.env.getClient), controller.findById);
+        router.put("/clients/:id?", AuthMiddlewares.checkTokenByMethod(process.env.updateNameAndAddress), controller.updateNameAndAddres);
+        router.get("/client/:id?", AuthMiddlewares.checkTokenByMethod(process.env.getClient), controller.findById);
         //router.delete("/clients",AuthMiddlewares.isAdmin,AuthMiddlewares.checkTokenByMethod(process.env.cancelOrder), controller.delete);
         return router;
     }

@@ -42,7 +42,7 @@ export default class ClientRepository implements IBaseRepository<Client> {
 
     public async findOne(id: string): Promise<Client> {
         return new Promise<Client>((resolve, reject) => {
-            this._userModel.find({_id: id, _role: "client"}, (error: any, result: IClientModel) => {
+            this._userModel.find({_id: id, role: "client"}, (error: any, result: IClientModel) => {
                 if (error) reject(error);
                 else resolve(ClientMapper.fromPersistenceToDomain(result));
             });

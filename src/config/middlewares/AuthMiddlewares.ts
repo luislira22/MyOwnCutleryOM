@@ -15,11 +15,14 @@ export default class Auth {
                     if (err) {
                         return res.status(403).send(Auth.tokenError('Token is not valid'));
                     } else {
-                        if (permission === "all" || permission === "client"){
+                        if (permission === "all"){
+                            req.decoded = decoded;
+                            next();
+                        }else if(permission === "client" === decoded.role){
                             req.decoded = decoded;
                             next();
                         }
-                        else if(permission == "admin"){
+                        else if(permission == "admin" === decoded.role){
                             req.decoded = decoded;
                             req.redirect("admin/" + req.url);
                         }

@@ -47,11 +47,28 @@ class AdminController {
             let id = req.params.id;
             let clientService = new ClientService();
             clientService.findById(id).then(value => {
-                res.status(201).send(ClientMapper.fromDomainToDTO(value));
+                res.status(201).send(ClientMapper.fromDomainToNameDTO(value));
             }).catch(value => {
                 res.status(400).send(value);
             });
 
+        } catch (e) {
+            res.status(500).send(e.message);
+        }
+    }
+
+    retrieve(req: express.Request, res: express.Response): void {
+        try {
+            let clientService = new ClientService();
+            clientService.getAll().then(result => {
+                let clientsDTO = [];
+                result.forEach(function (value) {
+                    clientsDTO.push(ClientMapper.fromDomainToNameDTO(value));
+                });
+                res.status(200).send(clientsDTO)
+            }).catch(value => {
+                res.send(400).send(value);
+            });
         } catch (e) {
             res.status(500).send(e.message);
         }

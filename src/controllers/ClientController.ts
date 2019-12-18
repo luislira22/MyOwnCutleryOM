@@ -71,7 +71,6 @@ class ClientController {
         }
     }
 
-    //TODO nao deve estar disponivel (apenas para testes) remover no futuro
     retrieve(req: express.Request, res: express.Response): void {
         try {
             let clientService = new ClientService();
@@ -92,7 +91,7 @@ class ClientController {
     async findById(req: express.Request, res: express.Response) {
         try {
             //@ts-ignore
-            let id = req.decoded.id;
+            let id = req.params.id;
             let clientService = new ClientService();
             clientService.findById(id).then(value => {
                 res.status(201).send(ClientMapper.fromDomainToDTO(value));

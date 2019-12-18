@@ -8,6 +8,7 @@ import Nif from "../../model/user/client/Nif";
 import Priority from "../../model/user/client/Priority";
 import InputClientDTO from "../../dtos/users/clients/InputClientDTO";
 import OutputClientDTO from "../../dtos/users/clients/OutputClientDTO";
+import OutputClientNameDTO from "../../dtos/users/clients/OutputClientNameDTO";
 
 export default class ClientMapper {
 
@@ -25,7 +26,6 @@ export default class ClientMapper {
     }
 
     public static fromDomainToDTO(client : Client) : OutputClientDTO {
-        console.log(client);
         return ({
             //user
             email: client.email.email,
@@ -42,6 +42,15 @@ export default class ClientMapper {
             },
             nif: client.nif.value
         });
+    }
+
+    public static fromDomainToNameDTO(client: Client) : OutputClientNameDTO {
+        return({
+            name: {
+                firstname: client.fullname.firstname,
+                lastname: client.fullname.lastname
+            }
+        })
     }
 
     public static fromDomainToPersistence(client: Client): mongoose.Model<IClientModel> {
