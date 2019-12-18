@@ -1,27 +1,28 @@
 import express = require("express");
-import OrderService = require("../services/OrderService");
-import IBaseController = require("./interfaces/base/BaseController");
-import OrderDTO from "../dtos/orders/OrderDTO";
+import OrderService = require("../services/orders/OrderService");
+import InputOrderDTO from "../dtos/orders/InputOrderDTO";
+import OrderMapper from "../mappers/orders/OrderMapper";
+import OrderQuantity from "../model/orders/OrderQuantity";
 
-class OrderController implements IBaseController <OrderService> {
+class OrderController {
 
-    create(req: express.Request, res: express.Response): void {
-       /* try {
-            //@ts-ignore
-            let id = req.decoded.id;
-            let orderDTO: OrderDTO = <OrderDTO>req.body;
-            orderDTO.client = id;
+    async create(req: express.Request, res: express.Response): Promise<void> {
+        try {
+            let orderDTO: InputOrderDTO = <InputOrderDTO>req.body;
+            // @ts-ignore
+            let clientId = req.decoded.id;
             let orderService = new OrderService();
-            orderService.create(orderDTO, (error, result)=> {
-                if (error) res.status(400).end(error.toString());
-                else res.status(201).send(OrderMapper.toDTOLight(result));
-            });
+            await orderService.create(OrderMapper.fromDTOToDomain(orderDTO), clientId).then(value => {
+                res.status(201).send(OrderMapper.fromDomainToDTO(value));
+            }).catch(value => {
+                res.status(400).send(value);
+            })
         } catch (e) {
-            res.send({"error": e.message});
-        }*/
+            res.status(500).send(e.message);
+        }
     }
 
-    async getOrdersByClient(req: express.Request, res:express.Response){
+    async getOrdersByClient(req: express.Request, res: express.Response) {
         /*try{
             //@ts-ignore
             let id : string = req.decoded.id;
@@ -31,7 +32,7 @@ class OrderController implements IBaseController <OrderService> {
             }).catch((error)=>{
                 throw new Error(error);
             });
-            let ordersDTO : OrderDTO[] = [];
+            let ordersDTO : InputOrderDTO[] = [];
             await ordersDomain.forEach(child => {
                 ordersDTO.push(OrderMapper.toDTOLight(child))
             });
@@ -41,7 +42,7 @@ class OrderController implements IBaseController <OrderService> {
         }*/
     }
 
-    async deleteOrderByClient(req: express.Request, res:express.Response){
+    public async deleteOrderByClient(req: express.Request, res: express.Response) {
         /*try{
             //@ts-ignore
             let clientId : string = req.decoded.id;
@@ -56,70 +57,68 @@ class OrderController implements IBaseController <OrderService> {
             res.status(500).send(error.message);
         }*/
     }
-//TODO
-    update(req: express.Request, res: express.Response): void {
-        /*try {
-            let order: OrderDTO = <OrderDTO>req.body;
-            let _id: string = req.params._id;
+
+    public async updateQuantity(req: express.Request, res: express.Response): Promise<void> {
+        try {
+            let order: InputOrderDTO = <InputOrderDTO>req.body;
+            let orderId = req.params._id;
+            let quantity = new OrderQuantity(order.quantity);
             let orderService = new OrderService();
-            orderService.update(_id, order, (error, result) => {
-                if (error) res.status(400).send(error.toString());
-                else res.status(200).send(result);
+            await orderService.updateQuantity(orderId, quantity).then(value => {
+                res.status(200).send(value);
+            }).catch(value => {
+                res.status(400).send(value);
             });
         } catch (e) {
-            console.log(e);
-            res.send({"error": "error in your request"});
-        }*/
+            res.status(500).send(e.message);
+        }
     }
 
-    delete(req: express.Request, res: express.Response): void {
-        /*try {
-            let _id: string = req.params._id;
+    public async delete(req: express.Request, res: express.Response): Promise<void> {
+        try {
+            //@ts-ignore
+            let clientId = req.decoded.id;
+            let orderId = req.params._id;
             let orderService = new OrderService();
-            orderService.delete(_id, (error, result) => {
-                if (error) res.status(400).end(error.toString());
-                else res.status(204).send({"204": "no content"});
+            await orderService.delete(orderId, clientId).then(value => {
+                res.status(204).send(value);
+            }).catch(value => {
+                res.status(400).send(value);
             });
         } catch (e) {
-            res.send({"error": e.message});
-
-        }*/
+            res.status(500).send(e.message);
+        }
     }
 
-    retrieve(req: express.Request, res: express.Response): void {
-        /*try {
+    public async retrieve(req: express.Request, res: express.Response): Promise<void> {
+        try {
             let orderService = new OrderService();
-            orderService.retrieve((error, result) => {
-                if (error) res.send({"error": "error"});
-                else {
-                    let fullResponse = [];
-                    result.forEach(function (value) {
-                        fullResponse.push(OrderMapper.toDTOFull(value))
-                    });
-                    res.status(200).send(fullResponse);
-                }
+            await orderService.getAll().then(value => {
+                let orders = [];
+                value.forEach(function (element) {
+                    orders.push(OrderMapper.fromDomainToDTO(element));
+                });
+                res.status(200).send(orders);
+            }).catch(value => {
+                res.status(400).send(value);
             });
         } catch (e) {
-            res.send({"error": "error in your request"});
-
-        }*/
+            res.status(500).send(e.message);
+        }
     }
 
-    findById(req: express.Request, res: express.Response): void {
-        /*try {
-
-            // @ts-ignore
-            let _id: string = /!*req.params._id;*!/req.decoded.id;
-
+    async findById(req: express.Request, res: express.Response): Promise<void> {
+        try {
+            let orderId = req.params._id;
             let orderService = new OrderService();
-            orderService.findById(_id, (error, result) => {
-                if (error) res.send({"error": "error"});
-                else res.send(OrderMapper.toDTOFull(result));
+            await orderService.findById(orderId).then(value => {
+                res.status(200).send(OrderMapper.fromDomainToDTO(value));
+            }).catch(value => {
+                res.status(400).send(value);
             });
         } catch (e) {
-            console.log(e);
-            res.send({"error": "error in your request"});
-        }*/
+            res.status(500).send(e.message);
+        }
     }
 }
 

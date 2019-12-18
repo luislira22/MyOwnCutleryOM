@@ -1,13 +1,13 @@
-import NIF from "../../../src/model/clients2/Nif";
+import Nif from "../../../src/model/user/client/Nif";
 
-test('Create a valid nif', () => {
-    new NIF(123456789);
+test('Create a valid Nif', () => {
+    new Nif(123456789);
 });
 
-describe('Create an invalid nif', () => {
+describe('Create an invalid Nif', () => {
     it('with more than 9 number', () => {
         try {
-            new NIF(111111111111111);
+            new Nif(111111111111111);
             expect(true).toBe(false);
         }
         catch(e) {
@@ -16,7 +16,7 @@ describe('Create an invalid nif', () => {
     });
     it('with less than 9 number', () => {
         try {
-            new NIF(1111);
+            new Nif(1111);
             expect(true).toBe(false);
         }
         catch(e) {
@@ -25,7 +25,7 @@ describe('Create an invalid nif', () => {
     });
     it('with negative number', () => {
         try {
-            new NIF(-1);
+            new Nif(-1);
             expect(true).toBe(false);
         }
         catch(e) {

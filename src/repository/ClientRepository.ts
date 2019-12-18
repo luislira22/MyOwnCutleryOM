@@ -10,7 +10,7 @@ export default class ClientRepository implements IBaseRepository<Client> {
     private _clientModel: mongoose.Model<mongoose.Document>;
     private _userModel: mongoose.Model<mongoose.Document>;
 
-    constructor(clientModel?: mongoose.Model<mongoose.Document>, userModel?: mongoose.Model<mongoose.Document>) {
+    constructor(clientModel: mongoose.Model<mongoose.Document>, userModel: mongoose.Model<mongoose.Document>) {
         this._clientModel = clientModel;
         this._userModel = userModel;
     }

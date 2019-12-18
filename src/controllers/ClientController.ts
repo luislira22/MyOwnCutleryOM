@@ -47,7 +47,7 @@ class ClientController {
             let clientService = new ClientService();
             await clientService.updateNameAndAddress(_id, name, address).then(value => {
                 //Return client : 200 CREATED
-                res.status(201).send(value);
+                res.status(200).send(value);
             }).catch(value => {
                 res.status(400).send(value);
             });
