@@ -1,18 +1,40 @@
 import express = require("express");
 
 //DOMAIN
-import Address from "../model/user/client/Address";
 import Fullname from "../model/user/client/Fullname";
+import Address from "../model/user/client/Address";
 //SERVICE
 import ClientService = require("../services/users/ClientService");
+import AdminService = require("../services/users/AdminService");
 //DTO
+import InputAdminDTO from "../dtos/users/admins/InputAdminDTO";
 import InputClientDTO from "../dtos/users/clients/InputClientDTO";
 //MAPPER
+import AdminMapper from "../mappers/users/AdminMapper";
 import ClientMapper from "../mappers/users/ClientMapper";
-import Client from "../model/user/client/Client";
+
+
+
+
 
 class AdminController {
 
+    async create(req: express.Request, res: express.Response): Promise<void> {
+        try {
+            let adminDTO : InputAdminDTO = <InputAdminDTO>req.body;
+            let adminService = new AdminService();
+            await adminService.create(AdminMapper.fromDTOToDomain(adminDTO)).then(value => {
+                //Return client : 201 CREATED
+                res.status(201).send(AdminMapper.fromDomainToDTO(value));
+            }).catch(value => {
+                res.status(400).send(value);
+            });
+        } catch (e) {
+            //Internal server error
+            res.status(500).send(e.message);
+        }
+
+    }
 
     async updateNameAndAddress(req: express.Request, res: express.Response): Promise<void> {
         try {

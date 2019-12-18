@@ -1,20 +1,20 @@
 import express = require("express");
-import ClientController = require("../../controllers/ClientController");
 import AuthMiddlewares from "../middlewares/AuthMiddlewares";
+import AdminController = require("../../controllers/AdminController");
 let router = express.Router();
 
 class AdminRoutes {
-    private readonly _adminController: ClientController;
+    private readonly _adminController: AdminController;
 
     constructor() {
-        this._adminController = new ClientController();
+        this._adminController = new AdminController();
     }
 
     get routes() {
         let controller = this._adminController;
-        router.get("/admin/clients",AuthMiddlewares.checkTokenByMethod(process.env.getAllClients), controller.retrieve);
-        router.put("/admin/clients/:id",AuthMiddlewares.checkTokenByMethod(process.env.updateNameAndAddress),controller.updateNameAndAddres);
-        router.get("/admin/client/:id?", AuthMiddlewares.checkTokenByMethod(process.env.getClient), controller.findById);
+        router.post("/admins",controller.create);
+        router.get("/admin/clients",AuthMiddlewares.checkAdminToken, controller.retrieve);
+        router.get("/admin/client/:id?",AuthMiddlewares.checkAdminToken, controller.findById);
         return router;
     }
 }
