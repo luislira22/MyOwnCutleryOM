@@ -2,7 +2,7 @@
 import IOrderService = require("./interfaces/OrderService");
 import ClientService = require("./ClientService");
 import Constants = require("../../config/constants/Constants");
-import OrderDTO from "../dtos/orders/OrderDTO";
+import InputOrderDTO from "../dtos/orders/InputOrderDTO";
 
 
 const axios = require('axios');
@@ -19,7 +19,7 @@ class OrderService implements IOrderService {
 
 
     // POST HTTP method (CONNECTS TO MASTER DATA PRODUCT)
-    async create(item: OrderDTO, callback: (error: any, result: any) => void) {
+    async create(item: InputOrderDTO, callback: (error: any, result: any) => void) {
         /*let getClient = new Promise((resolve, reject) => {
             this._clientService.findById(item.client, (error: any, client: Client) => {
                 if (error || client == null) reject("Client does not exists");
@@ -118,7 +118,7 @@ class OrderService implements IOrderService {
         /* this._orderRepository.retrieve(callback);*/
     }
 
-    async update(_id: string, item: OrderDTO, callback: (error: any, result: any) => void) {
+    async update(_id: string, item: InputOrderDTO, callback: (error: any, result: any) => void) {
         /*let getOrder = new Promise((resolve, reject) => {
             this.findById(_id, (error: any, order: Order) => {
                 if (error || order == null) reject("Order does not exists");
@@ -130,9 +130,9 @@ class OrderService implements IOrderService {
         }).catch((message) => {
             callback(message, null);
         });
-        if (item.quantity == undefined) callback("Quantity must be defined", null);
+        if (item.quantity == undefined) callback("OrderQuantity must be defined", null);
         try {
-            order.quantity = new Quantity(item.quantity);
+            order.quantity = new OrderQuantity(item.quantity);
             let orderPersistence = OrderMapper.fromDomainToPersistence(order);
             // @ts-ignore
             this._orderRepository.update(_id, orderPersistence, callback);

@@ -1,4 +1,4 @@
-import Address from "../../../src/model/clients2/IAddress";
+import Address from "../../../src/model/user/client/Address"
 
 describe('Create a valid address', () => {
     let address = new Address('Rua da Avenida', '4010-200', 'Porto', 'Portugal')

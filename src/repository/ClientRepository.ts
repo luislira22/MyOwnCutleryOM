@@ -10,7 +10,7 @@ export default class ClientRepository implements IBaseRepository<Client> {
     private _clientModel: mongoose.Model<mongoose.Document>;
     private _userModel: mongoose.Model<mongoose.Document>;
 
-    constructor(clientModel?: mongoose.Model<mongoose.Document>, userModel?: mongoose.Model<mongoose.Document>) {
+    constructor(clientModel: mongoose.Model<mongoose.Document>, userModel: mongoose.Model<mongoose.Document>) {
         this._clientModel = clientModel;
         this._userModel = userModel;
     }
@@ -31,7 +31,6 @@ export default class ClientRepository implements IBaseRepository<Client> {
                 if (error) reject(error);
                 else {
                     let clients = [];
-                    console.log(result);
                     result.forEach(function (element: IClientModel) {
                         clients.push(ClientMapper.fromPersistenceToDomain(element))
                     });
@@ -43,7 +42,7 @@ export default class ClientRepository implements IBaseRepository<Client> {
 
     public async findOne(id: string): Promise<Client> {
         return new Promise<Client>((resolve, reject) => {
-            this._userModel.find({_id: id, _role: "client"}, (error: any, result: IClientModel) => {
+            this._userModel.find({_id: id, role: "client"}, (error: any, result: IClientModel) => {
                 if (error) reject(error);
                 else resolve(ClientMapper.fromPersistenceToDomain(result));
             });

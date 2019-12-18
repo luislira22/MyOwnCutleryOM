@@ -1,4 +1,4 @@
-import Quantity from '../../../src/model/orders2/Quantity';
+import Quantity from '../../../src/model/orders2/OrderQuantity';
 
 test('Create a valid quantity', () => {
 
@@ -12,7 +12,7 @@ describe('Create an invalid quantity', () => {
         let quantity = new Quantity(null);
       expect(true).toBe(false);
     } catch (e) {
-      expect(e.message).toBe('Quantity shouldn\'t be null');
+      expect(e.message).toBe('OrderQuantity shouldn\'t be null');
     }
   });
   it('negative quantity', () => {
@@ -20,7 +20,7 @@ describe('Create an invalid quantity', () => {
         let quantity = new Quantity(-5);
       expect(true).toBe(false);
     } catch (e) {
-      expect(e.message).toBe('Quantity shouldn\'t be a negative value');
+      expect(e.message).toBe('OrderQuantity shouldn\'t be a negative value');
     }
   });
 });

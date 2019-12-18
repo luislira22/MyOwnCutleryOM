@@ -1,15 +1,15 @@
-import Client from "../../../src/model/clients2/Client";
-import Fullname from "../../../src/model/clients2/IFullname";
-import Address from "../../../src/model/clients2/IAddress";
-import Email from "../../../src/model/clients2/Email";
-import NIF from "../../../src/model/clients2/Nif";
-import Role from "../../../src/model/clients2/Role";
+import Client from "../../../src/model/user/client/Client";
+import Fullname from "../../../src/model/user/client/Fullname";
+import Address from "../../../src/model/user/client/Address";
+import Email from "../../../src/model/user/Email";
+import Nif from "../../../src/model/user/client/Nif";
+
 
 describe('Create a valid client', () => {
     let fullname = new Fullname('Daniel', 'Craig');
     let address = new Address('Rua da Avenida', '4010-200', 'Porto', 'Portugal');
     let email = new Email('daniel.craig@mail.co.uk');
-    let nif = new NIF(123456789);
+    let nif = new Nif(123456789);
     let password = "12345678";
     let client = new Client(
         fullname,

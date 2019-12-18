@@ -1,5 +1,5 @@
 import Order from '../../../src/model/orders2/Order';
-import Quantity from "../../../src/model/orders2/Quantity";
+import Quantity from "../../../src/model/orders2/OrderQuantity";
 import Client from "../../../src/model/clients2/Client";
 import Status from "../../../src/model/orders2/Status";
 import OrderDate from "../../../src/model/orders2/OrderDate";
