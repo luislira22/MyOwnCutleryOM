@@ -39,7 +39,7 @@ class OrderService {
 
     public async updateQuantity(orderId: string, clientId: string, orderQuantity: OrderQuantity) {
         let order = await this._orderRepository.findOne(orderId);
-        if(order.client.id == clientId) {
+        if (order.client.id == clientId) {
             order.quantity = orderQuantity;
             return await this._orderRepository.update(orderId, order);
         } else {
@@ -49,7 +49,14 @@ class OrderService {
         }
     }
 
-    public async delete(orderId: string, clientId): Promise<boolean> {
+    public async delete(orderId: string): Promise<boolean> {
+        let order = await this._orderRepository.findOne(orderId);
+        order.status = new OrderStatus('CANCELLED');
+        return await this._orderRepository.update(orderId, order);
+    }
+
+
+    public async deleteByClient(orderId: string, clientId): Promise<boolean> {
         let order = await this._orderRepository.findOne(orderId);
         if (order.client.id == clientId) {
             order.status = new OrderStatus('CANCELLED');

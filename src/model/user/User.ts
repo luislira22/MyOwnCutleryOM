@@ -2,7 +2,7 @@ import Email from "./Email";
 
 export default abstract class User {
     _id: string;
-    _email: Email;
+    private _email: Email;
     _password: string;
     readonly _role: string;
 
@@ -24,6 +24,10 @@ export default abstract class User {
 
     get email(): Email {
         return this._email;
+    }
+
+    set email(value: Email) {
+        this._email = value;
     }
 
     get password(): string {

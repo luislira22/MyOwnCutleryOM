@@ -25,10 +25,6 @@ export default class Client extends User {
         return this._id;
     }
 
-    get email() {
-        return this._email;
-    }
-
     get fullname() {
         return this._fullname;
     }

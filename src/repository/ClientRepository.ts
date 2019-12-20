@@ -1,6 +1,5 @@
 import mongoose = require('mongoose');
 import {IBaseRepository} from "./interfaces/IBaseRepository";
-import User from "../model/user/User";
 import Client from "../model/user/client/Client";
 import ClientMapper from "../mappers/users/ClientMapper";
 import IClientModel from "../dataAccess/schemas/users/interfaces/clients/IClientModel";
@@ -27,7 +26,7 @@ export default class ClientRepository implements IBaseRepository<Client> {
 
     public async find(): Promise<Client[]> {
         return new Promise<Client[]>((resolve, reject) => {
-            this._userModel.find({role: "client"}, (error: any, result: IClientModel[]) => {
+            this._userModel.find({role: "client", nif: {$ne: 999999999}}, (error: any, result: IClientModel[]) => {
                 if (error) reject(error);
                 else {
                     let clients = [];
@@ -44,14 +43,18 @@ export default class ClientRepository implements IBaseRepository<Client> {
         return new Promise<Client>((resolve, reject) => {
             this._userModel.findOne({_id: id, role: "client"}, (error: any, result: IClientModel) => {
                 if (error) reject(error);
-                else resolve(ClientMapper.fromPersistenceToDomain(result));
+                else {
+                    console.log(result);
+                    resolve(ClientMapper.fromPersistenceToDomain(result));
+                }
             });
         });
     }
 
-    public async update(id: string, client: User): Promise<boolean> {
+    public async update(id: string, client: Client): Promise<boolean> {
+        let persistenceClient = ClientMapper.fromDomainToPersistence(client);
         return new Promise<boolean>(async (resolve) => {
-            await this._userModel.update({_id: id, _role: "client"}, client, (error: any) => {
+            await this._clientModel.findOneAndUpdate({_id: id, role: "client"}, persistenceClient, (error: any, result: any) => {
                 resolve(!error);
             });
         });
@@ -59,7 +62,7 @@ export default class ClientRepository implements IBaseRepository<Client> {
 
     public async delete(id: string): Promise<boolean> {
         return new Promise<boolean>((resolve) => {
-            this._userModel.deleteOne({_id: id, _role: "client"}, (error: any) => {
+            this._userModel.deleteOne({_id: id, role: "client"}, (error: any) => {
                 resolve(!error);
             });
         });

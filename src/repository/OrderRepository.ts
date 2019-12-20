@@ -53,7 +53,6 @@ export default class OrderRepository implements IBaseRepository<Order> {
         });
     }
 
-    //TODO!!!!!!!!!!!!!!!!!!!!!
     public async findByClientId(id: string) : Promise<Order[]> {
         return new Promise<Order[]>((resolve, reject) => {
             this._orderModel.find({client: id}, (error: any, result: IOrderFullModel[]) => {
@@ -70,8 +69,9 @@ export default class OrderRepository implements IBaseRepository<Order> {
     }
 
     public async update(id: string, order: Order): Promise<boolean> {
+        let orderPersistence = OrderMapper.fromDomainToPersistence(order);
         return new Promise<boolean>(async (resolve) => {
-            await this._orderModel.update({_id: id}, order, (error: any) => {
+            await this._orderModel.findOneAndUpdate({_id: id}, orderPersistence, (error: any) => {
                 resolve(!error);
             });
         });

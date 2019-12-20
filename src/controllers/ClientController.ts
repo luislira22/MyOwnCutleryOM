@@ -71,23 +71,6 @@ class ClientController {
         }
     }
 
-    retrieve(req: express.Request, res: express.Response): void {
-        try {
-            let clientService = new ClientService();
-            clientService.getAll().then(result => {
-                let clientsDTO = [];
-                result.forEach(function (value) {
-                    clientsDTO.push(ClientMapper.fromDomainToDTO(value));
-                });
-                res.status(200).send(clientsDTO)
-            }).catch(value => {
-                res.send(400).send(value);
-            });
-        } catch (e) {
-            res.status(500).send(e.message);
-        }
-    }
-
     async findById(req: express.Request, res: express.Response) {
         try {
             //@ts-ignore

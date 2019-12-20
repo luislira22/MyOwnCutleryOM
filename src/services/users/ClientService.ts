@@ -4,6 +4,8 @@ import Fullname from "../../model/user/client/Fullname";
 import Address from "../../model/user/client/Address";
 //REPOSITORY
 import ClientRepository from "../../repository/ClientRepository";
+import Email from "../../model/user/Email";
+import Nif from "../../model/user/client/Nif";
 //PERSISTENCE MODELS
 const ClientModel = require("../../dataAccess/schemas/users/ClientSchema");
 const UserModel = require("../../dataAccess/schemas/users/UserSchema");
@@ -26,12 +28,22 @@ class ClientService {
         let client = await this._clientRepository.findOne(id);
         client.fullname = clientName;
         client.address = clientAddress;
+        console.log("WTF",client);
         return await this._clientRepository.update(id, client);
     }
 
-    //TODO (REDO) respecting lapr5 rgpd rules without breaking business logic
     async delete(id: string): Promise<boolean> {
-        return await this._clientRepository.delete(id);
+        let client = await this._clientRepository.findOne(id);
+
+        let deletedClient = new Client(
+            new Email(client.id + '@myowncutlery.com'),
+            'deleted',
+            new Fullname('Deleted', 'Deleted'),
+            new Address('Deleted', 'Deleted', 'Deleted', 'Deleted' ),
+            new Nif(999999999),
+            client.priority
+        );
+        return await this._clientRepository.update(id, deletedClient);
     }
 
     async getAll(): Promise<Client[]> {

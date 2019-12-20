@@ -30,7 +30,8 @@ class ClientRoutes {
         router.get("/client/orders", AuthMiddlewares.checkTokenByMethod(process.env.consultOrders), orderController.getOrdersByClient);
         //client update order quantity
         router.put("/client/order/:orderId", AuthMiddlewares.checkTokenByMethod(process.env.updateOrder), orderController.updateQuantity);
-
+        //client deletes all info related to him
+        router.delete("/client", AuthMiddlewares.checkTokenByMethod(process.env.deleteClient), clientController.delete);
         //router.get("/clients",AuthMiddlewares.checkTokenByMethod(process.env.getAllClients), controller.retrieve);
         //router.delete("/clients",AuthMiddlewares.isAdmin,AuthMiddlewares.checkTokenByMethod(process.env.cancelOrder), controller.delete);
         return router;

@@ -43,18 +43,18 @@ class OrderController {
     }
 
     public async deleteOrderByClient(req: express.Request, res: express.Response) {
-        /*try{
+        /* try {
             //@ts-ignore
-            let clientId : string = req.decoded.id;
-            let orderId :string = req.params.id;
-            let orderService : OrderService = new OrderService();
-            await orderService.deleteOrderByClient(clientId,orderId).catch((error) =>{
-                throw new Error(error);
+            let clientId = req.decoded.id;
+            let orderId = req.params._id;
+            let orderService = new OrderService();
+            await orderService.delete(orderId, clientId).then(value => {
+                res.status(204).send(value);
+            }).catch(value => {
+                res.status(400).send(value);
             });
-            res.status(204).send();
-        }
-        catch(error){
-            res.status(500).send(error.message);
+        } catch (e) {
+            res.status(500).send(e.message);
         }*/
     }
 
@@ -78,11 +78,9 @@ class OrderController {
 
     public async delete(req: express.Request, res: express.Response): Promise<void> {
         try {
-            //@ts-ignore
-            let clientId = req.decoded.id;
-            let orderId = req.params._id;
+            let orderId = req.params.orderId;
             let orderService = new OrderService();
-            await orderService.delete(orderId, clientId).then(value => {
+            await orderService.delete(orderId).then(value => {
                 res.status(204).send(value);
             }).catch(value => {
                 res.status(400).send(value);

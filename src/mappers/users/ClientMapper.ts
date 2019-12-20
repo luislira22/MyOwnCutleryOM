@@ -46,6 +46,7 @@ export default class ClientMapper {
 
     public static fromDomainToNameDTO(client: Client) : OutputClientNameDTO {
         return({
+            id: client.id,
             name: {
                 firstname: client.fullname.firstname,
                 lastname: client.fullname.lastname

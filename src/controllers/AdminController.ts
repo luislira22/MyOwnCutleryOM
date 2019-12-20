@@ -13,10 +13,6 @@ import InputClientDTO from "../dtos/users/clients/InputClientDTO";
 import AdminMapper from "../mappers/users/AdminMapper";
 import ClientMapper from "../mappers/users/ClientMapper";
 
-
-
-
-
 class AdminController {
 
     async create(req: express.Request, res: express.Response): Promise<void> {
@@ -36,11 +32,11 @@ class AdminController {
 
     }
 
-    async updateNameAndAddress(req: express.Request, res: express.Response): Promise<void> {
+    public async updateNameAndAddress(req: express.Request, res: express.Response): Promise<void> {
         try {
             let client: InputClientDTO = <InputClientDTO>req.body;
             //@ts-ignore
-            let id = req.params.id;
+            let clientId = req.params.clientId;
             let name = new Fullname(
                 client.name.firstname,
                 client.name.lastname);
@@ -51,9 +47,8 @@ class AdminController {
                 client.address.country);
 
             let clientService = new ClientService();
-            await clientService.updateNameAndAddress(id, name, address).then(value => {
-                //Return client : 200 CREATED
-                res.status(201).send(value);
+            await clientService.updateNameAndAddress(clientId, name, address).then(value => {
+                res.status(200).send(value);
             }).catch(value => {
                 res.status(400).send(value);
             });
@@ -79,15 +74,15 @@ class AdminController {
         }
     }
 
-    retrieve(req: express.Request, res: express.Response): void {
+    public async retrieveNames(req: express.Request, res: express.Response): Promise<void> {
         try {
             let clientService = new ClientService();
-            clientService.getAll().then(result => {
+            await clientService.getAll().then(result => {
                 let clientsDTO = [];
                 result.forEach(function (value) {
                     clientsDTO.push(ClientMapper.fromDomainToNameDTO(value));
                 });
-                res.status(200).send(clientsDTO)
+                res.status(200).send(clientsDTO);
             }).catch(value => {
                 res.send(400).send(value);
             });

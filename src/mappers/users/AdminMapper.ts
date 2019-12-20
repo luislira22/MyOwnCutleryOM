@@ -34,7 +34,6 @@ export default class AdminMapper {
 
     public static fromDomainToDTO(admin : Admin) :OutputAdminDTO{
         return({
-            id : admin.id,
             email : admin.email.email
         });
     }
