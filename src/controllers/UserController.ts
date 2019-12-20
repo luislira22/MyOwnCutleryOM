@@ -6,8 +6,6 @@ import UserService = require("../services/users/UserService");
 import UserLoginDTO from "../dtos/users/auth/UserLoginDTO";
 import ResponseDTOError from "../dtos/reponseDTO/ResponseDTOError";
 
-
-
 class UserController {
 
     public async login(req: express.Request, res: express.Response): Promise<void> {

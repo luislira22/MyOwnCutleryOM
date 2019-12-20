@@ -12,6 +12,7 @@ class UserRoutes {
 
     get routes() {
         let controller = this._userController;
+        //auth user
         router.post("/login", controller.login);
         return router;
     }

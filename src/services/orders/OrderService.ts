@@ -1,9 +1,11 @@
+import axios from 'axios'
 import OrderRepository from "../../repository/OrderRepository";
 import Order from "../../model/orders/Order";
 import OrderQuantity from "../../model/orders/OrderQuantity";
 import OrderStatus from "../../model/orders/OrderStatus";
+import ClientService = require("../users/ClientService");
 
-const OrderModel = require('../../dataAccess/schemas/orders');
+const OrderModel = require('../../dataAccess/schemas/orders/OrderSchema');
 
 class OrderService {
 
@@ -14,34 +16,37 @@ class OrderService {
     }
 
     public async create(order: Order, clientId: string): Promise<Order> {
-        //TODO
-        //verificar produto
-        /*await axios.get(Constants.MPD_API_URL + order.productID).then(response => {
-            if (response.status != 200) callback("Product id does not exists", null);
-            this._orderRepository.create(persistenceOrder, callback);
-        }).catch(reason => {
-            callback("Product id does not exists", null);
-        });*/
-        //Ir buscar client
+
+        await axios.get(process.env.MPD_API_URL + order.productID).catch(reason => {
+            return new Promise<Order>(((resolve, reject) => {
+                reject("Product id does not exists")
+            }))
+        });
+
+        let clientService = new ClientService();
+        order.client = await clientService.findById(clientId);
 
         return await this._orderRepository.create(order);
     }
 
-    public async getAllByClient(id: string): Promise<Order[]> {
-        //TODO
-        return null;
+    public async findByClientId(id: string): Promise<Order[]> {
+        return await this._orderRepository.findByClientId(id);
     }
 
     public async getAll(): Promise<Order[]> {
         return await this._orderRepository.find();
     }
 
-    //FIX
-    public async updateQuantity(id: string, orderQuantity: OrderQuantity) {
-        //TODO ter a certeza que o user é o mesmo owner da order
-        let order = await this._orderRepository.findOne(id);
-        order.quantity = orderQuantity;
-        return await this._orderRepository.update(id, order);
+    public async updateQuantity(orderId: string, clientId: string, orderQuantity: OrderQuantity) {
+        let order = await this._orderRepository.findOne(orderId);
+        if(order.client.id == clientId) {
+            order.quantity = orderQuantity;
+            return await this._orderRepository.update(orderId, order);
+        } else {
+            return new Promise<boolean>((resolve, reject) => {
+                reject("Permission denied: client is not order owner.");
+            });
+        }
     }
 
     public async delete(orderId: string, clientId): Promise<boolean> {
@@ -50,8 +55,8 @@ class OrderService {
             order.status = new OrderStatus('CANCELLED');
             return await this._orderRepository.update(orderId, order);
         } else {
-            return new Promise<boolean>((resolve) => {
-                resolve(false);
+            return new Promise<boolean>((resolve, reject) => {
+                reject("Permission denied: client is not order owner.");
             });
         }
     }

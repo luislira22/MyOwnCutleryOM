@@ -29,7 +29,7 @@ class ClientController {
         }
     }
 
-    async updateNameAndAddres(req: express.Request, res: express.Response): Promise<void> {
+    public async updateNameAndAddres(req: express.Request, res: express.Response): Promise<void> {
         try {
 
             let client: InputClientDTO = <InputClientDTO>req.body;
@@ -91,10 +91,10 @@ class ClientController {
     async findById(req: express.Request, res: express.Response) {
         try {
             //@ts-ignore
-            let id = req.params.id;
+            let id = req.decoded.id;
             let clientService = new ClientService();
             clientService.findById(id).then(value => {
-                res.status(201).send(ClientMapper.fromDomainToDTO(value));
+                res.status(200).send(ClientMapper.fromDomainToDTO(value));
             }).catch(value => {
                 res.status(400).send(value);
             });

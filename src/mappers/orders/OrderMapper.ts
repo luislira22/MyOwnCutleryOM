@@ -17,6 +17,7 @@ import OrderRequestedDeliveryDate from "../../model/orders/OrderRequestedDeliver
 import InputOrderDTO from "../../dtos/orders/InputOrderDTO";
 import OutputOrderDTO from "../../dtos/orders/OutputOrderDTO";
 import ClientMapper from "../users/ClientMapper";
+import OrderDeliveryDate from "../../model/orders/OrderDeliveryDate";
 
 export default class OrderMapper {
 
@@ -27,38 +28,45 @@ export default class OrderMapper {
                 orderDTO.productID,
                 new OrderQuantity(orderDTO.quantity),
                 new OrderStatus(orderDTO.status),
-                new OrderDate(orderDTO.date),
+                new OrderDate(new Date().toString()),
                 new OrderRequestedDeliveryDate(orderDTO.deliveryDate)
             )
         );
     }
 
     public static fromDomainToDTO(order: Order): OutputOrderDTO {
-        return ({
+        let orderDTO = {
+            id: order.id,
             client: ClientMapper.fromDomainToDTO(order.client),
             quantity: order.quantity.quantity,
-            date: order.date.date.toString(),
-            deliveryDate: order.date.date.toString(),
+            date: order.date.date,
+            requestDeliveryDate: order.requestDeliveryDate.date,
+            deliveryDate: null,
             status: order.status.status,
             productID: order.productID
-        });
+        };
+        if (order.deliveryDate != undefined) orderDTO.deliveryDate = order.deliveryDate.date;
+        return orderDTO;
     }
 
     public static fromDomainToPersistence(order: Order): mongoose.Model<IOrderModel> {
-        return ({
+        let orderPersistence = {
             // @ts-ignore
             client: order.client.id,
             quantity: order.quantity.quantity,
             date: order.date.date,
             requestDeliveryDate: order.requestDeliveryDate.date,
-            deliveryDate: order.deliveryDate.date,
+            deliveryDate: null,
             status: order.status.status,
             productID: order.productID,
-        });
+        };
+        if (order.deliveryDate != undefined) orderPersistence.deliveryDate = order.deliveryDate.date;
+        // @ts-ignore
+        return orderPersistence;
     }
 
     public static fromPersistenceToDomain(orderModel: IOrderFullModel): Order {
-        return new Order(
+        let order = new Order(
             new Client(
                 new Email(orderModel.client.email),
                 orderModel.client.password,
@@ -72,7 +80,10 @@ export default class OrderMapper {
             new OrderQuantity(orderModel.quantity),
             new OrderStatus(orderModel.status),
             new OrderDate(orderModel.date.toString()),
-            new OrderRequestedDeliveryDate(orderModel.requestDeliveryDate.toString())
+            new OrderRequestedDeliveryDate(orderModel.requestDeliveryDate.toString()),
+            orderModel._id
         );
+        if (orderModel.deliveryDate != undefined) order.deliveryDate = new OrderDeliveryDate(orderModel.deliveryDate.toString());
+        return order;
     }
 }

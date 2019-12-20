@@ -19,11 +19,13 @@ export default class OrderRepository implements IBaseRepository<Order> {
     //Possivelmente não funciona
     public async create(order: Order): Promise<Order> {
         let persistenceOrder = OrderMapper.fromDomainToPersistence(order);
-        let savedOrder = await this._orderModel.create(persistenceOrder, (error: any, result: IOrderModel) => {
-            if (error) throw new (error);
-            else return (result);
+        let savedOrder = await new Promise<IOrderModel>((resolve, reject) => {
+            this._orderModel.create(persistenceOrder, (error: any, result: IOrderModel) => {
+                if (error) reject(error);
+                else resolve(result);
+            });
         });
-        return await this.findOne(savedOrder.id);
+        return this.findOne(savedOrder._id);
     }
 
     //TODO Populate make sure it's working
@@ -42,12 +44,27 @@ export default class OrderRepository implements IBaseRepository<Order> {
         });
     }
 
-    //TODO Populate
     public async findOne(id: string): Promise<Order> {
         return new Promise<Order>((resolve, reject) => {
-            this._orderModel.find({_id: id}, (error: any, result: IOrderFullModel) => {
+            this._orderModel.findOne({_id: id}, (error: any, result: IOrderFullModel) => {
                 if (error) reject(error);
                 else resolve(OrderMapper.fromPersistenceToDomain(result));
+            }).populate('client');
+        });
+    }
+
+    //TODO!!!!!!!!!!!!!!!!!!!!!
+    public async findByClientId(id: string) : Promise<Order[]> {
+        return new Promise<Order[]>((resolve, reject) => {
+            this._orderModel.find({client: id}, (error: any, result: IOrderFullModel[]) => {
+                if (error) reject(error);
+                else {
+                    let orders = [];
+                    result.forEach(function (element: IOrderFullModel) {
+                       orders.push(OrderMapper.fromPersistenceToDomain(element));
+                    });
+                    resolve(orders);
+                }
             }).populate('client');
         });
     }

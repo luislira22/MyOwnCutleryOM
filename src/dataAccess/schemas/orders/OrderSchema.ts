@@ -2,7 +2,7 @@ import * as mongoose from "mongoose";
 
 //TODO - REDO
 mongoose.connection.once("open", () => {
-    console.log("Connected to mongodb. [USER]");
+    console.log("Connected to mongodb. [ORDER2]");
 });
 
 // @ts-ignore

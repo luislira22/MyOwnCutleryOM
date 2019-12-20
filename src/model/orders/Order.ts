@@ -9,12 +9,12 @@ import OrderConclusionDate from "./OrderDeliveryDate";
 export default class Order {
 
     private readonly _id: string;
-    private readonly _client: Client;
+    private _client: Client;
     private readonly _productID: string;
     private _quantity: OrderQuantity;
     private _status: OrderStatus;
     private readonly _date: OrderDate;
-    private readonly _deliveryDate: OrderDeliveryDate;
+    private _deliveryDate: OrderDeliveryDate;
     private readonly _requestDeliveryDate: OrderRequestedDeliveryDate;
 
     constructor(client: Client, productID: string, quantity: OrderQuantity, status: OrderStatus, date: OrderDate, requestDeliveryDate: OrderRequestedDeliveryDate, id?: string) {
@@ -42,6 +42,10 @@ export default class Order {
         return this._client;
     }
 
+    set client(value: Client) {
+        this._client = value;
+    }
+
     get quantity(): OrderQuantity {
         return this._quantity;
     }
@@ -56,6 +60,10 @@ export default class Order {
 
     get deliveryDate(): OrderConclusionDate {
         return this._deliveryDate;
+    }
+
+    set deliveryDate(value: OrderConclusionDate) {
+        this._deliveryDate = value;
     }
 
     get requestDeliveryDate(): OrderRequestedDeliveryDate {
