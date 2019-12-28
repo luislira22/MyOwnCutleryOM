@@ -84,7 +84,7 @@ class OrderService {
         while (products.length > 0) {
             let tempMax = OrderService.mode(products);
             ordered.push(tempMax);
-            this.without(products, tempMax);
+           products = this.without(products, tempMax);
         }
         return ordered;
         // Lista ordenada com os produtos trending por exemplo [Produto1, Produto2, Produto3]
