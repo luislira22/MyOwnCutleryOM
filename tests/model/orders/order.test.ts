@@ -1,46 +1,45 @@
-import Order from '../../../src/model/orders2/Order';
-import Quantity from "../../../src/model/orders2/OrderQuantity";
-import Client from "../../../src/model/clients2/Client";
-import Status from "../../../src/model/orders2/Status";
-import OrderDate from "../../../src/model/orders2/OrderDate";
-import Fullname from "../../../src/model/clients2/IFullname";
-import Address from "../../../src/model/clients2/IAddress";
-import Email from "../../../src/model/clients2/Email";
-import NIF from "../../../src/model/clients2/Nif";
-import Role from "../../../src/model/clients2/Role";
+import Client from "../../../src/model/user/client/Client";
+import Fullname from "../../../src/model/user/client/Fullname";
+import Address from "../../../src/model/user/client/Address";
+import Email from "../../../src/model/user/Email";
+import OrderStatus from "../../../src/model/orders/OrderStatus";
+import OrderDate from "../../../src/model/orders/OrderDate";
+import Order from "../../../src/model/orders/Order";
+import OrderQuantity from "../../../src/model/orders/OrderQuantity";
+import Nif from "../../../src/model/user/client/Nif";
+import Priority from "../../../src/model/user/client/Priority";
+import OrderRequestedDeliveryDate from "../../../src/model/orders/OrderRequestedDeliveryDate";
 
 describe('Create a valid order', () => {
 
     let client = new Client(
-        new Fullname("John", "Doe"),
-        new Address("Rua 1", "4470-123", "Porto", "Portugal"),
         new Email("johndoe@gmail.com"),
         "123456789",
-        new NIF(111111111),
-        new Role("Admin"));
+        new Fullname("John", "Doe"),
+        new Address("Rua 1", "4470-123", "Porto", "Portugal"),
+        new Nif(111111111),
+        new Priority(1));
     let product = "asdf-sadf-asdf-sadf-1234-1234-1234";
 
-    let quantity = new Quantity(20);
-    let status = new Status("ACCEPTED");
+    let quantity = new OrderQuantity(20);
+    let status = new OrderStatus("ACCEPTED");
     let orderDate = new OrderDate("2019-10-10");
-    let order = new Order(client, product, quantity, status, orderDate);
+    let orderRequestedDeliveryDate = new OrderRequestedDeliveryDate("2029-10-10");
+    let order = new Order(client, product, quantity, status, orderDate, orderRequestedDeliveryDate);
 
-    it("ensure all Parameters are well formed",()=>{
+    it("ensure all Parameters are well formed", () => {
         expect(order.client).toEqual(client);
-    })
-    it("ensure all Parameters are well formed",()=>{
+    });
+    it("ensure all Parameters are well formed", () => {
         expect(order.quantity).toEqual(quantity);
-    })
-    it("ensure all Parameters are well formed",()=>{
+    });
+    it("ensure all Parameters are well formed", () => {
         expect(order.productID).toEqual(product);
-    })
-    it("ensure all Parameters are well formed",()=>{
+    });
+    it("ensure all Parameters are well formed", () => {
         expect(order.date).toEqual(orderDate);
-    })
-    it("ensure all Parameters are well formed",()=>{
+    });
+    it("ensure all Parameters are well formed", () => {
         expect(order.status).toEqual(status);
-    })
-    it("ensure is an Entity",()=>{
-        expect(order.isEntity());
-    })
+    });
 });

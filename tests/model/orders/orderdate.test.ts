@@ -1,4 +1,4 @@
-import OrderDate from '../../../src/model/orders2/OrderDate';
+import OrderDate from '../../../src/model/orders/OrderDate';
 
 test('Create a valid order date', () => {
 
