@@ -1,7 +1,8 @@
 import UserRepository from "../../repository/UserRepository";
 import User from "../../model/user/User";
 import ResponseDTO from "../../dtos/reponseDTO/ResponseDTO";
-import LoginResponseDTO from "../../dtos/reponseDTO/LoginResponseDTO";
+import LoginResponseDTO from "../../dtos/users/auth/LoginResponseDTO";
+import permissionsHandler from "../../config/utils/permissionsHandler";
 
 const ClientModel = require("../../dataAccess/schemas/users/ClientSchema");
 const UserModel = require("../../dataAccess/schemas/users/UserSchema");
@@ -32,6 +33,7 @@ class UserService {
         } else {
             return await bcrypt.compare(insertedPassword, user.password).then((match: boolean) => {
                 if (match) {
+                    let role = user.role;
                     const payload = {
                         id: user._id,
                         role: user.role
@@ -43,9 +45,10 @@ class UserService {
                     let responseDTO: LoginResponseDTO = {
                         success: true,
                         message: "Login successful",
-                        token: token
+                        token: token,
+                        permissions:permissionsHandler.createPermissionsResponse(role)
                     };
-                    return responseDTO;
+                    return responseDTO
                 } else {
                     let responseDTO: ResponseDTO = {
                         success: false,

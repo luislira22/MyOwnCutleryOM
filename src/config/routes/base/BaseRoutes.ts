@@ -1,4 +1,5 @@
 import express = require("express");
+import Permissions from "../../middlewares/PermissionsMiddlewares";
 import ClientRoutes = require("../ClientRoutes");
 import AdminRoutes = require("../AdminRoutes");
 import UserRoutes = require("../UserRoutes");

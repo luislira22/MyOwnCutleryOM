@@ -48,7 +48,6 @@ export default class UserRepository implements IBaseRepository<User> {
 
     public async findByEmail(email: string) : Promise<User> {
         return new Promise<User>((resolve, reject) => {
-            console.log(this._userModel);
             this._userModel.findOne({email : email}, (error: any, result: any) => {
                 if (error) reject(error);
                 else if(result == null) resolve(null);
@@ -68,7 +67,6 @@ export default class UserRepository implements IBaseRepository<User> {
                 if (error) reject(error);
                 else {
                     let users: User[] = [];
-                    console.log(result);
                     result.forEach(function (element: any) {
                         if (element.role == 'ClientModel') users.push(ClientMapper.fromPersistenceToDomain(element));
                         else if (element.role == 'AdminModel') users.push(AdminMapper.fromPersistenceToDomain(element));

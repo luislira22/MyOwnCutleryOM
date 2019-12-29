@@ -56,7 +56,7 @@ class ClientController {
         }
     }
 
-    delete(req: express.Request, res: express.Response): void {
+    async delete(req: express.Request, res: express.Response): Promise<void> {
         try {
             //@ts-ignore
             let _id: string = req.decoded.id;

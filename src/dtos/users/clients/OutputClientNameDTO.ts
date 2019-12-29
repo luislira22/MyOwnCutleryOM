@@ -3,6 +3,6 @@ import DTO from "../../DTO";
 
 
 export default interface OutputClientNameDTO extends DTO {
-    id: string
+    id : string,
     name: FullnameDTO
 }

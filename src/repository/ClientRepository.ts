@@ -44,7 +44,6 @@ export default class ClientRepository implements IBaseRepository<Client> {
             this._userModel.findOne({_id: id, role: "client"}, (error: any, result: IClientModel) => {
                 if (error) reject(error);
                 else {
-                    console.log(result);
                     resolve(ClientMapper.fromPersistenceToDomain(result));
                 }
             });

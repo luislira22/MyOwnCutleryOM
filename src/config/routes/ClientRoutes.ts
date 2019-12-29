@@ -2,7 +2,7 @@ import express = require("express");
 import ClientController = require("../../controllers/ClientController");
 import AuthMiddlewares from "../middlewares/AuthMiddlewares";
 import OrderController = require("../../controllers/OrderController");
-
+const configs = require('../config');
 
 let router = express.Router();
 
@@ -21,19 +21,17 @@ class ClientRoutes {
         //create client
         router.post("/client", clientController.create);
         //consult client
-        router.get("/client", AuthMiddlewares.checkTokenByMethod(process.env.getClient), clientController.findById);
+        router.get("/client", AuthMiddlewares.checkTokenByMethod(configs.permissions.getClient), clientController.findById);
         //client updates name and address
-        router.put("/client", AuthMiddlewares.checkTokenByMethod(process.env.updateNameAndAddress), clientController.updateNameAndAddres);
+        router.put("/client", AuthMiddlewares.checkTokenByMethod(configs.permissions.updateNameAndAddress), clientController.updateNameAndAddres);
         //client creates order
-        router.post("/client/order", AuthMiddlewares.checkTokenByMethod(process.env.createOrder), orderController.create);
+        router.post("/client/order", AuthMiddlewares.checkTokenByMethod(configs.permissions.createOrder), orderController.create);
         //client consult his orders
-        router.get("/client/orders", AuthMiddlewares.checkTokenByMethod(process.env.consultOrders), orderController.getOrdersByClient);
+        router.get("/client/orders", AuthMiddlewares.checkTokenByMethod(configs.permissions.consultOrders), orderController.getOrdersByClient);
         //client update order quantity
-        router.put("/client/order/:orderId", AuthMiddlewares.checkTokenByMethod(process.env.updateOrder), orderController.updateQuantity);
+        router.put("/client/order/:orderId", AuthMiddlewares.checkTokenByMethod(configs.permissions.updateOrder), orderController.updateQuantity);
         //client deletes all info related to him
-        router.delete("/client", AuthMiddlewares.checkTokenByMethod(process.env.deleteClient), clientController.delete);
-        //router.get("/clients",AuthMiddlewares.checkTokenByMethod(process.env.getAllClients), controller.retrieve);
-        //router.delete("/clients",AuthMiddlewares.isAdmin,AuthMiddlewares.checkTokenByMethod(process.env.cancelOrder), controller.delete);
+        router.delete("/client", AuthMiddlewares.checkTokenByMethod(configs.permissions.deleteClient), clientController.delete);
         return router;
     }
 }
