@@ -14,7 +14,7 @@ pipelines:
                   - npm install
                   - npm install -g gulp
                   - gulp compile
-                  - tar -cvzf application.tgz lib/ package-lock.json package.json
+                  - tar -cvzf application.tgz lib/ package-lock.json package.json .env
               artifacts:
                   - application.tgz
         - step:

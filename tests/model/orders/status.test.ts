@@ -1,5 +1,4 @@
-import Status from '../../../src/model/orders2/Status';
-import {ValidStatus} from '../../../src/model/orders2/enums/ValidStatus'
+import Status, {ValidStatus} from "../../../src/model/orders/OrderStatus";
 
 test('Create an accepted status', () => {
     let status = new Status('ACCEPTED');
@@ -45,7 +44,7 @@ test('Create an invalid status', () => {
 
 test('Create an invalid status', () => {
     try {
-        new Status(null)
+        new Status(null);
         expect(true).toBe(false)
     } catch (e) {
         expect(e.message).toBe('Cannot read property \'toUpperCase\' of null')

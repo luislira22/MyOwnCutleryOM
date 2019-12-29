@@ -3,6 +3,7 @@ import Fullname from "../../../src/model/user/client/Fullname";
 import Address from "../../../src/model/user/client/Address";
 import Email from "../../../src/model/user/Email";
 import Nif from "../../../src/model/user/client/Nif";
+import Priority from "../../../src/model/user/client/Priority";
 
 
 describe('Create a valid client', () => {
@@ -12,12 +13,12 @@ describe('Create a valid client', () => {
     let nif = new Nif(123456789);
     let password = "12345678";
     let client = new Client(
-        fullname,
-        address,
         email,
         password,
+        fullname,
+        address,
         nif,
-        null,
+        new Priority(1),
     );
     it('IAddress is set', () => {
         expect(client.address).toEqual(address);
@@ -26,15 +27,12 @@ describe('Create a valid client', () => {
         expect(client.email).toEqual(email);
     });
     it('Name is set', () => {
-        expect(client.name).toEqual(fullname);
+        expect(client.fullname).toEqual(fullname);
     });
     it('Password is set', () => {
         expect(client.password).toEqual(password);
     });
     it('Nif is set', () => {
         expect(client.nif).toEqual(nif);
-    });
-    it('Role is client', () => {
-        expect(client.role).toEqual(new Role("Client"));
     });
 });
