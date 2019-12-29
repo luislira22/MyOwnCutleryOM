@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.use(Permissions.updatePermissions,BaseRoutes.routes);
 app.use(cors());
 
+
 let port = config.settings.port;
 app.set("port", port);
 
