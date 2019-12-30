@@ -40,8 +40,7 @@ export default class ClientMapper {
                 city: client.address.city,
                 country: client.address.country
             },
-            nif: client.nif.value,
-            priority: client.priority.value
+            nif: client.nif.value
         });
     }
 
