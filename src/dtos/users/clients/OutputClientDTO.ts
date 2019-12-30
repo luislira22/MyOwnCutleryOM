@@ -7,4 +7,5 @@ export default interface OutputClientDTO extends DTO {
     address: AddressDTO
     email: string
     nif: number
+    priority: number
 }
