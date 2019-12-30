@@ -96,7 +96,7 @@ class OrderController {
             await orderService.getAll().then(value => {
                 let orders = [];
                 value.forEach(function (element) {
-                    orders.push(OrderMapper.fromDomainToDTO(element));
+                    orders.push(OrderMapper.fromDomainToLightDTO(element));
                 });
                 res.status(200).send(orders);
             }).catch(value => {
