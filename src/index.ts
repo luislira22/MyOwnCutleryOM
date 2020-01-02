@@ -9,9 +9,9 @@ const config = require("./config/config");
 
 var app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(Permissions.updatePermissions,BaseRoutes.routes);
-app.use(cors());
 
 let port = config.settings.port;
 app.set("port", port);

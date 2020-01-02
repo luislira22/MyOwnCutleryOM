@@ -18,6 +18,7 @@ import InputOrderDTO from "../../dtos/orders/InputOrderDTO";
 import OutputOrderDTO from "../../dtos/orders/OutputOrderDTO";
 import ClientMapper from "../users/ClientMapper";
 import OrderDeliveryDate from "../../model/orders/OrderDeliveryDate";
+import OutputLightOrderDTO from "../../dtos/orders/OutputLightOrderDTO";
 
 export default class OrderMapper {
 
@@ -38,6 +39,21 @@ export default class OrderMapper {
         let orderDTO = {
             id: order.id,
             client: ClientMapper.fromDomainToDTO(order.client),
+            quantity: order.quantity.quantity,
+            date: order.date.date,
+            requestDeliveryDate: order.requestDeliveryDate.date,
+            deliveryDate: null,
+            status: order.status.status,
+            productID: order.productID
+        };
+        if (order.deliveryDate != undefined) orderDTO.deliveryDate = order.deliveryDate.date;
+        return orderDTO;
+    }
+
+    public static fromDomainToLightDTO(order: Order): OutputLightOrderDTO {
+        let orderDTO = {
+            id: order.id,
+            client: ClientMapper.fromDomainToNameDTO(order.client),
             quantity: order.quantity.quantity,
             date: order.date.date,
             requestDeliveryDate: order.requestDeliveryDate.date,

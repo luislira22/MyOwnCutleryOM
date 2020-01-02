@@ -50,7 +50,8 @@ export default class ClientMapper {
             name: {
                 firstname: client.fullname.firstname,
                 lastname: client.fullname.lastname
-            }
+            },
+            priority: client.priority.value
         })
     }
 
