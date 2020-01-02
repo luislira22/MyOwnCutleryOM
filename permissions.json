@@ -2,10 +2,8 @@
     "updateNameAndAddress": "client",
     "getClient":"all",
     "getAllClients":"all",
-    "createClient":"client",
     "consultOrders":"all",
     "updateOrder":"client",
     "deleteClient":"client",
-    "cancelOrder":"all",
-    "createOrder":"client"
+    "cancelOrder":"all"
 }

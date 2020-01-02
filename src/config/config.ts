@@ -6,12 +6,9 @@ module.exports = {
     permissions:{
         updateNameAndAddress:"client",
         getClient:"all",
-        getAllClients:"all",
-        createClient:"client",
-        consultOrders:"client",
+        getAllClients:"admin",
         updateOrder:"client",
         deleteClient:"client",
         cancelOrder:"all",
-        createOrder:"client"
     }
 };
