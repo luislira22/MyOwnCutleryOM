@@ -52,7 +52,6 @@ export default class UserRepository implements IBaseRepository<User> {
                 if (error) reject(error);
                 else if (result == null) resolve(null);
                 else {
-                    console.log(result);
                     if (result.role == 'client') resolve(ClientMapper.fromPersistenceToDomain(result));
                     else if (result.role == 'admin') resolve(AdminMapper.fromPersistenceToDomain(result));
                     reject(new Error("invalid role found"));

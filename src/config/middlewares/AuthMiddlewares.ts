@@ -57,6 +57,8 @@ export default class Auth {
                     }
                 }
             })
+        }else {
+            return res.status(403).send(Auth.tokenError('Auth token is not supplied'));
         }
     }
 

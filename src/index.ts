@@ -7,7 +7,7 @@ import cors = require("cors");
 
 const config = require("./config/config");
 
-var app = express();
+let app = express();
 
 app.use(cors());
 app.use(bodyParser.json());

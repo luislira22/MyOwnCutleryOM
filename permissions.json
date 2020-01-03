@@ -1,9 +1,17 @@
 {
-    "updateNameAndAddress": "client",
-    "getClient":"all",
-    "getAllClients":"all",
-    "consultOrders":"all",
-    "updateOrder":"client",
-    "deleteClient":"client",
-    "cancelOrder":"all"
+    "admins":{
+        "getAllClients":"true",
+        "getAllOrders": "true",
+        "MDFP": "true"
+    },
+    "clients": {
+        "getOrders": "true",
+        "deleteClient":"true"
+    },
+    "universal":{
+        "updateNameAndAddress": "client",
+        "getClient":"all",
+        "updateOrder":"client",
+        "cancelOrder":"all"
+    }
 }

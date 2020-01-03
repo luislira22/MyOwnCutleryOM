@@ -28,7 +28,6 @@ class ClientService {
         let client = await this._clientRepository.findOne(id);
         client.fullname = clientName;
         client.address = clientAddress;
-        console.log("WTF",client);
         return await this._clientRepository.update(id, client);
     }
 

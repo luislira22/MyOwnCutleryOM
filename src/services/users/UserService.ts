@@ -53,12 +53,13 @@ class UserService {
                     }else if(user instanceof Admin){
                         userDTO = AdminMapper.fromDomainToDTO(<Admin> user);
                     }
+                    let permissions = permissionsHandler.createPermissionsResponse(role);
                     let responseDTO: LoginResponseDTO = {
                         user:userDTO,
                         success: true,
                         message: "Login successful",
                         token: token,
-                        permissions:permissionsHandler.createPermissionsResponse(role)
+                        permissions:permissions
                     };
                     return responseDTO
                 } else {

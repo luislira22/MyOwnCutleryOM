@@ -84,4 +84,60 @@ export default class OrderRepository implements IBaseRepository<Order> {
             });
         });
     }
+
+    public async getMostOrderedProductsByProductsQuantity() : Promise<string[]>{
+        return new Promise<string[]>((resolve,reject) => {
+            this._orderModel.aggregate([
+                {
+                    "$group" :
+                        {
+                            _id: "$productID",
+                            totalProducts: {"$sum": "$quantity"}
+                        }
+                },
+                {"$sort" :
+                        {totalProducts : -1}
+                },
+                {"$limit": 3}
+            ],(error: any, result: mongoose.Document[]) => {
+                if (error) reject(error);
+                else {
+                    console.log(result);
+                    let productIds : string[] = [];
+                    result.forEach(function (element: mongoose.Document) {
+                        productIds.push(element._id);
+                    });
+                    resolve(productIds);
+                }
+            });
+        });
+    }
+
+    public async getMostOrderedProductsByOrdersQuantity() : Promise<string[]>{
+        return new Promise<string[]>((resolve,reject) => {
+            this._orderModel.aggregate([
+                {
+                    "$group" :
+                        {
+                            _id: "$productID",
+                            totalOrders: {"$sum": 1}
+                        }
+                },
+                {"$sort" :
+                        {totalOrders : -1}
+                },
+                {"$limit": 3}
+            ],(error: any, result: mongoose.Document[]) => {
+                if (error) reject(error);
+                else {
+                    console.log(result);
+                    let productIds : string[] = [];
+                    result.forEach(function (element: mongoose.Document) {
+                        productIds.push(element._id);
+                    });
+                    resolve(productIds);
+                }
+            });
+        });
+    }
 }
