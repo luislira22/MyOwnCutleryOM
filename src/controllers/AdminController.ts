@@ -90,6 +90,21 @@ class AdminController {
             res.status(500).send(e.message);
         }
     }
+
+    public async deleteClient(req: express.Request, res: express.Response): Promise<void> {
+        try {
+            //@ts-ignore
+            let clientId = req.params.clientId;
+            let clientService = new ClientService();
+            clientService.delete(clientId).then(value => {
+                res.status(204).send(value);
+            }).catch(value => {
+                res.status(400).send(value);
+            })
+        } catch (e) {
+            res.status(500).send(e.message);
+        }
+    }
 }
 
 
