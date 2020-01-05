@@ -151,7 +151,7 @@ export default class OrderMapper {
                 clientCId = `c${clientCounter}`;
                 clientMap.set(clientId,clientCId);
                 clientCounter++;
-                let clientDTO : PPClientDTO = {id:clientCId,priority:clientPriority};
+                let clientDTO : PPClientDTO = {clientId:clientCId,priority:clientPriority};
                 PPDTO.clients.push(clientDTO);
             }else{
                 clientCId =  clientMap.get(clientId);

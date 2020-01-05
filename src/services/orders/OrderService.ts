@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, {AxiosResponse} from 'axios'
 import OrderRepository from "../../repository/OrderRepository";
 import Order from "../../model/orders/Order";
 import OrderQuantity from "../../model/orders/OrderQuantity";
@@ -107,20 +107,30 @@ class OrderService {
 
     public async createProductionPlanning(){
         //get accepted Orders
-        let detailedOrders : Order[] = await this.getAll();
-        console.log(detailedOrders);
+        let detailedOrders : Order[] = await this._orderRepository.findAccepted();
         //production planning DTO
         let ppDTO : ProductionPlanningRequestDTO = OrderMapper.fromDomainListToProductionPlanningDTO(detailedOrders);
         console.log(ppDTO);
         //make request to production planning server
-        let res = await axios.post(process.env.PP_API_URL,ppDTO);
+        let data = await axios({
+            method: 'post',
+            url: process.env.PP_API_URL+"/productionplanning",
+            data: ppDTO
+        }).then((result)=>{
+            return result.data;
+        }).catch((error)=>{
+            console.log(error);
+        });
+
         //update request
-        let ppRDTO : ProductionPlanningResponseDTO = <ProductionPlanningResponseDTO>res.data;
+        let ppRDTO : ProductionPlanningResponseDTO = <ProductionPlanningResponseDTO>data;
+
         for(let orderJson of ppRDTO.orderList){
             let orderId = orderJson.orderId;
             //received delivery date
-            let deliveryDate = new Date(orderJson.endTime);
-            console.log(deliveryDate);
+            // @ts-ignore
+            let endTime = orderJson.endTime * 1000;
+            let deliveryDate = new Date(endTime);
             //create delivery date object
             let orderDeliveryDate : OrderDeliveryDate = new OrderDeliveryDate(deliveryDate.toDateString());
             //fetch order
@@ -129,6 +139,7 @@ class OrderService {
             //change end date
             await this._orderRepository.update(orderId,order);
         }
+        //console.log(res);
     }
 }
 

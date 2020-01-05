@@ -123,9 +123,9 @@ class AdminController {
         try{
             let orderService = new OrderService();
             await orderService.createProductionPlanning().then(() =>{
-                res.status(200).send("{success : true}");
+                res.status(200).send();
             }).catch((error) => {
-                res.status(400).send("{success : false}");
+                res.status(400).send();
                 throw error;
             });
         }catch(e){
