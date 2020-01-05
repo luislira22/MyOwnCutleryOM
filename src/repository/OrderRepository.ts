@@ -45,10 +45,13 @@ export default class OrderRepository implements IBaseRepository<Order> {
     }
 
     public async findOne(id: string): Promise<Order> {
-        return new Promise<Order>((resolve, reject) => {
+        return new Promise<Order>( (resolve, reject) => {
             this._orderModel.findOne({_id: id}, (error: any, result: IOrderFullModel) => {
                 if (error) reject(error);
-                else resolve(OrderMapper.fromPersistenceToDomain(result));
+                else {
+                    if (result == null) reject("Order does not exists");
+                    else resolve(OrderMapper.fromPersistenceToDomain(result));
+                }
             }).populate('client');
         });
     }

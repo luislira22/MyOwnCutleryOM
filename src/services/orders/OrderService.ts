@@ -38,7 +38,14 @@ class OrderService {
     }
 
     public async updateQuantity(orderId: string, clientId: string, orderQuantity: OrderQuantity) {
-        let order = await this._orderRepository.findOne(orderId);
+        let order;
+        try {
+            let order = await this._orderRepository.findOne(orderId);
+        } catch (e) {
+            return new Promise<boolean>((resolve, reject) => {
+                reject("Order Id does not exists");
+            });
+        }
         if (order.client.id == clientId) {
             order.quantity = orderQuantity;
             return await this._orderRepository.update(orderId, order);
@@ -50,7 +57,14 @@ class OrderService {
     }
 
     public async updateQuantityAdmin(orderId: string, orderQuantity: OrderQuantity) {
-        let order = await this._orderRepository.findOne(orderId);
+        let order;
+        try {
+            let order = await this._orderRepository.findOne(orderId);
+        } catch (e) {
+            return new Promise<boolean>((resolve, reject) => {
+                reject("Order Id does not exists");
+            });
+        }
         order.quantity = orderQuantity;
         return await this._orderRepository.update(orderId, order);
 
