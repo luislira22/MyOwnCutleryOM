@@ -19,6 +19,9 @@ import OutputOrderDTO from "../../dtos/orders/OutputOrderDTO";
 import ClientMapper from "../users/ClientMapper";
 import OrderDeliveryDate from "../../model/orders/OrderDeliveryDate";
 import OutputLightOrderDTO from "../../dtos/orders/OutputLightOrderDTO";
+import PPOrderDTO from "../../dtos/productionPlanning/PPOrderDTO";
+import ProductionPlanningRequestDTO from "../../dtos/productionPlanning/ProductionPlanningRequestDTO";
+import PPClientDTO from "../../dtos/productionPlanning/PPClientDTO";
 
 export default class OrderMapper {
 
@@ -101,5 +104,40 @@ export default class OrderMapper {
         );
         if (orderModel.deliveryDate != undefined) order.deliveryDate = new OrderDeliveryDate(orderModel.deliveryDate.toString());
         return order;
+    }
+    public static fromDomainListToProductionPlanningDTO(orders : Order[]) : ProductionPlanningRequestDTO{
+        let PPDTO : ProductionPlanningRequestDTO = {orders:[],clients:[]};
+        let clientMap : Map<string, string> = new Map<string, string>();
+        let orderCounter = 1;
+        let clientCounter = 1;
+        orders.forEach(async (order) =>{
+
+            //conclusion time in seconds
+            let conclusionTime = order.date.date.getTime()/1000;
+            //order id
+            let orderId = order.id;
+            //product id
+            let productId = order.productID;
+            //client id
+            let clientId = order.client.id;
+            let clientPriority = order.client.priority.value;
+            let clientCId;
+            //Build PP ClientDTO
+            if(!clientMap.has(clientId)){
+                //add client to the map
+                clientCId = `c${clientCounter}`;
+                clientMap.set(clientId,clientCId);
+                clientCounter++;
+                let clientDTO : PPClientDTO = {id:clientCId,priority:clientPriority};
+                PPDTO.clients.push(clientDTO);
+            }else{
+                clientCId =  clientMap.get(clientId);
+            }
+            //Create PP OrderDTO
+            let orderDTO : PPOrderDTO = {orderId:orderId,productId:productId,clientId:clientCId,quantity:order.quantity.quantity,conclusionTime: conclusionTime};
+            orderCounter++;
+            PPDTO.orders.push(orderDTO);
+        });
+        return PPDTO;
     }
 }

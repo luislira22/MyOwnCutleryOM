@@ -12,6 +12,9 @@ import InputClientDTO from "../dtos/users/clients/InputClientDTO";
 //MAPPER
 import AdminMapper from "../mappers/users/AdminMapper";
 import ClientMapper from "../mappers/users/ClientMapper";
+import OrderService = require("../services/orders/OrderService");
+import OrderMapper from "../mappers/orders/OrderMapper";
+import Order from "../model/orders/Order";
 
 class AdminController {
 
@@ -112,6 +115,20 @@ class AdminController {
                 res.status(400).send(value);
             })
         } catch (e) {
+            res.status(500).send(e.message);
+        }
+    }
+
+    public async createProductionPlanning(req: express.Request, res: express.Response) : Promise<void>{
+        try{
+            let orderService = new OrderService();
+            await orderService.createProductionPlanning().then(() =>{
+                res.status(200).send("{success : true}");
+            }).catch((error) => {
+                res.status(400).send("{success : false}");
+                throw error;
+            });
+        }catch(e){
             res.status(500).send(e.message);
         }
     }

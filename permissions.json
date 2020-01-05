@@ -1,12 +1,12 @@
 {
     "admins":{
-        "getAllClients":"true",
-        "getAllOrders": "true",
-        "MDFP": "true"
+        "getAllClients":true,
+        "getAllOrders": true,
+        "MDFP": true
     },
     "clients": {
-        "getOrders": "true",
-        "deleteClient":"true"
+        "getOrders": true,
+        "deleteClient":true
     },
     "universal":{
         "updateNameAndAddress": "client",

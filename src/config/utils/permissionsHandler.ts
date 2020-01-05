@@ -24,7 +24,7 @@ export default class permissionsHandler {
         }
         for(let name in clientPermissions){
             if(role == "client") permissionsDTO[name] = clientPermissions[name];
-            else permissionsDTO[name] =false;
+            else permissionsDTO[name] = false;
         }
         for(let name in universalPermissions){
             let permissionRole : string = universalPermissions[name];

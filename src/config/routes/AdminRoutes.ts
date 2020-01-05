@@ -29,6 +29,8 @@ class AdminRoutes {
         router.get("/admin/orders", AuthMiddlewares.checkAdminToken, orderController.retrieve);
         //Admin cancel order
         router.delete("/admin/order/:orderId", AuthMiddlewares.checkAdminToken, orderController.delete);
+        //create production planning at this moment
+        router.put("/admin/createProductionPlanning",adminController.createProductionPlanning);
         //Admin delete client
         router.delete("/admin/client/:clientId", AuthMiddlewares.checkAdminToken, adminController.deleteClient);
         //Admin updates order
