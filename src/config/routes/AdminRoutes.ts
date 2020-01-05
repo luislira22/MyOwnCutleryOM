@@ -29,6 +29,8 @@ class AdminRoutes {
         router.get("/admin/orders", AuthMiddlewares.checkAdminToken, orderController.retrieve);
         //Admin cancel order
         router.delete("/admin/order/:orderId", AuthMiddlewares.checkAdminToken, orderController.delete);
+        //Admin updates order
+        router.put("/admin/order/:orderId", AuthMiddlewares.checkAdminToken, orderController.updateQuantityAdmin);
 
         return router;
     }

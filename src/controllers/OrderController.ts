@@ -76,6 +76,23 @@ class OrderController {
         }
     }
 
+    public async updateQuantityAdmin(req: express.Request, res: express.Response): Promise<void> {
+        try {
+            let order: InputOrderDTO = <InputOrderDTO>req.body;
+            // @ts-ignore
+            let orderId = req.params.orderId;
+            let quantity = new OrderQuantity(order.quantity);
+            let orderService = new OrderService();
+            await orderService.updateQuantityAdmin(orderId, quantity).then(value => {
+                res.status(200).send(value);
+            }).catch(value => {
+                res.status(400).send(value);
+            });
+        } catch (e) {
+            res.status(500).send(e.message);
+        }
+    }
+
     public async delete(req: express.Request, res: express.Response): Promise<void> {
         try {
             let orderId = req.params.orderId;

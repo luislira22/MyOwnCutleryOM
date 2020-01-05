@@ -49,6 +49,13 @@ class OrderService {
         }
     }
 
+    public async updateQuantityAdmin(orderId: string, orderQuantity: OrderQuantity) {
+        let order = await this._orderRepository.findOne(orderId);
+        order.quantity = orderQuantity;
+        return await this._orderRepository.update(orderId, order);
+
+    }
+
     public async delete(orderId: string): Promise<boolean> {
         let order = await this._orderRepository.findOne(orderId);
         order.status = new OrderStatus('CANCELLED');
@@ -84,7 +91,7 @@ class OrderService {
         while (products.length > 0) {
             let tempMax = OrderService.mode(products);
             ordered.push(tempMax);
-           products = this.without(products, tempMax);
+            products = this.without(products, tempMax);
         }
         return ordered;
         // Lista ordenada com os produtos trending por exemplo [Produto1, Produto2, Produto3]
