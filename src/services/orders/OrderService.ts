@@ -110,7 +110,6 @@ class OrderService {
         let detailedOrders : Order[] = await this._orderRepository.findAccepted();
         //production planning DTO
         let ppDTO : ProductionPlanningRequestDTO = OrderMapper.fromDomainListToProductionPlanningDTO(detailedOrders);
-        console.log(ppDTO);
         //make request to production planning server
         let data = await axios({
             method: 'post',
@@ -124,7 +123,7 @@ class OrderService {
 
         //update request
         let ppRDTO : ProductionPlanningResponseDTO = <ProductionPlanningResponseDTO>data;
-
+        console.log(ppRDTO);
         for(let orderJson of ppRDTO.orderList){
             let orderId = orderJson.orderId;
             //received delivery date
