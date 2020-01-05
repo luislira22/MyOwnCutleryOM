@@ -17,7 +17,7 @@ class AdminController {
 
     async create(req: express.Request, res: express.Response): Promise<void> {
         try {
-            let adminDTO : InputAdminDTO = <InputAdminDTO>req.body;
+            let adminDTO: InputAdminDTO = <InputAdminDTO>req.body;
             let adminService = new AdminService();
             await adminService.create(AdminMapper.fromDTOToDomain(adminDTO)).then(value => {
                 //Return client : 201 CREATED
@@ -37,14 +37,24 @@ class AdminController {
             let client: InputClientDTO = <InputClientDTO>req.body;
             //@ts-ignore
             let clientId = req.params.clientId;
-            let name = new Fullname(
-                client.name.firstname,
-                client.name.lastname);
-            let address = new Address(
-                client.address.address,
-                client.address.postalcode,
-                client.address.city,
-                client.address.country);
+            let name = null
+            let address = null;
+            try {
+                name = new Fullname(
+                    client.name.firstname,
+                    client.name.lastname);
+            } catch (ex) {
+                console.log(ex)
+            }
+            try {
+                address = new Address(
+                    client.address.address,
+                    client.address.postalcode,
+                    client.address.city,
+                    client.address.country);
+            } catch (ex) {
+                console.log(ex)
+            }
 
             let clientService = new ClientService();
             await clientService.updateNameAndAddress(clientId, name, address).then(value => {
@@ -86,6 +96,21 @@ class AdminController {
             }).catch(value => {
                 res.send(400).send(value);
             });
+        } catch (e) {
+            res.status(500).send(e.message);
+        }
+    }
+
+    public async deleteClient(req: express.Request, res: express.Response): Promise<void> {
+        try {
+            //@ts-ignore
+            let clientId = req.params.clientId;
+            let clientService = new ClientService();
+            clientService.delete(clientId).then(value => {
+                res.status(204).send(value);
+            }).catch(value => {
+                res.status(400).send(value);
+            })
         } catch (e) {
             res.status(500).send(e.message);
         }

@@ -79,52 +79,12 @@ class OrderService {
         return await this._orderRepository.findOne(id);
     }
 
-    public async getTrendingProducts(): Promise<string[]> {
-        let orders = await this.getAll();
-        let products: string[];
-        let ordered: string[];
-
-        orders.forEach(order =>
-            products.push(order.productID)
-        );
-
-        while (products.length > 0) {
-            let tempMax = OrderService.mode(products);
-            ordered.push(tempMax);
-            products = this.without(products, tempMax);
-        }
-        return ordered;
-        // Lista ordenada com os produtos trending por exemplo [Produto1, Produto2, Produto3]
-        //TODO se calhar retornar uma lista de pares (Produto, Presente em X nº de encomendas) ,
-        // para saber qual e o mais trending apesar de ja estar organizado por essa ordem.
+    public getMostOrderedProductsByProductsQuantity() : Promise<string[]>{
+        return this._orderRepository.getMostOrderedProductsByProductsQuantity();
     }
-
-    private without(array, what): string[] {
-        return array.filter(function (element) {
-            return element !== what;
-        });
+    public getMostOrderedProductsByOrdersQuantity() : Promise<string[]>{
+        return this._orderRepository.getMostOrderedProductsByOrdersQuantity();
     }
-
-    private static mode(array): string {
-        if (array.length == 0)
-            return null;
-        let modeMap = {};
-        let maxEl = array[0], maxCount = 1;
-        for (let i = 0; i < array.length; i++) {
-            const el = array[i];
-            if (modeMap[el] == null)
-                modeMap[el] = 1;
-            else
-                modeMap[el]++;
-            if (modeMap[el] > maxCount) {
-                maxEl = el;
-                maxCount = modeMap[el];
-            }
-        }
-        return maxEl;
-    }
-
-
 }
 
 Object.seal(OrderService);

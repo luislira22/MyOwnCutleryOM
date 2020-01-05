@@ -137,6 +137,32 @@ class OrderController {
             res.status(500).send(e.message);
         }
     }
+
+    public async getMostOrderedProductsByProductsQuantity(req: express.Request, res: express.Response): Promise<void> {
+        try {
+            let orderService = new OrderService();
+            await orderService.getMostOrderedProductsByProductsQuantity().then(value => {
+                res.status(200).send(value);
+            }).catch(value => {
+                res.status(400).send(value);
+            });
+        } catch (e) {
+            res.status(500).send(e.message);
+        }
+    }
+
+    public async getMostOrderedProductsByOrdersQuantity(req: express.Request, res: express.Response): Promise<void> {
+        try {
+            let orderService = new OrderService();
+            await orderService.getMostOrderedProductsByOrdersQuantity().then(value => {
+                res.status(200).send(value);
+            }).catch(value => {
+                res.status(400).send(value);
+            });
+        } catch (e) {
+            res.status(500).send(e.message);
+        }
+    }
 }
 
 export = OrderController;

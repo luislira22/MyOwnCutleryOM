@@ -46,11 +46,11 @@ export default class UserRepository implements IBaseRepository<User> {
         });
     }
 
-    public async findByEmail(email: string) : Promise<User> {
+    public async findByEmail(email: string): Promise<User> {
         return new Promise<User>((resolve, reject) => {
-            this._userModel.findOne({email : email}, (error: any, result: any) => {
+            this._userModel.findOne({email: email}, (error: any, result: any) => {
                 if (error) reject(error);
-                else if(result == null) resolve(null);
+                else if (result == null) resolve(null);
                 else {
                     if (result.role == 'client') resolve(ClientMapper.fromPersistenceToDomain(result));
                     else if (result.role == 'admin') resolve(AdminMapper.fromPersistenceToDomain(result));
@@ -78,15 +78,15 @@ export default class UserRepository implements IBaseRepository<User> {
         });
     }
 
-    public async findOne(id: string): Promise<User> {
-        throw new Error("Not implemented");
-    }
-
     public async update(id: string, client: User): Promise<boolean> {
         throw new Error("Not implemented");
     }
 
     public async delete(id: string): Promise<boolean> {
+        throw new Error("Not implemented");
+    }
+
+    findOne(id: string): Promise<User> {
         throw new Error("Not implemented");
     }
 }

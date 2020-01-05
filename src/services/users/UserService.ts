@@ -3,6 +3,11 @@ import User from "../../model/user/User";
 import ResponseDTO from "../../dtos/reponseDTO/ResponseDTO";
 import LoginResponseDTO from "../../dtos/users/auth/LoginResponseDTO";
 import permissionsHandler from "../../config/utils/permissionsHandler";
+import Client from "../../model/user/client/Client";
+import UserDTO from "../../dtos/users/UserDTO";
+import ClientMapper from "../../mappers/users/ClientMapper";
+import Admin from "../../model/user/admin/Admin";
+import AdminMapper from "../../mappers/users/AdminMapper";
 
 const ClientModel = require("../../dataAccess/schemas/users/ClientSchema");
 const UserModel = require("../../dataAccess/schemas/users/UserSchema");
@@ -42,11 +47,19 @@ class UserService {
                     const secret = process.env.JWT_SECRET;
                     const token = jwt.sign(payload, secret, options);
 
+                    let userDTO : UserDTO;
+                    if(user instanceof Client){
+                        userDTO = ClientMapper.fromDomainToDTO(<Client>user);
+                    }else if(user instanceof Admin){
+                        userDTO = AdminMapper.fromDomainToDTO(<Admin> user);
+                    }
+                    let permissions = permissionsHandler.createPermissionsResponse(role);
                     let responseDTO: LoginResponseDTO = {
+                        user:userDTO,
                         success: true,
                         message: "Login successful",
                         token: token,
-                        permissions:permissionsHandler.createPermissionsResponse(role)
+                        permissions:permissions
                     };
                     return responseDTO
                 } else {
@@ -60,6 +73,10 @@ class UserService {
                 throw error;
             });
         }
+    }
+
+    async findById(id: string): Promise<User> {
+        return await this._userRepository.findOne(id);
     }
 }
 

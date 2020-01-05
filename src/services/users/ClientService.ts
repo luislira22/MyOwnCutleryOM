@@ -26,9 +26,8 @@ class ClientService {
 
     async updateNameAndAddress(id: string, clientName: Fullname, clientAddress: Address): Promise<boolean> {
         let client = await this._clientRepository.findOne(id);
-        client.fullname = clientName;
-        client.address = clientAddress;
-        console.log("WTF",client);
+        if(clientName != null) client.fullname = clientName;
+        if(clientAddress != null) client.address = clientAddress;
         return await this._clientRepository.update(id, client);
     }
 

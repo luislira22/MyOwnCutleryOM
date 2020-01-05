@@ -13,14 +13,21 @@ export default class permissionsHandler {
     }
     public static createPermissionsResponse(role: string){
         let permissionsDTO =  {};
-        //MDP / MDF only available for admin
-        if(role === "admin")
-            permissionsDTO["MDFP"] = true;
-        else
-            permissionsDTO["MDFP"] = false;
+        let clientPermissions = configs.permissions.clients;
+        let adminPermissions = configs.permissions.admins;
+        let universalPermissions = configs.permissions.universal;
         //create Object with all the permissions available and not available for the role
-        for(let name in configs.permissions){
-            let permissionRole : string = configs.permissions[name];
+
+        for(let name in adminPermissions){
+            if(role == "admin") permissionsDTO[name] = adminPermissions[name];
+            else permissionsDTO[name] = false;
+        }
+        for(let name in clientPermissions){
+            if(role == "client") permissionsDTO[name] = clientPermissions[name];
+            else permissionsDTO[name] =false;
+        }
+        for(let name in universalPermissions){
+            let permissionRole : string = universalPermissions[name];
             if(permissionRole === "all" || permissionRole === role)
                 permissionsDTO[name] = true;
             else
