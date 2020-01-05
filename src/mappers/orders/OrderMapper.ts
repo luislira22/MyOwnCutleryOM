@@ -40,13 +40,13 @@ export default class OrderMapper {
             id: order.id,
             client: ClientMapper.fromDomainToDTO(order.client),
             quantity: order.quantity.quantity,
-            date: order.date.date,
-            requestDeliveryDate: order.requestDeliveryDate.date,
+            date: this.formatDate(order.date.date),
+            requestDeliveryDate: this.formatDate(order.requestDeliveryDate.date),
             deliveryDate: null,
             status: order.status.status,
             productID: order.productID
         };
-        if (order.deliveryDate != undefined) orderDTO.deliveryDate = order.deliveryDate.date;
+        if (order.deliveryDate != undefined) orderDTO.deliveryDate = this.formatDate(order.deliveryDate.date);
         return orderDTO;
     }
 
@@ -55,14 +55,37 @@ export default class OrderMapper {
             id: order.id,
             client: ClientMapper.fromDomainToNameDTO(order.client),
             quantity: order.quantity.quantity,
-            date: order.date.date,
-            requestDeliveryDate: order.requestDeliveryDate.date,
+            date: this.formatDate(order.date.date),
+            requestDeliveryDate: this.formatDate(order.requestDeliveryDate.date),
             deliveryDate: null,
             status: order.status.status,
             productID: order.productID
         };
-        if (order.deliveryDate != undefined) orderDTO.deliveryDate = order.deliveryDate.date;
+        if (order.deliveryDate != undefined) orderDTO.deliveryDate = this.formatDate(order.deliveryDate.date);
         return orderDTO;
+    }
+
+    private static formatDate(date: Date): string {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear(),
+            hour = '' + d.getHours(),
+            minute = '' + d.getMinutes(),
+            second = '' + d.getSeconds();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        if (hour.length < 2)
+            hour = '0' + hour;
+        if (minute.length < 2)
+            minute = '0' + minute;
+        if (second.length < 2)
+            second = '0' + second;
+
+        return [day, month, year].join('-') + " " + [hour, minute, second].join(':');
     }
 
     public static fromDomainToPersistence(order: Order): mongoose.Model<IOrderModel> {

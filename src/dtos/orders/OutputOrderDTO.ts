@@ -6,9 +6,9 @@ export default interface OutputOrderDTO extends DTO {
     id: string
     client: OutputClientDTO
     quantity: number
-    date: Date
-    requestDeliveryDate: Date,
-    deliveryDate: Date
+    date: string
+    requestDeliveryDate: string,
+    deliveryDate: string
     status: string
     productID: string
 }
