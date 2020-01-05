@@ -4,6 +4,11 @@ import Order from "../../model/orders/Order";
 import OrderQuantity from "../../model/orders/OrderQuantity";
 import OrderStatus from "../../model/orders/OrderStatus";
 import ClientService = require("../users/ClientService");
+import OrderMapper from "../../mappers/orders/OrderMapper";
+import ProductionPlanningRequestDTO from "../../dtos/productionPlanning/ProductionPlanningRequestDTO";
+import ProductionPlanningResponseDTO from "../../dtos/productionPlanning/ProductionPlanningResponseDTO";
+import PPOrderDTO from "../../dtos/productionPlanning/PPOrderDTO";
+import OrderDeliveryDate from "../../model/orders/OrderDeliveryDate";
 
 const OrderModel = require('../../dataAccess/schemas/orders/OrderSchema');
 
@@ -98,6 +103,32 @@ class OrderService {
     }
     public getMostOrderedProductsByOrdersQuantity() : Promise<string[]>{
         return this._orderRepository.getMostOrderedProductsByOrdersQuantity();
+    }
+
+    public async createProductionPlanning(){
+        //get accepted Orders
+        let detailedOrders : Order[] = await this.getAll();
+        console.log(detailedOrders);
+        //production planning DTO
+        let ppDTO : ProductionPlanningRequestDTO = OrderMapper.fromDomainListToProductionPlanningDTO(detailedOrders);
+        console.log(ppDTO);
+        //make request to production planning server
+        let res = await axios.post(process.env.PP_API_URL,ppDTO);
+        //update request
+        let ppRDTO : ProductionPlanningResponseDTO = <ProductionPlanningResponseDTO>res.data;
+        for(let orderJson of ppRDTO.orderList){
+            let orderId = orderJson.orderId;
+            //received delivery date
+            let deliveryDate = new Date(orderJson.endTime);
+            console.log(deliveryDate);
+            //create delivery date object
+            let orderDeliveryDate : OrderDeliveryDate = new OrderDeliveryDate(deliveryDate.toDateString());
+            //fetch order
+            let order = await this._orderRepository.findOne(orderId);
+            order.deliveryDate = orderDeliveryDate;
+            //change end date
+            await this._orderRepository.update(orderId,order);
+        }
     }
 }
 

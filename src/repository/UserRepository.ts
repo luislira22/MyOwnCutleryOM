@@ -78,6 +78,8 @@ export default class UserRepository implements IBaseRepository<User> {
         });
     }
 
+
+
     public async update(id: string, client: User): Promise<boolean> {
         throw new Error("Not implemented");
     }

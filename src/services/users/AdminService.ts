@@ -2,6 +2,9 @@
 //REPOSITORY
 import UserRepository from "../../repository/UserRepository";
 import Admin from "../../model/user/admin/Admin";
+import Order from "../../model/orders/Order";
+import OrderRepository from "../../repository/OrderRepository";
+import IOrderModel from "../../dataAccess/schemas/orders/interfaces/IOrderModel";
 //PERSISTENCE MODELS
 const ClientModel = require("../../dataAccess/schemas/users/ClientSchema");
 const UserModel = require("../../dataAccess/schemas/users/UserSchema");
@@ -21,6 +24,7 @@ class AdminService {
     async create(admin : Admin): Promise<Admin> {
         return await this._userRepository.create(admin);
     }
+
 }
 
 Object.seal(AdminService);

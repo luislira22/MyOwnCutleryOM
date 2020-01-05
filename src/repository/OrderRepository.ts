@@ -7,6 +7,7 @@ import IOrderFullModel from "../dataAccess/schemas/orders/interfaces/IOrderFullM
 import IOrderModel from "../dataAccess/schemas/orders/interfaces/IOrderModel";
 import IClientModel from "../dataAccess/schemas/users/interfaces/clients/IClientModel";
 import Client from "../model/user/client/Client";
+import {Types} from "mongoose";
 
 export default class OrderRepository implements IBaseRepository<Order> {
 
