@@ -32,7 +32,8 @@ class ClientRoutes {
         router.put("/client/order/:orderId", AuthMiddlewares.checkTokenByMethod(configs.permissions.updateOrder), orderController.updateQuantity);
         //client deletes all info related to him
         router.delete("/client", AuthMiddlewares.checkTokenByMethod(configs.permissions.deleteClient), clientController.delete);
-
+        //delete order
+        router.delete("/client/order/:orderId", AuthMiddlewares.checkTokenByMethod(configs.permissions.cancelOrder), orderController.delete);
 
         return router;
     }
