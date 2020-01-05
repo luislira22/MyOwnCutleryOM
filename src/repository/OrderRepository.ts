@@ -44,6 +44,21 @@ export default class OrderRepository implements IBaseRepository<Order> {
         });
     }
 
+    public async findAccepted(): Promise<Order[]> {
+        return new Promise<Order[]>((resolve, reject) => {
+            this._orderModel.find({status: "ACCEPTED"}, (error: any, result: IOrderFullModel[]) => {
+                if (error) reject(error);
+                else {
+                    let orders = [];
+                    result.forEach(function (element: IOrderFullModel) {
+                        orders.push(OrderMapper.fromPersistenceToDomain(element))
+                    });
+                    resolve(orders);
+                }
+            }).populate('client');
+        });
+    }
+
     public async findOne(id: string): Promise<Order> {
         return new Promise<Order>( (resolve, reject) => {
             this._orderModel.findOne({_id: id}, (error: any, result: IOrderFullModel) => {
